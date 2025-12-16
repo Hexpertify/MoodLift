@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ArrowLeft, TrendingUp, Award, Target, Star } from 'lucide-react';
@@ -15,20 +15,18 @@ function ProgressContent() {
   const [progress, setProgress] = useState<UserProgress | null>(null);
   const [loading, setLoading] = useState(true);
 
-  // ✅ FIX: fetchProgress MUST be declared before useEffect
-  const fetchProgress = useCallback(async () => {
-    if (!user) return;
-    setLoading(true);
-    const data = await getUserProgress(user.id);
-    setProgress(data);
-    setLoading(false);
-  }, [user]);
-
   useEffect(() => {
-    if (user) {
-      fetchProgress();
-    }
-  }, [user, fetchProgress]);
+    if (!user) return;
+
+    const fetchProgress = async () => {
+      setLoading(true);
+      const data = await getUserProgress(user.id);
+      setProgress(data);
+      setLoading(false);
+    };
+
+    fetchProgress();
+  }, [user]);
 
   if (loading) {
     return (
@@ -100,7 +98,10 @@ function ProgressContent() {
           <CardContent>
             <div className="flex items-end justify-between gap-2 h-48">
               {weeklyProgress.map(day => (
-                <div key={day.day} className="flex-1 flex flex-col items-center gap-2">
+                <div
+                  key={day.day}
+                  className="flex-1 flex flex-col items-center gap-2"
+                >
                   <div className="w-full flex flex-col justify-end flex-1">
                     <div
                       className="w-full bg-gradient-to-t from-primary to-accent rounded-t-lg transition-all hover:opacity-80"
@@ -199,8 +200,7 @@ function ProgressContent() {
             </h3>
             <p className="text-lg text-white/90 mb-6">
               You're {remaining} achievement
-              {remaining !== 1 ? 's' : ''} away from unlocking the "Wellness
-              Champion" badge
+              {remaining !== 1 ? 's' : ''} away from unlocking the "Wellness Champion" badge
             </p>
             <Link href="/">
               <Button
