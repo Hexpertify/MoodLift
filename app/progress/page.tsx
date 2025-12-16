@@ -15,12 +15,7 @@ function ProgressContent() {
   const [progress, setProgress] = useState<UserProgress | null>(null);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    if (user) {
-      fetchProgress();
-    }
-  }, [user, fetchProgress]);
-
+  // ✅ FIX: fetchProgress MUST be declared before useEffect
   const fetchProgress = useCallback(async () => {
     if (!user) return;
     setLoading(true);
@@ -28,6 +23,12 @@ function ProgressContent() {
     setProgress(data);
     setLoading(false);
   }, [user]);
+
+  useEffect(() => {
+    if (user) {
+      fetchProgress();
+    }
+  }, [user, fetchProgress]);
 
   if (loading) {
     return (
@@ -41,11 +42,19 @@ function ProgressContent() {
   }
 
   const weeklyProgress = progress?.weeklyActivity || [];
-  const maxGames = weeklyProgress.length > 0 ? Math.max(...weeklyProgress.map(d => d.games)) : 1;
-  const achievements = progress?.achievements.map(a => ({
-    ...a,
-    icon: [Star, Award, Target, TrendingUp, Star, Award][Math.floor(Math.random() * 6)],
-  })) || [];
+  const maxGames =
+    weeklyProgress.length > 0
+      ? Math.max(...weeklyProgress.map(d => d.games))
+      : 1;
+
+  const achievements =
+    progress?.achievements.map(a => ({
+      ...a,
+      icon: [Star, Award, Target, TrendingUp, Star, Award][
+        Math.floor(Math.random() * 6)
+      ],
+    })) || [];
+
   const totalGames = progress?.totalGames || 0;
   const avgMood = progress?.avgMood || 0;
   const currentStreak = progress?.currentStreak || 0;
@@ -58,7 +67,10 @@ function ProgressContent() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center gap-4 h-16">
             <Link href="/">
-              <Button size="sm" className="bg-gradient-to-r from-primary to-accent hover:opacity-90 text-white">
+              <Button
+                size="sm"
+                className="bg-gradient-to-r from-primary to-accent hover:opacity-90 text-white"
+              >
                 <ArrowLeft className="w-4 h-4 mr-2" />
                 Home
               </Button>
@@ -70,8 +82,12 @@ function ProgressContent() {
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 md:py-12">
         <div className="mb-8">
-          <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-primary mb-2">Track Your Growth</h2>
-          <p className="text-muted-foreground">Celebrate your achievements and stay motivated</p>
+          <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-primary mb-2">
+            Track Your Growth
+          </h2>
+          <p className="text-muted-foreground">
+            Celebrate your achievements and stay motivated
+          </p>
         </div>
 
         <Card className="border-2 mb-8">
@@ -83,7 +99,7 @@ function ProgressContent() {
           </CardHeader>
           <CardContent>
             <div className="flex items-end justify-between gap-2 h-48">
-              {weeklyProgress.map((day) => (
+              {weeklyProgress.map(day => (
                 <div key={day.day} className="flex-1 flex flex-col items-center gap-2">
                   <div className="w-full flex flex-col justify-end flex-1">
                     <div
@@ -92,24 +108,37 @@ function ProgressContent() {
                     />
                   </div>
                   <div className="text-center">
-                    <p className="text-xs font-medium text-muted-foreground">{day.day}</p>
-                    <p className="text-xs text-primary font-semibold">{day.games}</p>
+                    <p className="text-xs font-medium text-muted-foreground">
+                      {day.day}
+                    </p>
+                    <p className="text-xs text-primary font-semibold">
+                      {day.games}
+                    </p>
                   </div>
                 </div>
               ))}
             </div>
+
             <div className="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-4">
               <div className="p-4 bg-secondary/30 rounded-lg">
                 <p className="text-sm text-muted-foreground mb-1">Total Games</p>
-                <p className="text-lg sm:text-xl md:text-2xl font-bold text-primary">{totalGames}</p>
+                <p className="text-lg sm:text-xl md:text-2xl font-bold text-primary">
+                  {totalGames}
+                </p>
               </div>
               <div className="p-4 bg-secondary/30 rounded-lg">
                 <p className="text-sm text-muted-foreground mb-1">Avg Mood</p>
-                <p className="text-lg sm:text-xl md:text-2xl font-bold text-accent">{avgMood.toFixed(1)}/10</p>
+                <p className="text-lg sm:text-xl md:text-2xl font-bold text-accent">
+                  {avgMood.toFixed(1)}/10
+                </p>
               </div>
               <div className="p-4 bg-secondary/30 rounded-lg">
-                <p className="text-sm text-muted-foreground mb-1">Current Streak</p>
-                <p className="text-lg sm:text-xl md:text-2xl font-bold text-accent">{currentStreak} days</p>
+                <p className="text-sm text-muted-foreground mb-1">
+                  Current Streak
+                </p>
+                <p className="text-lg sm:text-xl md:text-2xl font-bold text-accent">
+                  {currentStreak} days
+                </p>
               </div>
             </div>
           </CardContent>
@@ -135,17 +164,25 @@ function ProgressContent() {
                         : 'bg-gray-50 border-gray-200 opacity-60'
                     }`}
                   >
-                    <div className={`w-12 h-12 rounded-full mb-3 flex items-center justify-center ${
-                      achievement.earned
-                        ? 'bg-gradient-to-br from-primary to-accent'
-                        : 'bg-gray-300'
-                    }`}>
+                    <div
+                      className={`w-12 h-12 rounded-full mb-3 flex items-center justify-center ${
+                        achievement.earned
+                          ? 'bg-gradient-to-br from-primary to-accent'
+                          : 'bg-gray-300'
+                      }`}
+                    >
                       <Icon className="w-6 h-6 text-white" />
                     </div>
-                    <h3 className="font-semibold text-primary mb-1">{achievement.title}</h3>
-                    <p className="text-sm text-muted-foreground">{achievement.description}</p>
+                    <h3 className="font-semibold text-primary mb-1">
+                      {achievement.title}
+                    </h3>
+                    <p className="text-sm text-muted-foreground">
+                      {achievement.description}
+                    </p>
                     {achievement.earned && (
-                      <p className="text-xs text-accent font-medium mt-2">Unlocked!</p>
+                      <p className="text-xs text-accent font-medium mt-2">
+                        Unlocked!
+                      </p>
                     )}
                   </div>
                 );
@@ -157,18 +194,27 @@ function ProgressContent() {
         <Card className="bg-gradient-to-r from-primary to-accent text-white border-0">
           <CardContent className="p-4 sm:p-6 md:p-8 text-center">
             <Target className="w-16 h-16 mx-auto mb-4" />
-            <h3 className="text-lg sm:text-xl md:text-2xl font-bold mb-2">Keep Going!</h3>
+            <h3 className="text-lg sm:text-xl md:text-2xl font-bold mb-2">
+              Keep Going!
+            </h3>
             <p className="text-lg text-white/90 mb-6">
-              You're {remaining} achievement{remaining !== 1 ? 's' : ''} away from unlocking the "Wellness Champion" badge
+              You're {remaining} achievement
+              {remaining !== 1 ? 's' : ''} away from unlocking the "Wellness
+              Champion" badge
             </p>
             <Link href="/">
-              <Button size="lg" variant="secondary" className="bg-white text-primary hover:bg-white/90">
+              <Button
+                size="lg"
+                variant="secondary"
+                className="bg-white text-primary hover:bg-white/90"
+              >
                 Continue Your Journey
               </Button>
             </Link>
           </CardContent>
         </Card>
       </main>
+
       <AppFooter />
     </div>
   );
