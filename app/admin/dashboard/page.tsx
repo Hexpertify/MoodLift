@@ -70,6 +70,15 @@ interface Asset {
   created_at: string;
 }
 
+interface Consultant {
+  id: string;
+  full_name: string;
+  title?: string | null;
+  picture_url?: string | null;
+  booking_url?: string | null;
+  is_active?: boolean;
+}
+
 export default function AdminDashboard() {
   const { user, signOut } = useAuth();
   const router = useRouter();
@@ -81,6 +90,9 @@ export default function AdminDashboard() {
   const [selectedGame, setSelectedGame] = useState<Game | null>(null);
   const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
   const [selectedTestimonial, setSelectedTestimonial] = useState<Testimonial | null>(null);
+  const [consultants, setConsultants] = useState<Consultant[]>([]);
+  const [selectedConsultant, setSelectedConsultant] = useState<Consultant | null>(null);
+  const [isAddingConsultant, setIsAddingConsultant] = useState(false);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
@@ -129,7 +141,8 @@ export default function AdminDashboard() {
         withTimeout(fetchMetadata()),
         withTimeout(fetchBooks()),
         withTimeout(fetchGames()),
-        withTimeout(fetchTestimonials())
+        withTimeout(fetchTestimonials()),
+        withTimeout(fetchConsultants())
       ]);
       setLoading(false);
     } catch (err) {
@@ -178,6 +191,16 @@ export default function AdminDashboard() {
       setTestimonials(data.testimonials || []);
     } catch (err) {
       console.error('Failed to load testimonials:', err);
+    }
+  };
+
+  const fetchConsultants = async () => {
+    try {
+      const response = await fetch('/api/admin/consultants');
+      const data = await response.json();
+      setConsultants(data.consultants || []);
+    } catch (err) {
+      console.error('Failed to load consultants:', err);
     }
   };
 
@@ -450,6 +473,71 @@ export default function AdminDashboard() {
     }
   };
 
+  const handleConsultantSave = async () => {
+    if (!selectedConsultant?.full_name) {
+      setError('Full name is required');
+      return;
+    }
+
+    setSaving(true);
+    setError('');
+
+    try {
+      const method = selectedConsultant.id && !isAddingConsultant ? 'PUT' : 'POST';
+      const response = await fetch('/api/admin/consultants', {
+        method,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(selectedConsultant),
+      });
+
+      let data: any = {};
+      try { data = await response.json(); } catch (e) { data = {}; }
+      if (!response.ok) {
+        console.error('Save consultant error:', data);
+        const msg = data?.error || 'Failed to save consultant';
+        setError(msg);
+        throw new Error(msg);
+      }
+
+      const saved = data?.consultant;
+      setSuccess('Consultant saved successfully!');
+      await fetchConsultants();
+      setIsAddingConsultant(false);
+      if (saved) setSelectedConsultant(saved);
+      else setSelectedConsultant(null);
+      setTimeout(() => setSuccess(''), 3000);
+    } catch (err) {
+      console.error('Failed to save consultant:', err);
+      if (!error) {
+        // if server didn't already set a helpful message, set a generic one
+        setError(err instanceof Error ? err.message : 'Failed to save consultant');
+      }
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const handleDeleteConsultant = async (consultantId: string) => {
+    if (!window.confirm('Are you sure you want to delete this consultant?')) return;
+
+    try {
+      const response = await fetch(`/api/admin/consultants?id=${consultantId}`, { method: 'DELETE' });
+      if (!response.ok) throw new Error('Failed to delete consultant');
+      setSuccess('Consultant deleted successfully!');
+      await fetchConsultants();
+      setSelectedConsultant(null);
+      setTimeout(() => setSuccess(''), 3000);
+    } catch (err) {
+      console.error('Failed to delete consultant:', err);
+      setError('Failed to delete consultant');
+    }
+  };
+
+  const handleAddNewConsultant = () => {
+    setIsAddingConsultant(true);
+    setSelectedConsultant({ id: '', full_name: '', title: '', picture_url: '', booking_url: '', is_active: true });
+  };
+
   const handleAddNewTestimonial = () => {
     setIsAddingTestimonial(true);
     setSelectedTestimonial({
@@ -508,6 +596,7 @@ export default function AdminDashboard() {
             <TabsTrigger value="books">Book Recommendations</TabsTrigger>
             <TabsTrigger value="games">Games Details</TabsTrigger>
             <TabsTrigger value="testimonials">Testimonials</TabsTrigger>
+            <TabsTrigger value="consultants">Consultants</TabsTrigger>
             <TabsTrigger value="faqs" asChild>
               <Link href="/admin/dashboard/faqs" className="cursor-pointer">
                 FAQs
@@ -650,6 +739,131 @@ export default function AdminDashboard() {
                   <Card>
                     <CardContent className="pt-6">
                       <p className="text-muted-foreground">Select a page to edit SEO metadata</p>
+                    </CardContent>
+                  </Card>
+                )}
+              </div>
+            </div>
+          </TabsContent>
+
+          <TabsContent value="consultants" className="space-y-6">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+              <div className="lg:col-span-1">
+                <Card>
+                  <CardHeader className="flex flex-row items-center justify-between space-y-0">
+                    <div>
+                      <CardTitle className="text-lg">Consultants</CardTitle>
+                      <CardDescription>Manage consultant carousel items</CardDescription>
+                    </div>
+                    <Button size="sm" onClick={handleAddNewConsultant} className="gap-2">
+                      <Plus className="w-4 h-4" />
+                      Add
+                    </Button>
+                  </CardHeader>
+                  <CardContent className="space-y-2">
+                    {consultants.map((c) => (
+                      <button
+                        key={c.id}
+                        onClick={() => { setIsAddingConsultant(false); setSelectedConsultant(c); }}
+                        className={`w-full text-left p-3 rounded-lg border-2 transition-colors text-sm ${
+                          selectedConsultant?.id === c.id
+                            ? 'border-primary bg-primary/5'
+                            : 'border-border hover:border-primary/50'
+                        }`}
+                      >
+                        <div className="font-medium truncate">{c.full_name}</div>
+                        <div className="text-xs text-muted-foreground">{c.title}</div>
+                      </button>
+                    ))}
+                  </CardContent>
+                </Card>
+              </div>
+
+              <div className="lg:col-span-2">
+                {selectedConsultant ? (
+                  <Card>
+                    <CardHeader>
+                      <CardTitle>{isAddingConsultant ? 'Add New Consultant' : 'Edit Consultant'}</CardTitle>
+                      <CardDescription>Manage consultant details shown in the homepage carousel</CardDescription>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                      <div className="space-y-2">
+                        <label className="text-sm font-medium">Full Name</label>
+                        <Input
+                          value={selectedConsultant.full_name}
+                          onChange={(e) => setSelectedConsultant({...selectedConsultant, full_name: e.target.value})}
+                          placeholder="Full name"
+                        />
+                      </div>
+
+                      <div className="space-y-2">
+                        <label className="text-sm font-medium">Title</label>
+                        <Input
+                          value={selectedConsultant.title || ''}
+                          onChange={(e) => setSelectedConsultant({...selectedConsultant, title: e.target.value})}
+                          placeholder="e.g., Licensed Therapist"
+                        />
+                      </div>
+
+
+
+                      <div className="space-y-2">
+                        <label className="text-sm font-medium">Picture URL</label>
+                        <Input
+                          type="url"
+                          value={selectedConsultant.picture_url || ''}
+                          onChange={(e) => setSelectedConsultant({...selectedConsultant, picture_url: e.target.value})}
+                          placeholder="https://example.com/photo.jpg"
+                        />
+                      </div>
+
+                      <div className="space-y-2">
+                        <label className="text-sm font-medium">Booking URL</label>
+                        <Input
+                          type="url"
+                          value={selectedConsultant.booking_url || ''}
+                          onChange={(e) => setSelectedConsultant({...selectedConsultant, booking_url: e.target.value})}
+                          placeholder="https://calendly.com/your-profile"
+                        />
+                      </div>
+
+                      <div className="flex items-center gap-2">
+                        <input
+                          type="checkbox"
+                          checked={!!selectedConsultant.is_active}
+                          onChange={(e) => setSelectedConsultant({...selectedConsultant, is_active: e.target.checked})}
+                          id="consultant-active"
+                          className="w-4 h-4"
+                        />
+                        <label htmlFor="consultant-active" className="text-sm font-medium cursor-pointer">Active (Show on website)</label>
+                      </div>
+
+                      <div className="flex gap-2 pt-4">
+                        <Button
+                          onClick={handleConsultantSave}
+                          disabled={saving}
+                          className="flex-1 gap-2"
+                        >
+                          <Save className="w-4 h-4" />
+                          {saving ? 'Saving...' : 'Save Consultant'}
+                        </Button>
+                        {!isAddingConsultant && (
+                          <Button
+                            variant="destructive"
+                            onClick={() => handleDeleteConsultant(selectedConsultant.id)}
+                            className="gap-2"
+                          >
+                            <Trash2 className="w-4 h-4" />
+                            Delete
+                          </Button>
+                        )}
+                      </div>
+                    </CardContent>
+                  </Card>
+                ) : (
+                  <Card>
+                    <CardContent className="pt-6">
+                      <p className="text-muted-foreground">Select a consultant to edit or click "Add" to create a new one</p>
                     </CardContent>
                   </Card>
                 )}

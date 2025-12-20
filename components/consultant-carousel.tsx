@@ -10,7 +10,6 @@ type Consultant = {
   id: string;
   full_name?: string;
   title?: string;
-  bio?: string;
   picture_url?: string;
   booking_url?: string;
 };
@@ -78,33 +77,36 @@ export default function ConsultantCarousel() {
       <div className="flex gap-4 px-2">
         {consultants.map((c) => (
           <div key={c.id} className="w-[320px] shrink-0">
-            <Card className="group relative border-2 overflow-hidden">
+            <Card className="relative border-2 overflow-hidden rounded-lg h-[220px]">
               {c.picture_url ? (
-                <div className="relative h-40 overflow-hidden">
-                  <img src={c.picture_url} alt={c.full_name} className="w-full h-full object-cover" />
+                <div className="relative h-full w-full">
+                  <img src={c.picture_url} alt={c.full_name} className="absolute inset-0 w-full h-full object-cover" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+
+                  <div className="absolute left-4 right-4 bottom-4 flex items-center justify-between">
+                    <div className="text-white">
+                      <h4 className="text-lg font-bold">{c.full_name || 'Consultant'}</h4>
+                      <p className="text-sm opacity-90">{c.title || 'Therapist'}</p>
+                    </div>
+
+                    <div>
+                      {c.booking_url ? (
+                        <a href={c.booking_url} target="_blank" rel="noopener noreferrer">
+                          <Button className="rounded-full px-4 py-2 bg-gradient-to-r from-primary to-accent text-white text-sm">Book Now</Button>
+                        </a>
+                      ) : (
+                        <Link href={`/consultants/${c.id}`}>
+                          <Button className="rounded-full px-4 py-2 bg-gradient-to-r from-primary to-accent text-white text-sm">Details</Button>
+                        </Link>
+                      )}
+                    </div>
+                  </div>
                 </div>
               ) : (
-                <div className="relative h-40 flex items-center justify-center bg-gray-100">
+                <div className="relative h-full flex items-center justify-center bg-gray-100">
                   <span className="text-5xl">👩‍⚕️</span>
                 </div>
               )}
-
-              <CardContent className="p-4">
-                <h4 className="text-lg font-bold text-primary line-clamp-2">{c.full_name || 'Consultant'}</h4>
-                <p className="text-sm text-muted-foreground mb-3">{c.title || 'Therapist'}</p>
-                <p className="text-sm text-gray-600 line-clamp-3 mb-4">{c.bio || ''}</p>
-                <div className="flex items-center justify-between gap-2">
-                  {c.booking_url ? (
-                    <a href={c.booking_url} target="_blank" rel="noopener noreferrer" className="w-full">
-                      <Button className="w-full bg-gradient-to-r from-primary to-accent text-white">Book Now</Button>
-                    </a>
-                  ) : (
-                    <Link href={`/consultants/${c.id}`} className="w-full">
-                      <Button className="w-full bg-gradient-to-r from-primary to-accent text-white">Details</Button>
-                    </Link>
-                  )}
-                </div>
-              </CardContent>
             </Card>
           </div>
         ))}
