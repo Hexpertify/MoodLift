@@ -184,23 +184,23 @@ export default function PhysicalGroundingGame() {
             </Button>
           </div>
           <div className="text-center">
-            <h1 className="text-2xl sm:text-3xl font-bold text-teal-600">Physical Grounding Game (Weight Shift Reset)</h1>
+            <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-teal-600">Physical Grounding Game (Weight Shift Reset)</h1>
           </div>
         </div>
       </nav>
 
-      <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
         <Card className="border-2 border-teal-200">
-          <CardContent className="p-12">
+          <CardContent className="p-6 sm:p-8 md:p-12">
             {/* Title and Tagline */}
-            <div className="text-center mb-12">
-              <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">Physical Grounding Game (Weight Shift Reset)</h1>
-              <p className="text-sm text-gray-600">A <strong>SOMATIC AND COGNITIVE BEHAVIORAL THERAPY (CBT)-BASED GROUNDING APPROACH</strong> that uses physical awareness to bring you back to the present moment.</p>
+            <div className="text-center mb-8 sm:mb-12">
+              <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-2">Physical Grounding Game (Weight Shift Reset)</h1>
+              <p className="text-xs sm:text-sm text-gray-600">A <strong>SOMATIC AND COGNITIVE BEHAVIORAL THERAPY (CBT)-BASED GROUNDING APPROACH</strong> that uses physical awareness to bring you back to the present moment.</p>
             </div>
 
             {/* Animation */}
             <div className="flex justify-center mb-12">
-              <div className="w-40 h-40 bg-gradient-to-br from-teal-200 to-cyan-200 rounded-2xl flex items-center justify-center relative overflow-hidden">
+              <div className="w-full max-w-md aspect-[3/1] bg-gradient-to-r from-teal-200 to-cyan-200 rounded-2xl flex items-center justify-center relative overflow-hidden">
                 <div className="absolute inset-0 opacity-30">
                   <div className="absolute inset-4 border-2 border-teal-400 rounded-xl" />
                   <div className="absolute inset-8 border-2 border-teal-400 rounded-lg" />
@@ -219,8 +219,8 @@ export default function PhysicalGroundingGame() {
             </div>
 
             {/* Current Step */}
-            <div className="mb-8 text-center">
-              <h2 className="text-2xl font-bold text-primary mb-2">
+            <div className="mb-6 sm:mb-8 text-center">
+              <h2 className="text-xl sm:text-2xl font-bold text-primary mb-2">
                 {completed
                   ? '✓ All Steps Complete'
                   : isRunning && steps[currentStep]
@@ -229,7 +229,7 @@ export default function PhysicalGroundingGame() {
               </h2>
               {isRunning && !completed && (
                 <>
-                  <p className="text-muted-foreground mb-2">
+                  <p className="text-sm sm:text-base text-muted-foreground mb-2">
                     {steps[currentStep]?.instruction}
                   </p>
                   <p className="text-xs text-gray-500">
@@ -245,7 +245,7 @@ export default function PhysicalGroundingGame() {
             </div>
 
             {/* Progress Bar */}
-            <div className="mb-8">
+            <div className="mb-6 sm:mb-8">
               <div className="flex justify-between text-sm text-gray-600 mb-2">
                 <span>Progress</span>
                 <span>{Math.round(progress)}%</span>
@@ -259,7 +259,7 @@ export default function PhysicalGroundingGame() {
             </div>
 
             {/* Controls */}
-            <div className="flex gap-2 sm:gap-4 justify-center items-center mb-8 flex-wrap">
+            <div className="flex gap-2 sm:gap-4 justify-center items-center mb-6 sm:mb-8 flex-wrap">
               <Button
                 onClick={() => {
                   if (!isRunning) {
@@ -326,7 +326,7 @@ export default function PhysicalGroundingGame() {
             </div>
 
             {/* Information Section */}
-            <div className="max-w-2xl mx-auto pt-12 border-t border-gray-200">
+            <div className="max-w-2xl mx-auto pt-8 sm:pt-12 border-t border-gray-200">
               <div className="space-y-8">
                 {/* What is Physical Grounding */}
                 <div>
