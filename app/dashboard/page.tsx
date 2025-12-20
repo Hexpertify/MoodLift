@@ -89,7 +89,7 @@ function DashboardContent() {
 
         if (activitiesRes.data) {
           setRecentActivities(activitiesRes.data);
-          const gameCount = activitiesRes.data.filter(a => a.activity_type === 'game').length;
+          const gameCount = (activitiesRes.data as RecentActivity[]).filter((a: RecentActivity) => a.activity_type === 'game').length;
           setGamesPlayed(gameCount);
         }
 

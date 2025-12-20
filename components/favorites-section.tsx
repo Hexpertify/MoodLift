@@ -44,8 +44,8 @@ export function FavoritesSection() {
 
       if (favError) throw favError;
 
-      const gameIds = favoritesData?.filter(f => f.item_type === 'game').map(f => f.item_id) || [];
-      const bookIds = favoritesData?.filter(f => f.item_type === 'book').map(f => f.item_id) || [];
+      const gameIds = favoritesData?.filter((f: any) => f.item_type === 'game').map((f: any) => f.item_id) || [];
+      const bookIds = favoritesData?.filter((f: any) => f.item_type === 'book').map((f: any) => f.item_id) || [];
 
       const items: FavoriteItem[] = [];
 
@@ -57,7 +57,7 @@ export function FavoritesSection() {
 
         if (gamesData) {
           items.push(
-            ...gamesData.map((game) => ({
+            ...gamesData.map((game: any) => ({
               id: game.id,
               title: game.title,
               description: game.description,
@@ -78,7 +78,7 @@ export function FavoritesSection() {
 
         if (booksData) {
           items.push(
-            ...booksData.map((book) => ({
+            ...booksData.map((book: any) => ({
               id: book.id,
               title: book.title,
               description: book.description,

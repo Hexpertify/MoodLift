@@ -58,7 +58,7 @@ export function BooksSection() {
         .eq('item_type', 'book');
 
       if (error) throw error;
-      setPinnedBooks(new Set(data?.map(f => f.item_id) || []));
+      setPinnedBooks(new Set(data?.map((f: any) => f.item_id) || []));
     } catch (error) {
       console.error('Error fetching pinned books:', error);
     }

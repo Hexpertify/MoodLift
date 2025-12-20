@@ -102,9 +102,9 @@ export async function getUserProgress(userId: string): Promise<UserProgress | nu
 
     // Calculate stats
     const totalGames = gameSessions?.length || 0;
-    const moodAfterScores = gameSessions?.filter(s => s.mood_after).map(s => s.mood_after) || [];
+    const moodAfterScores = gameSessions?.filter((s: any) => s.mood_after).map((s: any) => s.mood_after) || [];
     const avgMood = moodAfterScores.length > 0
-      ? (moodAfterScores.reduce((a, b) => a + b, 0) / moodAfterScores.length).toFixed(1)
+      ? (moodAfterScores.reduce((a: number, b: number) => a + b, 0) / moodAfterScores.length).toFixed(1)
       : '0';
 
     // Calculate weekly activity

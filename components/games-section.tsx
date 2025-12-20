@@ -151,7 +151,7 @@ export function GamesSection() {
         .eq('item_type', 'game');
 
       if (error) throw error;
-      setPinnedGames(new Set(data?.map(f => f.item_id) || []));
+      setPinnedGames(new Set(data?.map((f: any) => f.item_id) || []));
     } catch (error) {
       console.error('Error fetching pinned games:', error);
     }
