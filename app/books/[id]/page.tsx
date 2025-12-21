@@ -125,6 +125,51 @@ function BookDetailContent() {
     }
   };
 
+  const handleShare = async () => {
+    if (!book) return;
+
+    const url = window.location.href;
+    const shareData: ShareData = {
+      title: book.title,
+      text: `Check out this book: ${book.title} by ${book.author}`,
+      url,
+    };
+
+    try {
+      if (typeof navigator !== 'undefined' && 'share' in navigator) {
+        // Opens native share sheet on supported browsers/devices
+        await (navigator as any).share(shareData);
+        return;
+      }
+    } catch {
+      // Ignore (user cancelled or share failed) and fall back to copying link
+    }
+
+    try {
+      if (navigator?.clipboard?.writeText) {
+        await navigator.clipboard.writeText(url);
+        return;
+      }
+    } catch {
+      // Fall through to legacy copy
+    }
+
+    // Legacy clipboard fallback
+    try {
+      const textarea = document.createElement('textarea');
+      textarea.value = url;
+      textarea.setAttribute('readonly', '');
+      textarea.style.position = 'fixed';
+      textarea.style.opacity = '0';
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand('copy');
+      document.body.removeChild(textarea);
+    } catch {
+      // If we can't share or copy, there's nothing else we can do here.
+    }
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-white via-secondary/20 to-accent/10 flex items-center justify-center">
@@ -224,7 +269,7 @@ function BookDetailContent() {
                   <Heart className={`w-4 h-4 ${isPinned ? 'fill-current' : ''}`} />
                   {isPinned ? 'Saved' : 'Save'}
                 </Button>
-                <Button variant="outline" className="flex-1 gap-2">
+                <Button onClick={handleShare} variant="outline" className="flex-1 gap-2">
                   <Share2 className="w-4 h-4" />
                   Share
                 </Button>

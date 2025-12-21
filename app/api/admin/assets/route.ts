@@ -70,8 +70,8 @@ export async function POST(request: NextRequest) {
     const { data, error } = await supabase
       .storage
       .from('assets')
-      .upload(fileName, buffer, {
-        contentType: file.type,
+      .upload(fileName, Buffer.from(buffer), {
+        contentType: file.type || 'application/octet-stream',
         upsert: false,
       });
 
@@ -80,6 +80,8 @@ export async function POST(request: NextRequest) {
     const publicUrl = `${supabaseUrl}/storage/v1/object/public/assets/${fileName}`;
 
     return NextResponse.json({
+      name: fileName,
+      url: publicUrl,
       asset: {
         name: fileName,
         url: publicUrl,
@@ -88,7 +90,8 @@ export async function POST(request: NextRequest) {
     });
   } catch (error) {
     console.error('Error uploading asset:', error);
-    return NextResponse.json({ error: 'Failed to upload asset' }, { status: 500 });
+    const message = (error as any)?.message || 'Failed to upload asset';
+    return NextResponse.json({ error: message }, { status: 500 });
   }
 }
 

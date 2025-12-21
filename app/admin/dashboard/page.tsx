@@ -116,6 +116,14 @@ export default function AdminDashboard() {
     ]);
   };
 
+  const parseJsonSafe = async (response: Response) => {
+    try {
+      return await response.json();
+    } catch {
+      return {};
+    }
+  };
+
   const checkAdminAndFetch = async () => {
     // Allow development access without user
     if (!user && process.env.NODE_ENV === 'production') {
@@ -155,53 +163,78 @@ export default function AdminDashboard() {
   const fetchMetadata = async () => {
     try {
       const response = await fetch('/api/admin/seo-metadata');
-      const data = await response.json();
+      const data = await parseJsonSafe(response);
+      if (!response.ok) {
+        setError(data?.error || `Failed to load SEO metadata (${response.status})`);
+        return;
+      }
       setMetadata(data.metadata || []);
       if (data.metadata?.length > 0) {
         setSelectedPage(data.metadata[0]);
       }
     } catch (err) {
       console.error('Failed to load SEO metadata:', err);
+      setError('Failed to load SEO metadata');
     }
   };
 
   const fetchBooks = async () => {
     try {
       const response = await fetch('/api/admin/books');
-      const data = await response.json();
+      const data = await parseJsonSafe(response);
+      if (!response.ok) {
+        setError(data?.error || `Failed to load books (${response.status})`);
+        return;
+      }
       setBooks(data.books || []);
     } catch (err) {
       console.error('Failed to load books:', err);
+      setError('Failed to load books');
     }
   };
 
   const fetchGames = async () => {
     try {
       const response = await fetch('/api/admin/games');
-      const data = await response.json();
+      const data = await parseJsonSafe(response);
+      if (!response.ok) {
+        setError(data?.error || `Failed to load games (${response.status})`);
+        return;
+      }
       setGames(data.games || []);
     } catch (err) {
       console.error('Failed to load games:', err);
+      setError('Failed to load games');
     }
   };
 
   const fetchTestimonials = async () => {
     try {
       const response = await fetch('/api/admin/testimonials');
-      const data = await response.json();
+      const data = await parseJsonSafe(response);
+      if (!response.ok) {
+        setError(data?.error || `Failed to load testimonials (${response.status})`);
+        return;
+      }
       setTestimonials(data.testimonials || []);
     } catch (err) {
       console.error('Failed to load testimonials:', err);
+      setError('Failed to load testimonials');
     }
   };
 
   const fetchConsultants = async () => {
     try {
       const response = await fetch('/api/admin/consultants');
-      const data = await response.json();
+      const data = await parseJsonSafe(response);
+      if (!response.ok) {
+        setError(data?.error || `Failed to load consultants (${response.status})`);
+        return;
+      }
       setConsultants(data.consultants || []);
     } catch (err) {
       console.error('Failed to load consultants:', err);
+      setError('Failed to load consultants');
     }
   };
 
@@ -216,21 +249,30 @@ export default function AdminDashboard() {
         body: formData,
       });
 
-      if (!response.ok) throw new Error('Upload failed');
-      
-      const data = await response.json();
-      if (data.url) {
+      if (!response.ok) {
+        const errData = await parseJsonSafe(response);
+        throw new Error(errData?.error || 'Upload failed');
+      }
+
+      const data = await parseJsonSafe(response);
+      const url = data?.url || data?.asset?.url;
+      const assetName = data?.name || data?.asset?.name;
+
+      if (url) {
         setSuccess('Image uploaded successfully!');
         setTimeout(() => setSuccess(''), 2000);
-        return data.url;
+        return url;
       }
-      
-      // Parse URL from assets response
-      const timestamp = Date.now();
-      const url = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/assets/${timestamp}-${file.name}`;
-      setSuccess('Image uploaded successfully!');
-      setTimeout(() => setSuccess(''), 2000);
-      return url;
+
+      // If API returned a name but not a URL, derive the public URL from the name.
+      if (assetName && process.env.NEXT_PUBLIC_SUPABASE_URL) {
+        const derivedUrl = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/assets/${assetName}`;
+        setSuccess('Image uploaded successfully!');
+        setTimeout(() => setSuccess(''), 2000);
+        return derivedUrl;
+      }
+
+      throw new Error('Upload succeeded but no URL was returned');
     } catch (err) {
       console.error('Failed to upload cover image:', err);
       setError('Failed to upload image');
@@ -317,7 +359,8 @@ export default function AdminDashboard() {
       }
       setTimeout(() => setSuccess(''), 3000);
     } catch (err) {
-      setError('Failed to save book');
+      const message = (err as any)?.message || 'Failed to save book';
+      setError(message);
     } finally {
       setSaving(false);
     }

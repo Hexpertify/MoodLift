@@ -95,7 +95,9 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ book: data?.[0] });
   } catch (error) {
     console.error('Error creating book:', error);
-    return NextResponse.json({ error: 'Failed to create book' }, { status: 500 });
+    const code = (error as any)?.code;
+    const message = (error as any)?.message || 'Failed to create book';
+    return NextResponse.json({ error: message, code }, { status: 500 });
   }
 }
 
@@ -152,7 +154,23 @@ export async function PUT(request: NextRequest) {
     return NextResponse.json({ book: updateData?.[0] });
   } catch (error) {
     console.error('Error updating book:', error);
-    return NextResponse.json({ error: 'Failed to update book' }, { status: 500 });
+
+    const code = (error as any)?.code;
+    const message = (error as any)?.message || 'Failed to update book';
+
+    // Common local setup issue: migrations not applied to the Supabase project.
+    if (code === 'PGRST204' && /cover_image_url/i.test(message)) {
+      return NextResponse.json(
+        {
+          code,
+          error:
+            "Database schema is missing 'books.cover_image_url'. Apply the Supabase migrations or run: ALTER TABLE books ADD COLUMN IF NOT EXISTS cover_image_url text;",
+        },
+        { status: 400 }
+      );
+    }
+
+    return NextResponse.json({ error: message, code }, { status: 500 });
   }
 }
 
