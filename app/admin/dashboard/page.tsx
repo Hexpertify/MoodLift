@@ -231,6 +231,10 @@ export default function AdminDashboard() {
         setError(data?.error || `Failed to load consultants (${response.status})`);
         return;
       }
+      if (data?.error) {
+        setError(data.error);
+        return;
+      }
       setConsultants(data.consultants || []);
     } catch (err) {
       console.error('Failed to load consultants:', err);

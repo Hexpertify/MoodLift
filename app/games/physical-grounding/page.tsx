@@ -5,13 +5,11 @@ import { AppFooter } from "@/components/app-footer";
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { Play, Pause, RotateCcw, Volume2, VolumeX } from 'lucide-react';
+import { ArrowLeft, Play, Pause, RotateCcw, Volume2, VolumeX } from 'lucide-react';
 import { useVoiceGuide } from '@/hooks/use-breathing-guide';
 
-export default function PhysicalGroundingGame() {
+export default function PhysicalGrounding() {
   const router = useRouter();
-
-  const STEP_SECONDS = 15;
   
   const handleBack = () => {
     if (window.history.length > 1) {
@@ -23,80 +21,88 @@ export default function PhysicalGroundingGame() {
 
   const [isRunning, setIsRunning] = useState(false);
   const [voiceEnabled, setVoiceEnabled] = useState(true);
-  const [lockTimeLeft, setLockTimeLeft] = useState(0);
-  const [completed, setCompleted] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
+  const [timeLeft, setTimeLeft] = useState(0);
+  const [progress, setProgress] = useState(0);
 
-  const { speak, stop } = useVoiceGuide();
+  const { speak } = useVoiceGuide();
 
   const steps = [
     {
-      title: 'Step 1 - Splash Cold Water',
-      instruction:
-        'If available, run cold water on your wrists or splash your face. The cold activates your calming response and brings attention into the present, interrupting stress.',
+      title: 'Splash Cold Water',
+      instruction: 'If available, run cold water on your wrists or splash your face. Feel the shock awaken your senses.',
+      duration: 15,
     },
     {
-      title: 'Step 2 - Touch Textured Objects',
-      instruction:
-        'Hold something with a distinct texture (rough fabric, bark, ice, or velvet). Notice the feel as your fingers explore — tactile sensation anchors you in the present.',
+      title: 'Touch Textured Objects',
+      instruction: 'Hold something textured: sandpaper, rough fabric, tree bark, ice cubes. Feel the sensation fully.',
+      duration: 20,
     },
     {
-      title: 'Step 3 - Apply Chest Pressure',
-      instruction:
-        'Place a hand on your chest and apply gentle pressure; feel your heartbeat. This soothes your nervous system and signals safety.',
+      title: 'Apply Chest Pressure',
+      instruction: 'Place your hand on your chest and apply gentle pressure. Feel your heartbeat. You are alive, you are here.',
+      duration: 20,
     },
     {
-      title: 'Step 4 - Engage Your Muscles',
-      instruction:
-        'Tense then release muscle groups (fists, legs, shoulders). Hold briefly, then let go — this releases tension and restores a sense of control.',
+      title: 'Engage Your Muscles',
+      instruction: 'Tense and release muscle groups: fists, legs, shoulders. Feel the release of tension from your body.',
+      duration: 20,
     },
     {
-      title: 'Step 5 - Release and Ground',
-      instruction:
-        'Finish by standing with feet firmly planted. Feel the ground under all corners of your feet, take three deep breaths, and notice your stability.',
+      title: 'Feel Grounded',
+      instruction: 'Your body is present in this moment. You are grounded, safe, and in control.',
+      duration: 10,
     },
   ];
 
-  // Effect: countdown for the 15-second window. Pausing preserves `lockTimeLeft`.
   useEffect(() => {
-    if (!isRunning || completed || lockTimeLeft <= 0) return;
+    let interval: NodeJS.Timeout;
 
-    const interval = setInterval(() => {
-      setLockTimeLeft((t) => {
-        if (t <= 1) {
-          // Step finished
-          if (currentStep >= steps.length - 1) {
-            setCompleted(true);
-            setIsRunning(false);
-            try { stop(); } catch {}
-            if (voiceEnabled) {
-              try { speak('Notice the stability and support beneath you.'); } catch {}
-            }
-            return 0;
-          }
+    if (isRunning && currentStep < steps.length) {
+      const step = steps[currentStep];
 
-          const nextStep = currentStep + 1;
-          setCurrentStep(nextStep);
-          try { stop(); } catch {}
-          if (voiceEnabled) {
-            try { speak(steps[nextStep].instruction); } catch {}
-          }
-          return STEP_SECONDS;
+      if (timeLeft === 0) {
+        setTimeLeft(step.duration);
+        if (voiceEnabled) {
+          speak(step.instruction);
         }
-
-        return t - 1;
-      });
-    }, 1000);
+      } else {
+        interval = setInterval(() => {
+          setTimeLeft(t => {
+            if (t === 1) {
+              setCurrentStep(prev => {
+                if (prev + 1 < steps.length) {
+                  return prev + 1;
+                } else {
+                  setIsRunning(false);
+                  if (voiceEnabled) {
+                    speak('Physical grounding exercise complete. You are grounded and calm.');
+                  }
+                  return prev;
+                }
+              });
+              return 0;
+            }
+            return t - 1;
+          });
+        }, 1000);
+      }
+    }
 
     return () => clearInterval(interval);
-  }, [isRunning, completed, lockTimeLeft, currentStep, voiceEnabled, speak, stop]);
+  }, [isRunning, timeLeft, currentStep, steps, voiceEnabled, speak]);
+
+  useEffect(() => {
+    const totalDuration = steps.reduce((sum, s) => sum + s.duration, 0);
+    const elapsed = steps.slice(0, currentStep).reduce((sum, s) => sum + s.duration, 0);
+    setProgress(((elapsed + (steps[currentStep].duration - timeLeft)) / totalDuration) * 100);
+  }, [currentStep, timeLeft, steps]);
 
   const handleReset = () => {
     setIsRunning(false);
-    setLockTimeLeft(0);
-    setCompleted(false);
     setCurrentStep(0);
-    try { stop(); } catch {}
+    setTimeLeft(0);
+    setProgress(0);
   };
 
   return (
@@ -109,112 +115,68 @@ export default function PhysicalGroundingGame() {
             </Button>
           </div>
           <div className="text-center">
-            <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-teal-600">Physical Grounding Game (Weight Shift Reset)</h1>
+            <h1 className="text-2xl sm:text-3xl font-bold text-teal-600">Physical Grounding</h1>
           </div>
         </div>
       </nav>
 
-      <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+      <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <Card className="border-2 border-teal-200">
-          <CardContent className="p-6 sm:p-8 md:p-12">
+          <CardContent className="p-12">
             {/* Title and Tagline */}
-            <div className="text-center mb-8 sm:mb-12">
-              <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-2">Physical Grounding Game (Weight Shift Reset)</h1>
-              <p className="text-xs sm:text-sm text-gray-600">A <strong>SOMATIC AND COGNITIVE BEHAVIORAL THERAPY (CBT)-BASED GROUNDING APPROACH</strong> that uses physical awareness to bring you back to the present moment.</p>
+            <div className="text-center mb-12">
+              <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">Physical Grounding</h1>
+              <p className="text-sm text-gray-600">A <strong>SOMATIC AND COGNITIVE BEHAVIORAL THERAPY (CBT)-BASED GROUNDING APPROACH</strong> that uses physical awareness to bring you back to the present moment.</p>
             </div>
 
             {/* Animation */}
             <div className="flex justify-center mb-12">
-              <div className="w-64 h-16 sm:w-80 sm:h-20 md:w-96 md:h-24 bg-gradient-to-r from-teal-200 to-cyan-200 rounded-2xl flex items-center justify-center relative overflow-hidden">
-                <div className="absolute inset-0 opacity-30 flex items-center justify-center pointer-events-none">
-                  <div className="relative">
-                    <div className="w-36 h-36 sm:w-44 md:w-52 border-2 border-teal-400" />
-                    <div className="absolute inset-3 border-2 border-teal-400" />
-                  </div>
+              <div className="w-40 h-40 bg-gradient-to-br from-teal-200 to-cyan-200 rounded-2xl flex items-center justify-center relative overflow-hidden">
+                <div className="absolute inset-0 opacity-30">
+                  <div className="absolute inset-4 border-2 border-teal-400 rounded-xl" />
+                  <div className="absolute inset-8 border-2 border-teal-400 rounded-lg" />
                 </div>
                 <div className="text-center">
-                  <div className="text-4xl font-bold text-teal-600">{isRunning && !completed ? lockTimeLeft : completed ? '✓' : ''}</div>
-                  <div className="text-sm text-teal-700 mt-2">
-                    {isRunning && !completed
-                      ? 'seconds'
-                      : completed
-                        ? 'Complete'
-                        : 'Ready'}
-                  </div>
+                  <div className="text-4xl font-bold text-teal-600">{timeLeft}</div>
+                  <div className="text-sm text-teal-700 mt-2">seconds</div>
                 </div>
               </div>
             </div>
 
             {/* Current Step */}
-            <div className="mb-6 sm:mb-8 text-center">
-              <h2 className="text-xl sm:text-2xl font-bold text-primary mb-2">
-                {completed
-                  ? '✓ All Steps Complete'
-                  : isRunning && steps[currentStep]
-                    ? steps[currentStep].title
+            <div className="mb-8 text-center">
+              <h2 className="text-2xl font-bold text-primary mb-2">
+                {isRunning && currentStep < steps.length
+                  ? steps[currentStep].title
+                  : currentStep >= steps.length
+                    ? '✓ Complete'
                     : 'Ready to Begin'}
               </h2>
-              {isRunning && !completed && (
-                <>
-                  <p className="text-sm sm:text-base text-muted-foreground mb-2">
-                    {steps[currentStep]?.instruction}
-                  </p>
-                  <p className="text-xs text-gray-500">
-                    Step {currentStep + 1} of {steps.length}
-                  </p>
-                </>
-              )}
-              {completed && (
+              {isRunning && currentStep < steps.length && (
                 <p className="text-muted-foreground">
-                  Notice the stability and support beneath you.
+                  Step {currentStep + 1} of {steps.length}
                 </p>
               )}
             </div>
 
+            {/* Progress Bar */}
+            <div className="mb-8">
+              <div className="flex justify-between text-sm text-gray-600 mb-2">
+                <span>Progress</span>
+                <span>{Math.round(progress)}%</span>
+              </div>
+              <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
+                <div
+                  className="h-full bg-gradient-to-r from-teal-400 to-cyan-500 transition-all duration-300"
+                  style={{ width: `${progress}%` }}
+                />
+              </div>
+            </div>
+
             {/* Controls */}
-            <div className="flex gap-2 sm:gap-4 justify-center items-center mb-6 sm:mb-8 flex-wrap">
+            <div className="flex gap-2 sm:gap-4 justify-center items-center mb-8 flex-wrap">
               <Button
-                onClick={() => {
-                  if (isRunning) {
-                    // Pause
-                    setIsRunning(false);
-                    try { stop(); } catch {}
-                    return;
-                  }
-
-                  // Start / Resume
-                  if (completed) {
-                    setCompleted(false);
-                    setCurrentStep(0);
-                    setLockTimeLeft(STEP_SECONDS);
-                    setIsRunning(true);
-                    try { stop(); } catch {}
-                    if (voiceEnabled) {
-                      try { speak(steps[0].instruction); } catch {}
-                    }
-                    return;
-                  }
-
-                  if (lockTimeLeft > 0) {
-                    // Resume from where it was paused
-                    setIsRunning(true);
-                    try { stop(); } catch {}
-                    if (voiceEnabled && steps[currentStep]) {
-                      try { speak(steps[currentStep].instruction); } catch {}
-                    }
-                    return;
-                  }
-
-                  // Fresh start
-                  setCompleted(false);
-                  setCurrentStep(0);
-                  setLockTimeLeft(STEP_SECONDS);
-                  setIsRunning(true);
-                  try { stop(); } catch {}
-                  if (voiceEnabled) {
-                    try { speak(steps[0].instruction); } catch {}
-                  }
-                }}
+                onClick={() => setIsRunning(!isRunning)}
                 size="lg"
                 className="bg-gradient-to-r from-teal-500 to-cyan-500 hover:opacity-90 flex-1 sm:flex-none min-w-fit"
               >
@@ -226,7 +188,7 @@ export default function PhysicalGroundingGame() {
                 ) : (
                   <>
                     <Play className="w-4 h-4 mr-2" />
-                    {lockTimeLeft > 0 && !completed ? 'Resume' : 'Start'}
+                    Start
                   </>
                 )}
               </Button>
@@ -240,12 +202,7 @@ export default function PhysicalGroundingGame() {
                 Reset
               </Button>
               <Button
-                onClick={() => {
-                  if (voiceEnabled) {
-                    try { stop(); } catch {}
-                  }
-                  setVoiceEnabled(!voiceEnabled);
-                }}
+                onClick={() => setVoiceEnabled(!voiceEnabled)}
                 variant={voiceEnabled ? 'default' : 'outline'}
                 size="lg"
                 className="sm:flex-none"
@@ -259,7 +216,7 @@ export default function PhysicalGroundingGame() {
             </div>
 
             {/* Information Section */}
-            <div className="max-w-2xl mx-auto pt-8 sm:pt-12 border-t border-gray-200">
+            <div className="max-w-2xl mx-auto pt-12 border-t border-gray-200">
               <div className="space-y-8">
                 {/* What is Physical Grounding */}
                 <div>

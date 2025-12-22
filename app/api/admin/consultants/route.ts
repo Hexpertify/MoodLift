@@ -45,7 +45,7 @@ export async function GET(request: NextRequest) {
   } catch (err) {
     console.error('Error fetching consultants:', err);
     const message = err instanceof Error ? err.message : String(err);
-    return NextResponse.json({ error: `Failed to fetch consultants: ${message}`, consultants: [] }, { status: 200 });
+    return NextResponse.json({ error: `Failed to fetch consultants: ${message}`, consultants: [] }, { status: 500 });
   }
 }
 
