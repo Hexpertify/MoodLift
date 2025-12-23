@@ -122,15 +122,15 @@ export function TestimonialCarousel() {
                           src={testimonial.avatar_url}
                           alt={testimonial.user_name}
                           className="w-12 h-12 rounded-full object-cover border-2"
-                          style={{ borderColor: '#E2DAF5' }}
+                          style={{ borderColor: 'hsl(var(--secondary))' }}
                           loading="lazy"
                         />
                       ) : (
                         <div
                           className="w-12 h-12 rounded-full flex items-center justify-center text-white font-semibold border-2"
                           style={{
-                            backgroundColor: '#3C1F71',
-                            borderColor: '#E2DAF5'
+                            backgroundColor: 'hsl(var(--primary))',
+                            borderColor: 'hsl(var(--secondary))'
                           }}
                         >
                           {testimonial.user_name.charAt(0)}
@@ -140,7 +140,7 @@ export function TestimonialCarousel() {
                     <div className="flex-1 min-w-0">
                       <p
                         className="font-semibold truncate"
-                        style={{ color: '#3C1F71' }}
+                        style={{ color: 'hsl(var(--primary))' }}
                       >
                         {testimonial.user_name}
                       </p>
@@ -163,10 +163,10 @@ export function TestimonialCarousel() {
         size="icon"
         onClick={scrollPrev}
         className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 z-10 rounded-full w-12 h-12 shadow-lg border-2 bg-white hover:bg-gray-50 hidden md:flex"
-        style={{ borderColor: '#E2DAF5' }}
+        style={{ borderColor: 'hsl(var(--secondary))' }}
         aria-label="Previous testimonial"
       >
-        <ChevronLeft className="w-6 h-6" style={{ color: '#3C1F71' }} />
+        <ChevronLeft className="w-6 h-6" style={{ color: 'hsl(var(--primary))' }} />
       </Button>
 
       <Button
@@ -174,10 +174,10 @@ export function TestimonialCarousel() {
         size="icon"
         onClick={scrollNext}
         className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 z-10 rounded-full w-12 h-12 shadow-lg border-2 bg-white hover:bg-gray-50 hidden md:flex"
-        style={{ borderColor: '#E2DAF5' }}
+        style={{ borderColor: 'hsl(var(--secondary))' }}
         aria-label="Next testimonial"
       >
-        <ChevronRight className="w-6 h-6" style={{ color: '#3C1F71' }} />
+        <ChevronRight className="w-6 h-6" style={{ color: 'hsl(var(--primary))' }} />
       </Button>
 
       <div className="flex justify-center gap-2 mt-6 md:hidden">
@@ -186,20 +186,20 @@ export function TestimonialCarousel() {
           size="icon"
           onClick={scrollPrev}
           className="rounded-full w-10 h-10 border-2"
-          style={{ borderColor: '#E2DAF5' }}
+          style={{ borderColor: 'hsl(var(--secondary))' }}
           aria-label="Previous testimonial"
         >
-          <ChevronLeft className="w-5 h-5" style={{ color: '#3C1F71' }} />
+          <ChevronLeft className="w-5 h-5" style={{ color: 'hsl(var(--primary))' }} />
         </Button>
         <Button
           variant="outline"
           size="icon"
           onClick={scrollNext}
           className="rounded-full w-10 h-10 border-2"
-          style={{ borderColor: '#E2DAF5' }}
+          style={{ borderColor: 'hsl(var(--secondary))' }}
           aria-label="Next testimonial"
         >
-          <ChevronRight className="w-5 h-5" style={{ color: '#3C1F71' }} />
+          <ChevronRight className="w-5 h-5" style={{ color: 'hsl(var(--primary))' }} />
         </Button>
       </div>
     </div>

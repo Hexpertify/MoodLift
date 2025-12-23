@@ -88,8 +88,8 @@ function UserProfileComponent() {
     <div className="relative">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="relative flex items-center gap-1 px-2 py-1.5 rounded-full transition-all hover:bg-gray-50 active:scale-95 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500"
-        style={{ '--tw-ring-color': '#3C1F71' } as React.CSSProperties}
+        className="relative flex items-center gap-1 px-2 py-1.5 rounded-full transition-all hover:bg-gray-50 active:scale-95 focus:outline-none focus:ring-2 focus:ring-offset-2"
+        style={{ '--tw-ring-color': 'hsl(var(--primary))' } as React.CSSProperties}
         aria-label={`Profile menu for ${displayName}`}
         aria-expanded={isOpen}
       >
@@ -137,7 +137,7 @@ function UserProfileComponent() {
         <div className="absolute right-0 top-full mt-2 w-64 bg-white rounded-lg shadow-lg border border-gray-200 z-50 overflow-hidden">
           <div
             className="px-4 py-3 border-b"
-            style={{ backgroundColor: '#E2DAF5' }}
+            style={{ backgroundColor: 'hsl(var(--secondary))' }}
           >
             <p className="text-sm font-semibold text-gray-900">{displayName}</p>
             <p className="text-xs text-gray-600 mt-0.5">{userData.email}</p>
@@ -149,7 +149,7 @@ function UserProfileComponent() {
                 <Flame className="w-5 h-5" style={{ color: '#FF6B35' }} fill="#FF6B35" />
                 <div>
                   <p className="text-xs text-gray-600">Current Streak</p>
-                  <p className="text-lg font-bold" style={{ color: '#3C1F71' }}>
+                  <p className="text-lg font-bold" style={{ color: 'hsl(var(--primary))' }}>
                     {currentStreak} days
                   </p>
                 </div>
@@ -159,7 +159,7 @@ function UserProfileComponent() {
             {streakData && streakData.longestStreak > 0 && (
               <div className="mt-3 pt-3 border-t border-gray-200">
                 <p className="text-xs text-gray-600">Personal Best</p>
-                <p className="text-lg font-bold" style={{ color: '#3C1F71' }}>
+                <p className="text-lg font-bold" style={{ color: 'hsl(var(--primary))' }}>
                   {streakData.longestStreak} days
                 </p>
               </div>

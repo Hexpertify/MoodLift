@@ -44,7 +44,7 @@ export default function RewardsPage() {
     return (
       <div className="min-h-screen bg-white dark:bg-slate-950 flex items-center justify-center">
         <div className="animate-pulse">
-          <div className="w-12 h-12 bg-[#3C1F71] rounded-full"></div>
+          <div className="w-12 h-12 bg-primary rounded-full"></div>
         </div>
       </div>
     );
@@ -62,7 +62,7 @@ export default function RewardsPage() {
         {/* Header Section */}
         <div className="mb-12 animate-fade-in">
           <div className="inline-flex items-center gap-2 mb-4">
-            <Trophy className="w-6 h-6 text-[#3C1F71]" />
+            <Trophy className="w-6 h-6 text-primary" />
             <h1 className="text-4xl font-bold text-slate-900 dark:text-white">Rewards Center</h1>
           </div>
           <p className="text-slate-600 dark:text-slate-300 text-lg">Track your progress and unlock achievements</p>
@@ -70,7 +70,7 @@ export default function RewardsPage() {
 
         {/* Total Points Card */}
         <div className="mb-12 animate-fade-in">
-          <Card className="border-0 bg-gradient-to-r from-[#3C1F71] to-[#E2DAF5] shadow-lg overflow-hidden">
+          <Card className="border-0 bg-gradient-to-r from-primary to-secondary shadow-lg overflow-hidden">
             <div className="p-4 sm:p-6 md:p-8 sm:p-12">
               <div className="flex items-center justify-between">
                 <div>
@@ -89,7 +89,7 @@ export default function RewardsPage() {
             <Card className="border-0 shadow-lg bg-white dark:bg-slate-800">
               <div className="p-4 sm:p-6 md:p-8">
                 <div className="flex items-center gap-3 mb-6">
-                  <Target className="w-6 h-6 text-[#3C1F71]" />
+                  <Target className="w-6 h-6 text-primary" />
                   <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-slate-900 dark:text-white">Current Milestone</h2>
                 </div>
 
@@ -100,7 +100,7 @@ export default function RewardsPage() {
                       <p className="text-sm text-slate-600 dark:text-slate-400">{currentMilestone.description}</p>
                     </div>
                     <div className="text-right">
-                      <p className="text-lg sm:text-xl md:text-2xl font-bold text-[#3C1F71]">{currentMilestone.level}</p>
+                      <p className="text-lg sm:text-xl md:text-2xl font-bold text-primary">{currentMilestone.level}</p>
                       <p className="text-xs text-slate-600 dark:text-slate-400">Level</p>
                     </div>
                   </div>
@@ -109,11 +109,11 @@ export default function RewardsPage() {
                     <div>
                       <div className="flex items-center justify-between mb-2">
                         <span className="text-sm font-medium text-slate-700 dark:text-slate-300">Progress to next milestone</span>
-                        <span className="text-sm font-semibold text-[#3C1F71]">{totalPoints} / {nextMilestone.points_threshold}</span>
+                        <span className="text-sm font-semibold text-primary">{totalPoints} / {nextMilestone.points_threshold}</span>
                       </div>
-                      <div className="h-3 bg-[#E2DAF5] rounded-full overflow-hidden">
+                      <div className="h-3 bg-secondary rounded-full overflow-hidden">
                         <div
-                          className="h-full bg-gradient-to-r from-[#3C1F71] to-[#E2DAF5] transition-all duration-500"
+                          className="h-full bg-gradient-to-r from-primary to-secondary transition-all duration-500"
                           style={{ width: `${progressPercent}%` }}
                         />
                       </div>
@@ -131,7 +131,7 @@ export default function RewardsPage() {
         {/* All Milestones */}
         <div className="mb-12 animate-fade-in">
           <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-slate-900 dark:text-white mb-6 flex items-center gap-3">
-            <Zap className="w-6 h-6 text-[#3C1F71]" />
+            <Zap className="w-6 h-6 text-primary" />
             Milestone Journey
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
@@ -142,7 +142,7 @@ export default function RewardsPage() {
                   key={milestone.id}
                   className={`border-0 transition-all duration-300 transform hover:scale-105 ${
                     isReached
-                      ? 'bg-gradient-to-br from-[#3C1F71] to-[#E2DAF5] shadow-lg'
+                      ? 'bg-gradient-to-br from-primary to-secondary shadow-lg'
                       : 'bg-slate-100 dark:bg-slate-800 opacity-50'
                   }`}
                 >
@@ -172,7 +172,7 @@ export default function RewardsPage() {
         {/* Badges Section */}
         <div className="animate-fade-in">
           <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-slate-900 dark:text-white mb-6 flex items-center gap-3">
-            <Star className="w-6 h-6 text-[#3C1F71]" />
+            <Star className="w-6 h-6 text-primary" />
             Badges & Achievements
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -191,7 +191,7 @@ export default function RewardsPage() {
                     <div
                       className={`inline-flex items-center justify-center w-16 h-16 rounded-full mb-4 group-hover:scale-110 transition-transform ${
                         isEarned
-                          ? 'bg-gradient-to-br from-[#3C1F71] to-[#E2DAF5]'
+                          ? 'bg-gradient-to-br from-primary to-secondary'
                           : 'bg-slate-300 dark:bg-slate-700'
                       }`}
                     >
@@ -210,7 +210,7 @@ export default function RewardsPage() {
                         variant={isEarned ? 'default' : 'outline'}
                         className={
                           isEarned
-                            ? 'bg-[#3C1F71] text-white'
+                            ? 'bg-primary text-white'
                             : 'border-slate-300 dark:border-slate-600 text-slate-600 dark:text-slate-400'
                         }
                       >
