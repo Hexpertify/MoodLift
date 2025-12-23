@@ -249,9 +249,12 @@ export default function ConsultantCarousel() {
 
   const Section = ({ children }: { children: React.ReactNode }) => (
     <div className="mb-6">
-      <h2 className="text-xl sm:text-2xl font-semibold text-primary mb-4 text-center">
-        Connect with Certified Therapists
+      <h2 className="section-title font-semibold text-primary mb-4 text-center">
+        Need Professional Support?
       </h2>
+      <p className="text-xl text-muted-foreground max-w-2xl mx-auto text-center mb-4">
+        Connect with <span className="font-semibold">CERTIFIED Mental Health Counsellors</span> from Hexpertify.
+      </p>
       {children}
     </div>
   );

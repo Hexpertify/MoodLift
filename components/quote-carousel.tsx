@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
+import { useStreak } from '@/hooks/use-streak';
 
 type MoodQuote = {
   text: string;
@@ -95,6 +96,7 @@ function getDailyMoodQuotesByDateKey(dateKey: string, count = 5): MoodQuote[] {
 export function QuoteCarousel() {
   const [dateKey, setDateKey] = useState(() => getLocalDateKey(new Date()));
   const [currentIndex, setCurrentIndex] = useState(0);
+  const { streakData, loading: streakLoading } = useStreak();
 
   const quotes: MoodQuote[] = useMemo(() => {
     // Always show exactly 5 mood-lifting quotes per day.
@@ -140,57 +142,80 @@ export function QuoteCarousel() {
 
   return (
     <div className="mb-8">
-      <div className="flex items-center justify-center gap-2">
-        <h2 className="text-[20px] md:text-[24px] font-semibold text-primary text-center">
-          Quote of the Day
-        </h2>
-        <svg
-          width="13"
-          height="12"
-          viewBox="0 0 13 12"
-          className="h-4 w-4 md:h-5 md:w-5 fill-destructive"
-          aria-hidden="true"
-        >
-          <path d="M1.02933 1.29836C2.53313 -0.205442 4.94357 -0.249349 6.50033 1.16663C8.05709 -0.249349 10.4675 -0.205442 11.9713 1.29836C13.5203 2.84737 13.5203 5.35874 11.9713 6.90775L6.97133 11.9078C6.84626 12.0328 6.67663 12.1031 6.49999 12.1031C6.32336 12.1031 6.15373 12.0328 6.02866 11.9078L1.02866 6.90775C-0.520347 5.35874 -0.520347 2.84737 1.02933 1.29836Z" />
-        </svg>
-      </div>
+      {/* title moved into the quote column so it centers with the quote card */}
 
       <div className="mt-3 flex justify-center">
-        <div className="w-full max-w-[720px] px-4">
-          <div className="relative mx-auto w-full max-w-[640px] aspect-[324/92] rounded-[15px] bg-primary">
-            <div className="absolute left-[1.85%] top-[5.43%] h-[88.04%] w-[95.68%] rounded-[15px] bg-background" />
+        <div className="w-full max-w-[920px] px-4">
+          <div className="mx-auto flex flex-col md:flex-row items-stretch justify-center gap-6">
+            <div className="w-full md:w-[65%] flex flex-col">
+              <div className="flex items-center justify-center gap-2 mb-2">
+                <h2 className="text-[20px] md:text-[24px] font-semibold text-primary text-center">
+                  Quote of the Day
+                </h2>
+                <svg
+                  width="13"
+                  height="12"
+                  viewBox="0 0 13 12"
+                  className="h-4 w-4 md:h-5 md:w-5 fill-destructive"
+                  aria-hidden="true"
+                >
+                  <path d="M1.02933 1.29836C2.53313 -0.205442 4.94357 -0.249349 6.50033 1.16663C8.05709 -0.249349 10.4675 -0.205442 11.9713 1.29836C13.5203 2.84737 13.5203 5.35874 11.9713 6.90775L6.97133 11.9078C6.84626 12.0328 6.67663 12.1031 6.49999 12.1031C6.32336 12.1031 6.15373 12.0328 6.02866 11.9078L1.02866 6.90775C-0.520347 5.35874 -0.520347 2.84737 1.02933 1.29836Z" />
+                </svg>
+              </div>
+              <div className="relative w-full max-w-[640px] aspect-[324/92] rounded-[15px] bg-primary mx-auto md:mx-0 md:h-44 md:aspect-auto">
+                <div className="absolute left-[1.85%] top-[5.43%] h-[88.04%] w-[95.68%] rounded-[15px] bg-background" />
 
-            <div
-              className="absolute left-[1.85%] top-[5.43%] flex h-[88.04%] w-[95.68%] flex-col items-center justify-center px-4 md:px-8 text-center"
-            >
-              <div
-                key={`${dateKey}:${currentIndex}`}
-                className="animate-in fade-in slide-in-from-bottom-1 duration-300"
-              >
-                <p className="text-[14px] md:text-[18px] font-semibold leading-snug text-primary">
-                  &ldquo;{currentQuote.text}&rdquo;
-                </p>
-                <p className="mt-1 text-[12px] md:text-[14px] leading-none text-primary/70">
-                  — {currentQuote.author}
-                </p>
+                <div
+                  className="absolute left-[1.85%] top-[5.43%] flex h-[88.04%] w-[95.68%] flex-col items-center justify-center px-4 md:px-8 text-center"
+                >
+                  <div
+                    key={`${dateKey}:${currentIndex}`}
+                    className="animate-in fade-in slide-in-from-bottom-1 duration-300"
+                  >
+                    <p className="text-[14px] md:text-[18px] font-semibold leading-snug text-primary">
+                      &ldquo;{currentQuote.text}&rdquo;
+                    </p>
+                    <p className="mt-1 text-[12px] md:text-[14px] leading-none text-primary/70">
+                      — {currentQuote.author}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="mt-3 flex items-center justify-center gap-2">
+                {quotes.map((_, index) => (
+                  <button
+                    key={index}
+                    type="button"
+                    onClick={() => goToQuote(index)}
+                    className={`rounded-full transition-colors ${
+                      index === currentIndex
+                        ? 'h-2 w-2 bg-primary'
+                        : 'h-2 w-2 bg-primary/30 hover:bg-primary/50'
+                    }`}
+                    aria-label={`Go to quote ${index + 1}`}
+                  />
+                ))}
               </div>
             </div>
-          </div>
 
-          <div className="mt-3 flex items-center justify-center gap-2">
-            {quotes.map((_, index) => (
-              <button
-                key={index}
-                type="button"
-                onClick={() => goToQuote(index)}
-                className={`rounded-full transition-colors ${
-                  index === currentIndex
-                    ? 'h-2 w-2 bg-primary'
-                    : 'h-2 w-2 bg-primary/30 hover:bg-primary/50'
-                }`}
-                aria-label={`Go to quote ${index + 1}`}
-              />
-            ))}
+            {/* Streak box — placed to the right of the quote on md+ screens */}
+            <div className="w-full md:w-[35%] flex items-start justify-center md:justify-end">
+              <div className="w-36 h-36 md:w-44 md:h-44 flex flex-col items-center justify-center p-4 border border-accent/30 rounded-xl ring-4 ring-orange-400 shadow-2xl scale-105 animate-pulse" style={{ backgroundColor: '#FFF7ED' }}>
+                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-orange-400 to-rose-500 flex items-center justify-center transition-transform duration-500 scale-110 animate-bounce mb-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-flame w-6 h-6 text-white"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"></path></svg>
+                </div>
+                <p className="text-lg md:text-2xl font-bold text-orange-600 mb-0">
+                  {streakLoading ? '...' : `${streakData?.currentStreak ?? 0}`}
+                </p>
+                <p className="text-xs text-muted-foreground">Current Streak</p>
+                {streakData?.longestStreak ? (
+                  <p className="text-[10px] text-orange-600 mt-1 font-semibold">Best: {streakData.longestStreak}</p>
+                ) : (
+                  <p className="text-[10px] text-orange-600 mt-1 font-semibold">Best: --</p>
+                )}
+              </div>
+            </div>
           </div>
         </div>
       </div>

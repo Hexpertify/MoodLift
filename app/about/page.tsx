@@ -41,8 +41,7 @@ export default function AboutPage() {
 
               <p>
                 Our activities are designed to support emotions like stress, anxiety, sadness, and low motivation, using
-                approaches inspired by <span className="font-semibold">Cognitive Behavioral Techniques</span>, <span className="font-semibold">Mindfulness</span>, and <span className="font-semibold">Nervous system regulation</span>
-                presented in a way that feels light, friendly, and easy to use.
+                approaches inspired by <span className="font-semibold">Cognitive Behavioral Techniques</span>, <span className="font-semibold">Mindfulness</span>, and <span className="font-semibold">Nervous system regulation</span> presented in a way that feels light, friendly, and easy to use.
               </p>
 
               <p>

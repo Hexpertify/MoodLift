@@ -572,7 +572,7 @@ export default function Home() {
                     Confused About Your Mental State?
                   </h2>
                   <p className="mt-2 text-sm sm:text-base text-muted-foreground leading-relaxed">
-                    Take a short scientifically validated assessment to get clarity on your mood, stress, or anxiety.
+                    Take a short <span className="font-semibold">Scientifically</span> validated assessment to get clarity on your mood, stress, or anxiety.
                   </p>
                 </div>
               </div>
@@ -594,10 +594,10 @@ export default function Home() {
         <div className="mt-12 sm:mt-16 md:mt-24">
           <div className="text-center mb-12">
             <h2 className="section-title font-bold text-primary mb-4">
-              What Our Users Say
+              What Mental Health Professionals Say
             </h2>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Join thousands of people improving their mental wellness with MoodLift
+              Feedback from mental health professionals on how MoodLift supports emotional awareness and self-care.
             </p>
           </div>
           <TestimonialCarousel />

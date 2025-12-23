@@ -15,8 +15,8 @@ export function AppFooter() {
                 MoodLift
               </span>
             </div>
-            <div className="text-sm text-muted-foreground space-y-2">
-              <p>
+            <div className="text-xs text-muted-foreground space-y-2">
+              <p className="leading-snug">
                 Moodify helps you understand and improve your mood through simple & Science backed wellness games, calming exercises, and mindful activities designed for everyday emotional balance.
               </p>
             </div>
