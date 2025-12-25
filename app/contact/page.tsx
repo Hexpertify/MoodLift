@@ -51,7 +51,7 @@ export default function ContactPage() {
           "mainEntity": {
             "@type": "Organization",
             "name": "MoodLift",
-            "email": "support@moodlift.com",
+            "email": "hexpertifyapp@gmail.com",
             "telephone": "+91-89405-06900",
             "url": "https://moodlift.com"
           }
@@ -70,8 +70,8 @@ export default function ContactPage() {
 
             <div className="space-y-2">
               <h2 className="text-base font-semibold text-primary">Email Us</h2>
-              <a href="mailto:support@moodlift.com" className="hover:text-primary transition-colors">
-                support@moodlift.com
+              <a href="mailto:hexpertifyapp@gmail.com" className="hover:text-primary transition-colors">
+                hexpertifyapp@gmail.com
               </a>
             </div>
 
