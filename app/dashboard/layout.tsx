@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 import { getSeoMetadata } from '@/lib/seo-service';
 import StructuredData from '@/components/structured-data';
 
+export const dynamic = 'force-dynamic';
+
 const defaultMetadata: Metadata = {
   title: 'Dashboard - Track Your Emotional Wellness Progress | MoodLift',
   description: 'Monitor your emotional wellness journey with personalized insights, activity tracking, mood patterns, and progress analytics on your MoodLift dashboard.',

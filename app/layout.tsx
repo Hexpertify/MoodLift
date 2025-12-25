@@ -6,6 +6,8 @@ import { AuthProvider } from '@/lib/auth-context';
 import { FavoritesProvider } from '@/lib/favorites-context';
 import StructuredData from '@/components/structured-data';
 
+export const dynamic = 'force-dynamic';
+
 const inter = Inter({ subsets: ['latin'], variable: '--font-sans' });
 
 const defaultMetadata: Metadata = {

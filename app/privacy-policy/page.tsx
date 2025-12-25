@@ -8,6 +8,8 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { SiteHeader } from '@/components/site-header';
 import StructuredData from '@/components/structured-data';
 
+export const dynamic = 'force-dynamic';
+
 const defaultMetadata: Metadata = {
   title: 'Privacy Policy - MoodLift Emotional Wellness Platform',
   description: 'Read MoodLift\'s privacy policy to understand how we collect, use, and protect your personal information and data privacy practices.',

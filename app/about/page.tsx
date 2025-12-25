@@ -8,6 +8,8 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { SiteHeader } from '@/components/site-header';
 import StructuredData from '@/components/structured-data';
 
+export const dynamic = 'force-dynamic';
+
 const defaultMetadata: Metadata = {
   title: 'About MoodLift - AI-Powered Emotional Wellness Platform',
   description: 'Learn about MoodLift, an AI-powered mental wellness platform designed to help people understand, regulate, and improve their mood through engaging activities and games.',

@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 import { getSeoMetadata } from '@/lib/seo-service';
 import StructuredData from '@/components/structured-data';
 
+export const dynamic = 'force-dynamic';
+
 const defaultMetadata: Metadata = {
   title: 'Discover - Explore Emotional Wellness Activities & Resources | MoodLift',
   description: 'Discover personalized emotional wellness activities, games, books, and resources tailored to your mood and mental health needs.',

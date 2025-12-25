@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 import { getSeoMetadata } from '@/lib/seo-service';
 import StructuredData from '@/components/structured-data';
 
+export const dynamic = 'force-dynamic';
+
 const defaultMetadata: Metadata = {
   title: 'Book Recommendations - Mood-Based Reading for Emotional Wellness',
   description: 'Discover personalized book recommendations based on your mood and emotional state. Find the perfect books to support your mental health and emotional well-being journey.',

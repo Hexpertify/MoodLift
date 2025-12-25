@@ -8,6 +8,8 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { SiteHeader } from '@/components/site-header';
 import StructuredData from '@/components/structured-data';
 
+export const dynamic = 'force-dynamic';
+
 const defaultMetadata: Metadata = {
   title: 'Contact MoodLift - Get in Touch for Emotional Wellness Support',
   description: 'Contact MoodLift for questions about our AI-powered emotional wellness platform. Reach out for support, feedback, or partnership inquiries.',

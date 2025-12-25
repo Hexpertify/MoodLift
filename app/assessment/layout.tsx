@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 import { getSeoMetadata } from '@/lib/seo-service';
 import StructuredData from '@/components/structured-data';
 
+export const dynamic = 'force-dynamic';
+
 const defaultMetadata: Metadata = {
   title: 'Mood Assessment - Take Your Emotional Wellness Test | MoodLift',
   description: 'Take scientifically validated mood assessments including PANAS, PHQ-9, and GAD-7 to understand your emotional state and get personalized wellness recommendations.',

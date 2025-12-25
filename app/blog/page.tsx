@@ -8,6 +8,8 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { SiteHeader } from '@/components/site-header';
 import StructuredData from '@/components/structured-data';
 
+export const dynamic = 'force-dynamic';
+
 const defaultMetadata: Metadata = {
   title: 'MoodLift Blog - Mental Health Tips & Wellness Insights',
   description: 'Read our latest articles on mental health, emotional wellness, mindfulness practices, and AI-powered wellness techniques to improve your mood and well-being.',

@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 import { getSeoMetadata } from '@/lib/seo-service';
 import StructuredData from '@/components/structured-data';
 
+export const dynamic = 'force-dynamic';
+
 const defaultMetadata: Metadata = {
   title: 'Rewards & Achievements - Earn Points for Emotional Wellness | MoodLift',
   description: 'Earn points, unlock achievements, and track your progress as you complete emotional wellness activities and maintain healthy mental health habits.',
