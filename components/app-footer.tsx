@@ -109,7 +109,7 @@ export function AppFooter() {
           <p>
             &copy; 2025 MoodLift. All rights reserved. Crafted with Care by{' '}
             <a
-              href="https://hexpertify-blog-sigma.vercel.app/"
+              href="https://hexpertify.com"
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-primary transition-colors font-medium"
