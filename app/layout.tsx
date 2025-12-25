@@ -8,7 +8,7 @@ import StructuredData from '@/components/structured-data';
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-sans' });
 
-export const metadata: Metadata = {
+const defaultMetadata: Metadata = {
   title: 'MoodLift - AI-Powered Emotional Wellness Games & Activities',
   description: 'Transform your mood with AI-powered wellness games designed to boost emotional well-being. Take mood assessments, play interactive activities, and track your mental health journey.',
   keywords: 'emotional wellness, mental health games, mood tracking, AI wellness, mindfulness activities, CBT exercises, breathing techniques, mental health platform',
@@ -68,35 +68,35 @@ export async function generateMetadata({ request }: { request: Request }): Promi
     const url = new URL(request.url);
     const pathname = url.pathname || '/';
     const seo = await getSeoMetadata(pathname);
-    if (!seo) return metadata;
+    if (!seo) return defaultMetadata;
 
-    const ogImages = seo.og_image ? [{ url: seo.og_image, alt: seo.title }] : metadata.openGraph?.images;
+    const ogImages = seo.og_image ? [{ url: seo.og_image, alt: seo.title }] : defaultMetadata.openGraph?.images;
 
     return {
-      title: seo.title || metadata.title,
-      description: seo.description || metadata.description,
-      keywords: seo.keywords || metadata.keywords,
-      metadataBase: metadata.metadataBase,
-      alternates: metadata.alternates,
+      title: seo.title || defaultMetadata.title,
+      description: seo.description || defaultMetadata.description,
+      keywords: seo.keywords || defaultMetadata.keywords,
+      metadataBase: defaultMetadata.metadataBase,
+      alternates: defaultMetadata.alternates,
       openGraph: {
-        title: seo.title || metadata.openGraph?.title,
-        description: seo.description || metadata.openGraph?.description,
-        url: `${metadata.metadataBase?.toString()?.replace(/\/$/, '')}${pathname}`,
-        siteName: metadata.openGraph?.siteName,
+        title: seo.title || defaultMetadata.openGraph?.title,
+        description: seo.description || defaultMetadata.openGraph?.description,
+        url: `${defaultMetadata.metadataBase?.toString()?.replace(/\/$/, '')}${pathname}`,
+        siteName: defaultMetadata.openGraph?.siteName,
         images: ogImages as any,
-        locale: metadata.openGraph?.locale,
-        type: metadata.openGraph?.type,
+        locale: defaultMetadata.openGraph?.locale,
+        type: defaultMetadata.openGraph?.type,
       },
       twitter: {
-        card: seo.twitter_card || metadata.twitter?.card,
-        title: seo.title || metadata.twitter?.title,
-        description: seo.description || metadata.twitter?.description,
-        images: seo.og_image ? [seo.og_image] : metadata.twitter?.images,
+        card: seo.twitter_card || defaultMetadata.twitter?.card,
+        title: seo.title || defaultMetadata.twitter?.title,
+        description: seo.description || defaultMetadata.twitter?.description,
+        images: seo.og_image ? [seo.og_image] : defaultMetadata.twitter?.images,
       },
     } as Metadata;
   } catch (err) {
     console.error('Error generating metadata:', err);
-    return metadata;
+    return defaultMetadata;
   }
 }
 
@@ -107,6 +107,20 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        {/* Optional non-blocking preload for a production CSS file.
+            Set NEXT_PUBLIC_CRITICAL_CSS to the full path (example: /_next/static/css/c5bfc2e475fd76c0.css)
+            You can find the generated CSS filename in Chrome DevTools -> Network after building the app.
+        */}
+        {process.env.NEXT_PUBLIC_CRITICAL_CSS ? (
+          <>
+            <script dangerouslySetInnerHTML={{ __html: `(function(){var href='${process.env.NEXT_PUBLIC_CRITICAL_CSS}';var l=document.createElement('link');l.rel='preload';l.as='style';l.href=href;l.onload=function(){this.rel='stylesheet'};document.head.appendChild(l)})();` }} />
+            <noscript>
+              <link rel="stylesheet" href={process.env.NEXT_PUBLIC_CRITICAL_CSS} />
+            </noscript>
+          </>
+        ) : null}
+      </head>
       <body className={`${inter.variable} font-sans`}>
         <AuthProvider>
           <FavoritesProvider>
