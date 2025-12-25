@@ -415,7 +415,7 @@ export function GamesSection() {
               </div>
 
               <div className="pt-4 sm:pt-6">
-                <Link href={getGameDetails(selectedGame.title).gameUrl} className="w-full">
+                <Link href={getGameDetails(selectedGame.title).gameUrl} className="w-full" title={`Play ${selectedGame.title} - ${selectedGame.description}`}>
                   <Button
                     size="lg"
                     className="w-full bg-gradient-to-r text-xs sm:text-sm md:text-base from-primary to-accent hover:opacity-90 transition-opacity py-4 sm:py-6"

@@ -151,7 +151,7 @@ function DashboardContent() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center gap-4">
-              <Link href="/">
+              <Link href="/" title="Go back to MoodLift home page">
                 <Button size="sm" className="bg-gradient-to-r from-primary to-accent hover:opacity-90 text-white">
                   <ArrowLeft className="w-4 h-4 mr-2" />
                   Home
@@ -312,7 +312,7 @@ function DashboardContent() {
                   Keep building your positive habits with a quick game
                 </p>
               </div>
-              <Link href="/">
+              <Link href="/" title="Go to home page to start playing games">
                 <Button size="lg" variant="secondary" className="bg-white text-primary hover:bg-white/90 text-xs sm:text-sm md:text-base">
                   Play Now
                 </Button>

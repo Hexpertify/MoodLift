@@ -14,6 +14,17 @@ const defaultMetadata: Metadata = {
   title: 'About MoodLift - AI-Powered Emotional Wellness Platform',
   description: 'Learn about MoodLift, an AI-powered mental wellness platform designed to help people understand, regulate, and improve their mood through engaging activities and games.',
   keywords: 'mood tracking, emotional wellness, mental health, AI wellness, mood improvement, mindfulness, CBT, breathing exercises',
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
   openGraph: {
     title: 'About MoodLift - AI-Powered Emotional Wellness Platform',
     description: 'Discover how MoodLift uses AI-powered wellness games and activities to help improve emotional well-being and mental health.',
@@ -124,7 +135,7 @@ export default function AboutPage() {
             </div>
 
             <div>
-              <Link href="/discover" className="inline-block">
+              <Link href="/discover" className="inline-block" title="Discover personalized wellness recommendations">
                 <Button variant="outline">Go to Discover</Button>
               </Link>
             </div>

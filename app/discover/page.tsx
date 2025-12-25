@@ -19,7 +19,7 @@ function DiscoverContent() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center gap-4">
-              <Link href="/">
+              <Link href="/" title="Go back to MoodLift home page">
                 <Button size="sm" className="bg-gradient-to-r from-primary to-accent hover:opacity-90 text-white">
                   <ArrowLeft className="w-4 h-4 mr-2" />
                   Home
@@ -45,7 +45,7 @@ function DiscoverContent() {
                 </p>
 
                 <div className="w-full md:w-auto">
-                  <Link href="/assessment">
+                  <Link href="/assessment" title="Take our AI-powered mood assessment for personalized insights">
                     <Button className="w-full md:w-auto h-11 rounded-md px-8 bg-gradient-to-r from-primary to-accent hover:opacity-90 transition-opacity text-xs sm:text-sm md:text-base">
                       Start Assessment
                     </Button>
@@ -123,7 +123,7 @@ function DiscoverContent() {
               Pin your favorite games and books to create a personalized wellness collection. Track your progress and discover new ways to improve your mental health.
             </p>
             <div className="flex gap-3 sm:gap-4 justify-center flex-wrap">
-              <Link href="/dashboard">
+              <Link href="/dashboard" title="View your progress and achievements">
                 <Button size="lg" variant="secondary" className="bg-white text-primary hover:bg-white/90 text-xs sm:text-sm md:text-base">
                   View Dashboard
                 </Button>

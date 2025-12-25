@@ -324,13 +324,13 @@ export default function Home() {
               </Button>
               {user && (
                 <>
-                  <Link href="/games">
+                  <Link href="/games" title="Explore wellness games and activities">
                     <Button variant="ghost" size="sm">Games</Button>
                   </Link>
-                  <Link href="/discover">
+                  <Link href="/discover" title="Discover personalized recommendations">
                     <Button variant="ghost" size="sm">Discover</Button>
                   </Link>
-                  <Link href="/dashboard">
+                  <Link href="/dashboard" title="View your progress and achievements">
                     <Button variant="ghost" size="sm">Dashboard</Button>
                   </Link>
                 </>
@@ -395,17 +395,17 @@ export default function Home() {
               </Button>
               {user && (
                 <>
-                  <Link href="/games" className="block">
+                  <Link href="/games" className="block" title="Explore wellness games and activities">
                     <Button variant="ghost" className="w-full justify-start text-sm">
                       Games
                     </Button>
                   </Link>
-                  <Link href="/discover" className="block">
+                  <Link href="/discover" className="block" title="Discover personalized recommendations">
                     <Button variant="ghost" className="w-full justify-start text-sm">
                       Discover
                     </Button>
                   </Link>
-                  <Link href="/dashboard" className="block">
+                  <Link href="/dashboard" className="block" title="View your progress and achievements">
                     <Button variant="ghost" className="w-full justify-start text-sm">
                       Dashboard
                     </Button>
@@ -494,7 +494,7 @@ export default function Home() {
                   const slug = g.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
 
                   return (
-                    <Link key={g.id} href={`/games/${slug}`} className="md:col-span-1">
+                    <Link key={g.id} href={`/games/${slug}`} className="md:col-span-1" title={`Play ${g.title} - ${g.description}`}>
                       <div className="text-card-foreground group relative w-full max-w-[420px] aspect-square rounded-[24px] bg-white border-2 border-secondary/80 shadow-[0_8px_16px_rgba(75,52,37,0.05)] overflow-hidden animate-in fade-in-50 slide-in-from-bottom-4 cursor-pointer perspective-1000 hover:transform hover:rotate-x-6 hover:rotate-y-6 hover:scale-105 transition-all duration-300">
                         <div className="flex h-full flex-col p-4 sm:p-5">
                           <div className="relative h-[46%] w-full overflow-hidden rounded-[24px] bg-[#D9D9D9]">
@@ -546,7 +546,7 @@ export default function Home() {
                 const badge = durationBySlug[slug] ?? g.category;
 
                 return (
-                  <Link key={g.id} href={`/games/${slug}`} className="md:col-span-1">
+                  <Link key={g.id} href={`/games/${slug}`} className="md:col-span-1" title={`Play ${g.title} - ${g.description}`}>
                     <div className="text-card-foreground group relative w-full max-w-[420px] aspect-square rounded-[24px] bg-white border-2 border-secondary/80 shadow-[0_8px_16px_rgba(75,52,37,0.05)] overflow-hidden animate-in fade-in-50 slide-in-from-bottom-4 cursor-pointer perspective-1000 hover:transform hover:rotate-x-6 hover:rotate-y-6 hover:scale-105 transition-all duration-300">
                       <div className="flex h-full flex-col p-4 sm:p-5">
                         <div className="relative h-[46%] w-full overflow-hidden rounded-[24px] bg-[#D9D9D9]">
@@ -574,7 +574,7 @@ export default function Home() {
             ) : (
               // fallback static content if no popular games set
               <>
-                <Link href="/games/box-breathing" className="md:col-span-1">
+                <Link href="/games/box-breathing" className="md:col-span-1" title="Play Box Breathing - A simple breathing technique supported by CBT principles to help reduce stress">
                   <div className="text-card-foreground group relative w-full max-w-[420px] aspect-square rounded-[24px] bg-white border-2 border-secondary/80 shadow-[0_8px_16px_rgba(75,52,37,0.05)] overflow-hidden animate-in fade-in-50 slide-in-from-bottom-4 cursor-pointer perspective-1000 hover:transform hover:rotate-x-6 hover:rotate-y-6 hover:scale-105 transition-all duration-300">
                     <div className="flex h-full flex-col p-4 sm:p-5">
                       <div className="relative h-[46%] w-full overflow-hidden rounded-[24px] bg-[#D9D9D9]">
@@ -594,7 +594,7 @@ export default function Home() {
                   </div>
                 </Link>
 
-                <Link href="/games/diaphragmatic-breathing" className="md:col-span-1">
+                <Link href="/games/diaphragmatic-breathing" className="md:col-span-1" title="Play Diaphragmatic Breathing - Deep belly breathing that activates your parasympathetic nervous system for instant calm and stress relief">
                   <div className="text-card-foreground group relative w-full max-w-[420px] aspect-square rounded-[24px] bg-white border-2 border-secondary/80 shadow-[0_8px_16px_rgba(75,52,37,0.05)] overflow-hidden animate-in fade-in-50 slide-in-from-bottom-4 cursor-pointer perspective-1000 hover:transform hover:rotate-x-6 hover:rotate-y-6 hover:scale-105 transition-all duration-300">
                     <div className="flex h-full flex-col p-4 sm:p-5">
                       <div className="relative h-[46%] w-full overflow-hidden rounded-[24px] bg-[#D9D9D9]">
@@ -612,7 +612,7 @@ export default function Home() {
                   </div>
                 </Link>
 
-                <Link href="/games/four-seven-eight-breathing" className="md:col-span-1">
+                <Link href="/games/four-seven-eight-breathing" className="md:col-span-1" title="Play 4-7-8 Breathing - The famous 4-7-8 technique for anxiety relief and better sleep">
                   <div className="text-card-foreground group relative w-full max-w-[420px] aspect-square rounded-[24px] bg-white border-2 border-secondary/80 shadow-[0_8px_16px_rgba(75,52,37,0.05)] overflow-hidden animate-in fade-in-50 slide-in-from-bottom-4 cursor-pointer perspective-1000 hover:transform hover:rotate-x-6 hover:rotate-y-6 hover:scale-105 transition-all duration-300">
                     <div className="flex h-full flex-col p-4 sm:p-5">
                       <div className="relative h-[46%] w-full overflow-hidden rounded-[24px] bg-[#D9D9D9]">

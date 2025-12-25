@@ -14,6 +14,17 @@ const defaultMetadata: Metadata = {
   title: 'Contact MoodLift - Get in Touch for Emotional Wellness Support',
   description: 'Contact MoodLift for questions about our AI-powered emotional wellness platform. Reach out for support, feedback, or partnership inquiries.',
   keywords: 'contact MoodLift, emotional wellness support, mental health contact, wellness platform support, customer service',
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
   openGraph: {
     title: 'Contact MoodLift - Get in Touch for Emotional Wellness Support',
     description: 'Contact MoodLift for questions about our AI-powered emotional wellness platform. Reach out for support, feedback, or partnership inquiries.',

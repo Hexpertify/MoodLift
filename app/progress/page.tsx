@@ -119,7 +119,7 @@ function ProgressContent() {
       <nav className="border-b bg-white/80 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center gap-4 h-16">
-            <Link href="/">
+            <Link href="/" title="Go back to MoodLift home page">
               <Button size="sm" className="bg-gradient-to-r from-primary to-accent hover:opacity-90 text-white">
                 <ArrowLeft className="w-4 h-4 mr-2" />
                 Home
@@ -225,7 +225,7 @@ function ProgressContent() {
             <p className="text-lg text-white/90 mb-6">
               You're {remaining} achievement{remaining !== 1 ? 's' : ''} away from unlocking the "Wellness Champion" badge
             </p>
-            <Link href="/">
+            <Link href="/" title="Continue your wellness journey on the home page">
               <Button size="lg" variant="secondary" className="bg-white text-primary hover:bg-white/90">
                 Continue Your Journey
               </Button>

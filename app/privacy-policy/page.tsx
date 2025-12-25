@@ -14,6 +14,17 @@ const defaultMetadata: Metadata = {
   title: 'Privacy Policy - MoodLift Emotional Wellness Platform',
   description: 'Read MoodLift\'s privacy policy to understand how we collect, use, and protect your personal information and data privacy practices.',
   keywords: 'privacy policy, data protection, personal information, privacy practices, data security, GDPR compliance',
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
   openGraph: {
     title: 'Privacy Policy - MoodLift Emotional Wellness Platform',
     description: 'Read MoodLift\'s privacy policy to understand how we collect, use, and protect your personal information and data privacy practices.',
@@ -191,13 +202,13 @@ export default function PrivacyPolicyPage() {
               <h2 className="text-base font-semibold text-primary mb-2">9. Contact Us</h2>
               <p>If you have any questions about this Privacy Policy or how your data is handled, please contact us at:</p>
               <ul className="list-none pl-0 mt-2">
-                <li>Email: <a href="mailto:hexpertifyapp@gmail.com" className="text-primary hover:underline">hexpertifyapp@gmail.com</a></li>
-                <li>Website: <a href="https://hexpertify.com" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">Hexpertify.com</a></li>
+                <li>Email: <a href="mailto:hexpertifyapp@gmail.com" className="text-primary hover:underline" title="Contact us via email">hexpertifyapp@gmail.com</a></li>
+                <li>Website: <a href="https://hexpertify.com" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline" title="Visit our development partner Hexpertify">Hexpertify.com</a></li>
               </ul>
             </div>
 
             <div>
-              <Link href="/about" className="inline-block">
+              <Link href="/about" className="inline-block" title="Learn about MoodLift and our mission">
                 <Button variant="outline">About Moodify</Button>
               </Link>
             </div>

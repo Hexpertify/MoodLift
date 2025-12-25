@@ -14,6 +14,17 @@ const defaultMetadata: Metadata = {
   title: 'MoodLift Blog - Mental Health Tips & Wellness Insights',
   description: 'Read our latest articles on mental health, emotional wellness, mindfulness practices, and AI-powered wellness techniques to improve your mood and well-being.',
   keywords: 'mental health blog, wellness tips, mindfulness, emotional wellness, mood improvement, mental health articles, wellness insights',
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
   openGraph: {
     title: 'MoodLift Blog - Mental Health Tips & Wellness Insights',
     description: 'Read our latest articles on mental health, emotional wellness, mindfulness practices, and AI-powered wellness techniques.',
@@ -101,7 +112,7 @@ export default function BlogPage() {
           <CardContent className="space-y-4 text-sm text-muted-foreground">
             <p>Blog content will appear here soon.</p>
             <div>
-              <Link href="/discover" className="inline-block">
+              <Link href="/discover" className="inline-block" title="Discover personalized wellness recommendations">
                 <Button variant="outline">Go to Discover</Button>
               </Link>
             </div>

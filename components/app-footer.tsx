@@ -26,22 +26,22 @@ export function AppFooter() {
             <h3 className="font-semibold text-primary mb-4">Features</h3>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li>
-                <Link href="/assessment" className="hover:text-primary transition-colors">
+                <Link href="/assessment" className="hover:text-primary transition-colors" title="Take our AI-powered mood assessment">
                   Mood Assessment
                 </Link>
               </li>
               <li>
-                <Link href="/games" className="hover:text-primary transition-colors">
+                <Link href="/games" className="hover:text-primary transition-colors" title="Explore wellness games and activities">
                   Wellness Games
                 </Link>
               </li>
               <li>
-                <Link href="/books" className="hover:text-primary transition-colors">
+                <Link href="/books" className="hover:text-primary transition-colors" title="Discover mood-based book recommendations">
                   Book Recommendations
                 </Link>
               </li>
               <li>
-                <Link href="/dashboard" className="hover:text-primary transition-colors">
+                <Link href="/dashboard" className="hover:text-primary transition-colors" title="View your progress and achievements">
                   Dashboard
                 </Link>
               </li>
@@ -53,27 +53,27 @@ export function AppFooter() {
             <h3 className="font-semibold text-primary mb-4">Resources</h3>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li>
-                <Link href="/about" className="hover:text-primary transition-colors">
+                <Link href="/about" className="hover:text-primary transition-colors" title="Learn about MoodLift and our mission">
                   About
                 </Link>
               </li>
               <li>
-                <Link href="/discover" className="hover:text-primary transition-colors">
+                <Link href="/discover" className="hover:text-primary transition-colors" title="Discover personalized recommendations">
                   Discover
                 </Link>
               </li>
               <li>
-                <Link href="/games" className="hover:text-primary transition-colors">
+                <Link href="/games" className="hover:text-primary transition-colors" title="Browse all available games and activities">
                   All Games
                 </Link>
               </li>
               <li>
-                <Link href="/rewards" className="hover:text-primary transition-colors">
+                <Link href="/rewards" className="hover:text-primary transition-colors" title="View your rewards and achievements">
                   Rewards
                 </Link>
               </li>
               <li>
-                <Link href="/" className="hover:text-primary transition-colors">
+                <Link href="/" className="hover:text-primary transition-colors" title="Go to MoodLift home page">
                   Home
                 </Link>
               </li>
@@ -84,7 +84,7 @@ export function AppFooter() {
             <h3 className="font-semibold text-primary mb-4">Support</h3>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li>
-                <Link href="/contact" className="hover:text-primary transition-colors">
+                <Link href="/contact" className="hover:text-primary transition-colors" title="Get in touch with our support team">
                   Contact Us
                 </Link>
               </li>
@@ -92,12 +92,15 @@ export function AppFooter() {
                 <a
                   href="https://hexpertify-blog-sigma.vercel.app/"
                   className="hover:text-primary transition-colors"
+                  title="Visit our blog for more wellness insights"
+                  target="_blank"
+                  rel="noopener noreferrer"
                 >
                   Blog
                 </a>
               </li>
               <li>
-                <Link href="/privacy-policy" className="hover:text-primary transition-colors">
+                <Link href="/privacy-policy" className="hover:text-primary transition-colors" title="Read our privacy policy and data protection practices">
                   Privacy Policy
                 </Link>
               </li>
@@ -113,6 +116,7 @@ export function AppFooter() {
               target="_blank"
               rel="noopener noreferrer"
               className="hover:text-primary transition-colors font-medium"
+              title="Visit Hexpertify - Our development partner"
             >
               Hexpertify
             </a>

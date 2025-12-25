@@ -477,7 +477,7 @@ export default function PsychometricAssessment() {
                   Back
                 </Button>
               ) : (
-                <Link href="/">
+                <Link href="/" title="Go back to MoodLift home page">
                   <Button variant="ghost" size="sm" className="bg-[#E2DAF5] hover:bg-[#3C1F71] text-[#3C1F71] hover:text-white transition-colors px-4 py-2 rounded-lg font-medium">
                     Back
                   </Button>
@@ -761,10 +761,10 @@ export default function PsychometricAssessment() {
                       <li key={g.title} className="flex items-center gap-3">
                         <div className="flex-1">
                           <div className="flex items-center justify-between">
-                            <Link href={g.url} className="font-semibold text-[#3C1F71]">
+                            <Link href={g.url} className="font-semibold text-[#3C1F71]" title={`Play ${g.title} - ${g.description}`}>
                               {idx + 1}. {g.title}
                             </Link>
-                            <Link href={g.url}>
+                            <Link href={g.url} title={`Start playing ${g.title}`}>
                               <Button size="sm" className="px-3 py-1 bg-gradient-to-r from-[#3C1F71] to-[#5B3A8F] text-white hover:opacity-90 transition-opacity">
                                 Play
                               </Button>
@@ -799,17 +799,17 @@ export default function PsychometricAssessment() {
                                 </div>
                               )}
                               <div className="text-base text-[#3C1F71] truncate">{isExternal ? (
-                                <a href={url} target="_blank" rel="noopener noreferrer" className="font-medium text-[#3C1F71] truncate">{c.full_name}</a>
+                                <a href={url} target="_blank" rel="noopener noreferrer" className="font-medium text-[#3C1F71] truncate" title={`Visit ${c.full_name}'s profile`}>{c.full_name}</a>
                               ) : (
-                                <Link href={url} className="font-medium text-[#3C1F71] truncate">{c.full_name}</Link>
+                                <Link href={url} className="font-medium text-[#3C1F71] truncate" title={`View ${c.full_name}'s profile`}>{c.full_name}</Link>
                               )}</div>
                             </div>
                             {isExternal ? (
-                              <a href={url} target="_blank" rel="noopener noreferrer">
+                              <a href={url} target="_blank" rel="noopener noreferrer" title={`Consult with ${c.full_name}`}>
                                 <Button size="sm" className="h-10 px-4 py-2 bg-gradient-to-r from-[#3C1F71] to-[#5B3A8F] text-white hover:opacity-90 transition-opacity">Consult Now</Button>
                               </a>
                             ) : (
-                              <Link href={url}>
+                              <Link href={url} title={`Consult with ${c.full_name}`}>
                                 <Button size="sm" className="h-10 px-4 py-2 bg-gradient-to-r from-[#3C1F71] to-[#5B3A8F] text-white hover:opacity-90 transition-opacity">Consult Now</Button>
                               </Link>
                             )}
