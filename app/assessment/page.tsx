@@ -161,9 +161,9 @@ export default function PsychometricAssessment() {
       { id: 'phq9_3', question: 'Trouble falling or staying asleep, or sleeping too much', scale: 'phq9' },
       { id: 'phq9_4', question: 'Feeling tired or having little energy', scale: 'phq9' },
       { id: 'phq9_5', question: 'Poor appetite or overeating', scale: 'phq9' },
-      { id: 'phq9_6', question: 'Feeling bad about yourself — or that you are a failure or have let yourself or your family down', scale: 'phq9' },
+      { id: 'phq9_6', question: 'Feeling bad about yourself - or that you are a failure or have let yourself or your family down', scale: 'phq9' },
       { id: 'phq9_7', question: 'Trouble concentrating on things, such as reading the newspaper or watching television', scale: 'phq9' },
-      { id: 'phq9_8', question: 'Moving or speaking so slowly that other people could have noticed. Or the opposite — being so fidgety or restless that you have been moving around a lot more than usual', scale: 'phq9' },
+      { id: 'phq9_8', question: 'Moving or speaking so slowly that other people could have noticed. Or the opposite - being so fidgety or restless that you have been moving around a lot more than usual', scale: 'phq9' },
       { id: 'phq9_9', question: 'Thoughts that you would be better off dead, or of hurting yourself in some way', scale: 'phq9' },
     ];
   };
@@ -441,29 +441,6 @@ export default function PsychometricAssessment() {
     const mood = getMoodForRecommendations();
     return getGameRecommendations(mood).slice(0, 3);
   }, [result, selectedTest]);
-
-  type ConsultantSimple = { id: string; full_name?: string; booking_url?: string; picture_url?: string };
-  const [consultantsList, setConsultantsList] = useState<ConsultantSimple[]>([]);
-
-  useEffect(() => {
-    let mounted = true;
-    const fetchConsultants = async () => {
-      try {
-        const res = await fetch('/api/consultants', { cache: 'no-store' });
-        const json = await res.json().catch(() => ({}));
-        if (!mounted) return;
-        setConsultantsList((json?.consultants as ConsultantSimple[]) || []);
-      } catch (e) {
-        console.error('Error fetching consultants for recommendations:', e);
-      }
-    };
-    fetchConsultants();
-    return () => { mounted = false; };
-  }, []);
-
-  const displayConsultants = useMemo(() => {
-    return consultantsList.filter(c => !!c.full_name && c.full_name.trim()).slice(0, 3);
-  }, [consultantsList]);
 
   const needsImmediateHelp = !!(
     result &&
@@ -797,7 +774,15 @@ export default function PsychometricAssessment() {
               </CardContent>
             </Card>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {!needsImmediateHelp ? (
+              <Card className="mb-8 border-2 border-[#3C1F71]/20">
+                <CardContent className="pt-6">
+                  <ConsultantCarousel compact />
+                </CardContent>
+              </Card>
+            ) : null}
+
+            <div className="grid grid-cols-1 gap-4">
               <Card className="border-2 border-[#3C1F71]/20 hover:border-[#3C1F71] transition-colors">
                 <CardContent className="p-8">
                   <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[#3C1F71] to-[#5B3A8F] flex items-center justify-center mx-auto mb-3">
@@ -831,44 +816,6 @@ export default function PsychometricAssessment() {
 
               <Card className="border-2 border-[#3C1F71]/20 hover:border-[#3C1F71] transition-colors">
                 <CardContent className="p-6">
-                  {/** Show recommendations here as well, excluding help/mood-check sessions */}
-                  <div className="mb-4">
-                    <h4 className="text-base font-semibold text-[#3C1F71] mb-4 text-center">Connect with Excepts</h4>
-                    <div className="space-y-3">
-                      {displayConsultants.map((c, idx) => {
-                        const url = c.booking_url && c.booking_url.trim() ? c.booking_url : `/consultants/${c.id}`;
-                        const isExternal = !!(c.booking_url && c.booking_url.trim());
-                        return (
-                          <div key={c.id} className="flex items-center justify-between gap-4">
-                            <div className="flex items-center gap-4 min-w-0">
-                              {c.picture_url ? (
-                                <img src={c.picture_url} alt={c.full_name || 'Consultant'} title={c.full_name || 'Consultant'} className="w-[6.25rem] h-[6.25rem] object-cover rounded-md flex-shrink-0" />
-                              ) : (
-                                <div className="w-[6.25rem] h-[6.25rem] bg-[#E2DAF5] rounded-md flex items-center justify-center text-lg text-[#3C1F71] flex-shrink-0">
-                                  {c.full_name ? c.full_name.charAt(0).toUpperCase() : '?'}
-                                </div>
-                              )}
-                              <div className="text-base text-[#3C1F71] truncate">{isExternal ? (
-                                <a href={url} target="_blank" rel="noopener noreferrer" className="font-medium text-[#3C1F71] truncate" title={`Visit ${c.full_name}'s profile`}>{c.full_name}</a>
-                              ) : (
-                                <Link href={url} className="font-medium text-[#3C1F71] truncate" title={`View ${c.full_name}'s profile`}>{c.full_name}</Link>
-                              )}</div>
-                            </div>
-                            {isExternal ? (
-                              <a href={url} target="_blank" rel="noopener noreferrer" title={`Consult with ${c.full_name}`}>
-                                <Button size="sm" className="h-10 px-4 py-2 bg-gradient-to-r from-[#3C1F71] to-[#5B3A8F] text-white hover:opacity-90 transition-opacity">Consult Now</Button>
-                              </a>
-                            ) : (
-                              <Link href={url} title={`Consult with ${c.full_name}`}>
-                                <Button size="sm" className="h-10 px-4 py-2 bg-gradient-to-r from-[#3C1F71] to-[#5B3A8F] text-white hover:opacity-90 transition-opacity">Consult Now</Button>
-                              </Link>
-                            )}
-                          </div>
-                        );
-                      })}
-                    </div>
-                  </div>
-
                   <div className="text-center">
                     <Button
                       onClick={resetAssessment}
