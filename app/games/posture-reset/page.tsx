@@ -131,6 +131,8 @@ export default function PostureReset() {
 
   const handleNext = () => {
     if (isLastStep) {
+      if (timerRef.current) clearInterval(timerRef.current);
+      setIsStarted(false);
       setIsCompleted(true);
     } else {
       setCurrentStepIndex((prev) => prev + 1);
@@ -152,88 +154,6 @@ export default function PostureReset() {
     setIsCompleted(false);
     setIsStarted(true);
   };
-
-  if (isCompleted) {
-    return (
-      <div className="min-h-screen bg-gradient-to-b from-white to-blue-50 flex flex-col">
-        <nav className="border-b bg-white/80 backdrop-blur-sm sticky top-0 z-50">
-          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-            <div className="flex items-center justify-between">
-              <Button
-                onClick={() => router.back()}
-                className="bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white text-xs sm:text-sm"
-              >
-                <ArrowLeft className="w-4 h-4 mr-2" />
-                Back
-              </Button>
-              <div />
-            </div>
-          </div>
-        </nav>
-
-        <main className="flex-1 px-6 py-12 flex items-center justify-center">
-          <div className="max-w-2xl text-center">
-          <CheckCircle2 className="w-24 h-24 text-green-500 mx-auto mb-6" />
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">Perfect!</h1>
-          <p className="text-lg text-gray-700 mb-4">You've completed the Posture Reset sequence.</p>
-          <p className="text-gray-600 mb-8">
-            You should now feel more aligned, energized, and aware of your posture. Make this a daily habit to maintain better alignment throughout your day.
-          </p>
-          
-          <div className="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-8">
-            <h2 className="font-semibold text-blue-900 mb-3">Key Takeaways:</h2>
-            <ul className="text-left space-y-2 text-blue-800">
-              <li>✓ Regular posture resets prevent tension buildup</li>
-              <li>✓ Awareness is the first step to better alignment</li>
-              <li>✓ Combine with deep breathing for maximum benefit</li>
-              <li>✓ Practice 2-3 times daily for lasting improvements</li>
-            </ul>
-          </div>
-
-          <div className="max-w-2xl mx-auto mb-8">
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">Tips for Best Results</h2>
-            <ul className="space-y-2 text-gray-700">
-              <li className="flex items-start gap-2">
-                <span className="text-blue-600 font-bold">•</span>
-                <span>Do this exercise 2-3 times daily for maximum benefit</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-blue-600 font-bold">•</span>
-                <span>Move slowly and mindfully through each step</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-blue-600 font-bold">•</span>
-                <span>Notice how your body feels before and after</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <span className="text-blue-600 font-bold">•</span>
-                <span>Combine with the box breathing exercise for deeper relaxation</span>
-              </li>
-            </ul>
-          </div>
-
-          <div className="flex gap-4 justify-center flex-wrap">
-            <Button
-              onClick={handleReset}
-              className="bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white px-8"
-            >
-              Repeat Session
-            </Button>
-            <Button
-              onClick={() => router.back()}
-              variant="outline"
-              className="px-8"
-            >
-              Back
-            </Button>
-          </div>
-          </div>
-        </main>
-
-        <AppFooter />
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-blue-50 flex flex-col">
@@ -272,83 +192,114 @@ export default function PostureReset() {
           </div>
         </div>
 
-        <div className={`bg-gradient-to-br ${currentStep.color} rounded-2xl shadow-xl p-8 md:p-12 mb-12 text-white min-h-72 flex flex-col justify-center`}>
-          <div className="mb-6">
-            <span className="text-sm font-semibold opacity-90">STEP {currentStep.id}</span>
-            <h2 className="text-4xl md:text-5xl font-bold mt-2">{currentStep.title}</h2>
-          </div>
-
-          <p className="text-xl md:text-2xl leading-relaxed font-light">
-            {currentStep.instruction}
-          </p>
-
-          {!buttonEnabled && isStarted && (
-            <div className="mt-6 text-sm font-medium opacity-90">
-              Ready in {timeRemaining}s
+        {isCompleted ? (
+          <div className="bg-gradient-to-br from-green-500 to-emerald-500 rounded-2xl shadow-xl p-8 md:p-12 mb-12 text-white min-h-72 flex flex-col justify-center">
+            <div className="flex justify-center mb-6">
+              <CheckCircle2 className="w-14 h-14" />
             </div>
-          )}
-        </div>
+            <h2 className="text-4xl md:text-5xl font-bold">Completed</h2>
+            <p className="mt-3 text-xl md:text-2xl leading-relaxed font-light">
+              You’ve completed the Posture Reset sequence.
+            </p>
+          </div>
+        ) : (
+          <div className={`bg-gradient-to-br ${currentStep.color} rounded-2xl shadow-xl p-8 md:p-12 mb-12 text-white min-h-72 flex flex-col justify-center`}>
+            <div className="mb-6">
+              <span className="text-sm font-semibold opacity-90">STEP {currentStep.id}</span>
+              <h2 className="text-4xl md:text-5xl font-bold mt-2">{currentStep.title}</h2>
+            </div>
 
-        <div className="flex justify-center gap-2 mb-8 flex-wrap">
-          {POSTURE_STEPS.map((step, index) => (
-            <button
-              key={step.id}
-              onClick={() => handleSkipToStep(index)}
-              className={`w-10 h-10 rounded-full font-semibold text-sm transition-all ${
-                index === currentStepIndex
-                  ? `bg-gradient-to-r ${step.color} text-white shadow-lg scale-110`
-                  : index < currentStepIndex
-                  ? 'bg-green-500 text-white shadow'
-                  : 'bg-gray-200 text-gray-600 hover:bg-gray-300'
-              } cursor-pointer`}
-            >
-              {index < currentStepIndex ? '✓' : step.id}
-            </button>
-          ))}
-        </div>
+            <p className="text-xl md:text-2xl leading-relaxed font-light">
+              {currentStep.instruction}
+            </p>
+
+            {!buttonEnabled && isStarted && (
+              <div className="mt-6 text-sm font-medium opacity-90">
+                Ready in {timeRemaining}s
+              </div>
+            )}
+          </div>
+        )}
+
+        {!isCompleted && (
+          <div className="flex justify-center gap-2 mb-8 flex-wrap">
+            {POSTURE_STEPS.map((step, index) => (
+              <button
+                key={step.id}
+                onClick={() => handleSkipToStep(index)}
+                className={`w-10 h-10 rounded-full font-semibold text-sm transition-all ${
+                  index === currentStepIndex
+                    ? `bg-gradient-to-r ${step.color} text-white shadow-lg scale-110`
+                    : index < currentStepIndex
+                    ? 'bg-green-500 text-white shadow'
+                    : 'bg-gray-200 text-gray-600 hover:bg-gray-300'
+                } cursor-pointer`}
+              >
+                {index < currentStepIndex ? '✓' : step.id}
+              </button>
+            ))}
+          </div>
+        )}
 
         <div className="flex gap-3 justify-center items-center flex-wrap mb-12">
-          {currentStepIndex > 0 && (
-            <Button
-              onClick={handlePrevious}
-              variant="outline"
-              className="border-2 border-gray-300 text-gray-600 hover:bg-gray-50"
-            >
-              ← Previous
-            </Button>
+          {isCompleted ? (
+            <>
+              <Button
+                onClick={handleReset}
+                size="lg"
+                className="bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white shadow-lg px-8"
+              >
+                Again
+              </Button>
+              <Button onClick={() => router.push('/games')} variant="outline" size="lg" className="px-8">
+                Return to games
+              </Button>
+            </>
+          ) : (
+            <>
+              {currentStepIndex > 0 && (
+                <Button
+                  onClick={handlePrevious}
+                  variant="outline"
+                  className="border-2 border-gray-300 text-gray-600 hover:bg-gray-50"
+                >
+                  ← Previous
+                </Button>
+              )}
+
+              {!isStarted && (
+                <Button
+                  onClick={handleReset}
+                  size="lg"
+                  className="bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white shadow-lg px-8"
+                >
+                  Start
+                </Button>
+              )}
+
+              <Button
+                onClick={handleNext}
+                size="lg"
+                disabled={!buttonEnabled}
+                className={`px-8 shadow-lg ${
+                  buttonEnabled
+                    ? 'bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white cursor-pointer'
+                    : 'bg-gray-300 text-gray-500 cursor-not-allowed opacity-60'
+                }`}
+              >
+                {isLastStep ? 'Complete' : 'Next Step →'}
+              </Button>
+
+              <Button
+                onClick={handleReset}
+                variant="outline"
+                size="lg"
+                className="border-2 border-gray-300 text-gray-600 hover:bg-gray-50"
+              >
+                <RotateCcw className="w-5 h-5" />
+              </Button>
+            </>
           )}
-
-          {!isStarted && (
-            <Button
-              onClick={handleReset}
-              size="lg"
-              className="bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white shadow-lg px-8"
-            >
-              Start
-            </Button>
-          )}
-
-          <Button
-            onClick={handleNext}
-            size="lg"
-            disabled={!buttonEnabled}
-            className={`px-8 shadow-lg ${
-              buttonEnabled
-                ? 'bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white cursor-pointer'
-                : 'bg-gray-300 text-gray-500 cursor-not-allowed opacity-60'
-            }`}
-          >
-            {isLastStep ? 'Complete' : 'Next Step →'}
-          </Button>
-
-          <Button
-            onClick={handleReset}
-            variant="outline"
-            size="lg"
-            className="border-2 border-gray-300 text-gray-600 hover:bg-gray-50"
-          >
-            <RotateCcw className="w-5 h-5" />
-          </Button>
         </div>
 
         <div className="max-w-2xl mx-auto pt-8 border-t border-gray-200">
