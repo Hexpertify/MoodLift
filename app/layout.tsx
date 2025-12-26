@@ -115,6 +115,7 @@ export default function RootLayout({
     process.env.NEXT_PUBLIC_SITE_URL ||
     process.env.SITE_URL ||
     (host ? `${protocol}://${host}` : 'http://localhost:3000');
+  const canonicalSiteUrl = siteUrl.replace(/\/$/, '');
 
   return (
     <html lang="en">
@@ -141,12 +142,35 @@ export default function RootLayout({
               "@context": "https://schema.org",
               "@type": "WebSite",
               "name": "MoodLift",
-              "url": siteUrl,
+              "url": canonicalSiteUrl,
               "potentialAction": {
                 "@type": "SearchAction",
-                "target": `${siteUrl}/search?q={search_term_string}`,
+                "target": `${canonicalSiteUrl}/search?q={search_term_string}`,
                 "query-input": "required name=search_term_string"
               }
+            }}
+          />
+
+          {/* Base Organization schema for all pages */}
+          <StructuredData
+            script={{
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              "@id": `${canonicalSiteUrl}/#organization`,
+              "name": "MoodLift",
+              "url": canonicalSiteUrl,
+              "logo": `${canonicalSiteUrl}/logo.png`,
+              "description":
+                "MoodLift is a Mental wellness platform designed to help people understand, regulate, and improve their mood through simple, engaging activities.",
+              "parentOrganization": {
+                "@type": "Organization",
+                "name": "Hexpertify",
+                "url": "https://hexpertify.com"
+              },
+              "sameAs": [
+                "https://www.instagram.com/hexpertify",
+                "https://www.linkedin.com/company/hexpertify"
+              ]
             }}
           />
           {children}

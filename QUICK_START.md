@@ -150,6 +150,14 @@ SELECT * FROM user_favorites WHERE user_id = 'user-uuid';
 **Issue**: Build fails
 **Solution**: Run `npm run build` and check error messages. Ensure all imports are correct.
 
+**Issue**: Admin "Most Popular" pin doesn't persist
+**Solution**: Ensure the `games` table has `is_popular`:
+```sql
+ALTER TABLE games ADD COLUMN IF NOT EXISTS is_popular boolean DEFAULT FALSE;
+
+CREATE INDEX IF NOT EXISTS idx_games_is_popular ON games(is_popular);
+```
+
 ## For Users
 
 ### How to Use

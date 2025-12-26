@@ -213,40 +213,6 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-white via-secondary/20 to-accent/10">
-      <StructuredData
-        script={{
-          "@context": "https://schema.org",
-          "url": "/",
-          "publisher": {
-            "url": "/",
-            "logo": {
-              "@type": "ImageObject",
-              "url": "https://moodlift.com/images/logo.png"
-            }
-          },
-          "potentialAction": {
-            "@type": "SearchAction",
-            "target": "/search?q={search_term_string}",
-            "query-input": "required name=search_term_string"
-          }
-        }}
-      />
-      <StructuredData
-        script={{
-          "@context": "https://schema.org",
-          "@type": "Organization",
-          "name": "MoodLift",
-          "url": "https://moodlift.com",
-          "description": "AI-powered emotional wellness platform helping people improve mental health through interactive games and activities.",
-          "foundingDate": "2024",
-          "contactPoint": {
-            "@type": "ContactPoint",
-            "telephone": "+91-89405-06900",
-            "contactType": "customer service",
-            "email": "support@moodlift.com"
-          }
-        }}
-      />
       <HomeNavbar onAuthSuccess={handleAuthSuccess} />
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 md:py-12">

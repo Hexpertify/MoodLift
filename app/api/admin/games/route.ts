@@ -13,6 +13,12 @@ function createAdminClient() {
   return createClient(supabaseUrl, supabaseKey);
 }
 
+function isMissingColumnError(err: any, columnName: string) {
+  const code = err?.code;
+  const message = String(err?.message || '');
+  return code === 'PGRST204' && new RegExp(`\\b${columnName}\\b`, 'i').test(message);
+}
+
 export async function GET(request: NextRequest) {
   try {
     const supabase = createAdminClient();
@@ -90,7 +96,20 @@ export async function POST(request: NextRequest) {
           .update({ is_popular })
           .eq('id', gameId);
         if (popErr) {
-          console.log('Could not save is_popular directly');
+          if (isMissingColumnError(popErr, 'is_popular')) {
+            return NextResponse.json(
+              {
+                code: (popErr as any)?.code,
+                error:
+                  "Database schema is missing 'games.is_popular'. Apply the Supabase migrations or run: ALTER TABLE games ADD COLUMN IF NOT EXISTS is_popular boolean DEFAULT FALSE;",
+              },
+              { status: 400 }
+            );
+          }
+          return NextResponse.json(
+            { error: (popErr as any)?.message || 'Failed to save Most Popular flag', code: (popErr as any)?.code },
+            { status: 500 }
+          );
         }
       }
 
@@ -224,7 +243,23 @@ export async function PUT(request: NextRequest) {
 
     if (typeof is_popular !== 'undefined') {
       try {
-        await supabase.from('games').update({ is_popular }).eq('id', id);
+        const { error: popErr } = await supabase.from('games').update({ is_popular }).eq('id', id);
+        if (popErr) {
+          if (isMissingColumnError(popErr, 'is_popular')) {
+            return NextResponse.json(
+              {
+                code: (popErr as any)?.code,
+                error:
+                  "Database schema is missing 'games.is_popular'. Apply the Supabase migrations or run: ALTER TABLE games ADD COLUMN IF NOT EXISTS is_popular boolean DEFAULT FALSE;",
+              },
+              { status: 400 }
+            );
+          }
+          return NextResponse.json(
+            { error: (popErr as any)?.message || 'Failed to save Most Popular flag', code: (popErr as any)?.code },
+            { status: 500 }
+          );
+        }
       } catch (err) {
         console.log('Could not save is_popular directly');
       }
