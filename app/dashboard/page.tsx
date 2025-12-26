@@ -65,7 +65,7 @@ function DashboardContent() {
       }
 
       try {
-        const [rewardsRes, activitiesRes, assessmentsRes] = await Promise.all([
+        const [rewardsRes, activitiesRes, gamesCountRes, assessmentsRes] = await Promise.all([
           supabase
             .from('user_rewards')
             .select('total_points')
@@ -76,7 +76,12 @@ function DashboardContent() {
             .select('*')
             .eq('user_id', user.id)
             .order('created_at', { ascending: false })
-            .limit(5),
+            .limit(3),
+          supabase
+            .from('reward_activities')
+            .select('id', { count: 'exact', head: true })
+            .eq('user_id', user.id)
+            .eq('activity_type', 'game'),
           supabase
             .from('mood_assessments')
             .select('id')
@@ -90,8 +95,12 @@ function DashboardContent() {
 
         if (activitiesRes.data) {
           setRecentActivities(activitiesRes.data);
-          const gameCount = (activitiesRes.data as RecentActivity[]).filter((a: RecentActivity) => a.activity_type === 'game').length;
-          setGamesPlayed(gameCount);
+        }
+
+        if ((gamesCountRes as any)?.count !== undefined && (gamesCountRes as any)?.count !== null) {
+          setGamesPlayed((gamesCountRes as any).count as number);
+        } else {
+          setGamesPlayed(0);
         }
 
         if (assessmentsRes.data) {
@@ -115,18 +124,6 @@ function DashboardContent() {
       icon: Flame,
       color: 'from-orange-400 to-rose-500',
       highlight: streakHighlight && currentStreak > 0
-    },
-    {
-      label: 'Total Points',
-      value: totalPoints.toString(),
-      icon: TrendingUp,
-      color: 'from-blue-400 to-cyan-500'
-    },
-    {
-      label: 'Wellness Score',
-      value: totalPoints > 0 ? ((totalPoints / 50).toFixed(1)) : '0',
-      icon: Heart,
-      color: 'from-pink-400 to-rose-500'
     },
   ];
 
@@ -192,6 +189,18 @@ function DashboardContent() {
               </Card>
             );
           })}
+
+          <Card className="border-2 lg:col-span-2">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <TrendingUp className="w-5 h-5 text-accent" />
+                Todo List
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <TodoList />
+            </CardContent>
+          </Card>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-3 sm:gap-4 md:gap-6 mb-8 sm:mb-12">
@@ -306,17 +315,6 @@ function DashboardContent() {
           </CardContent>
         </Card>
 
-        <Card className="border-2 mb-8">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <TrendingUp className="w-5 h-5 text-accent" />
-              Todo List
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <TodoList />
-          </CardContent>
-        </Card>
       </main>
       <AppFooter />
     </div>

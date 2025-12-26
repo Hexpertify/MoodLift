@@ -23,11 +23,64 @@ type FavoriteItem = {
   cover_image_url?: string;
 };
 
+const GAME_ROUTES: { [key: string]: string } = {
+  // Keys here are normalized by normalizeTitle() (lowercase, punctuation removed, single-spaced)
+  'diaphragmatic breathing': '/games/diaphragmatic-breathing',
+  'box breathing': '/games/box-breathing',
+  '4 7 8 breathing': '/games/four-seven-eight-breathing',
+  'alternate nostril breathing': '/games/alternate-nostril-breathing',
+  'posture and body reset': '/games/posture-reset',
+  'describe the room technique': '/games/describe-room',
+  'describe your room technique': '/games/describe-room',
+  'describe your room': '/games/describe-room',
+  'describe room technique': '/games/describe-room',
+  'name the moment technique': '/games/name-the-moment',
+  'self soothing dbt technique': '/games/self-soothing',
+  'self soothing': '/games/self-soothing',
+  'cognitive grounding': '/games/cognitive-grounding',
+  'physical grounding': '/games/physical-grounding',
+};
+
 export function FavoritesSection() {
   const { user } = useAuth();
   const router = useRouter();
   const [favorites, setFavorites] = useState<FavoriteItem[]>([]);
   const [loading, setLoading] = useState(true);
+
+  const normalizeTitle = (title: string) =>
+    title
+      .toLowerCase()
+      .replace(/[()]/g, ' ')
+      .replace(/[^a-z0-9\s]/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim();
+
+  const getGameRoute = (title: string) => {
+    const normalized = normalizeTitle(title);
+
+    const direct = GAME_ROUTES[normalized];
+    if (direct) return direct;
+
+    // Handle minor wording differences ("your" vs "the", etc.)
+    const swapped = normalized.replace(/\byour\b/g, 'the');
+    const swappedDirect = GAME_ROUTES[swapped];
+    if (swappedDirect) return swappedDirect;
+
+    // Heuristic fallbacks for known route folders
+    if (normalized.includes('describe') && normalized.includes('room')) return '/games/describe-room';
+    if (normalized.includes('name the moment')) return '/games/name-the-moment';
+    if (normalized.includes('self soothing')) return '/games/self-soothing';
+    if (normalized.includes('cognitive grounding')) return '/games/cognitive-grounding';
+    if (normalized.includes('physical grounding')) return '/games/physical-grounding';
+    if (normalized.includes('alternate nostril')) return '/games/alternate-nostril-breathing';
+    if (normalized.includes('diaphragmatic')) return '/games/diaphragmatic-breathing';
+    if (normalized.includes('box breathing')) return '/games/box-breathing';
+    if (normalized.includes('4 7 8')) return '/games/four-seven-eight-breathing';
+
+    // Last resort: slugify (may 404 if no matching route folder exists)
+    const slug = normalized.replace(/\s+/g, '-');
+    return slug ? `/games/${slug}` : '/games';
+  };
 
   useEffect(() => {
     if (user) {
@@ -69,6 +122,7 @@ export function FavoritesSection() {
               color: game.color_from,
               icon: game.icon,
               category: game.category,
+              cover_image_url: game.cover_image_url,
             }))
           );
         }
@@ -222,17 +276,17 @@ export function FavoritesSection() {
                 </span>
                 {isGame ? (
                   <Button
+                    asChild
                     size="sm"
-                            className="h-7 sm:h-8 w-[100px] sm:w-[120px] rounded-[14px] bg-primary px-0 text-[10px] sm:text-[11px] font-semibold text-white hover:bg-primary/90"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              // Navigate to game page - create a slug from title if available
-                              const slugify = (s: string) => s.toLowerCase().replace(/[^a-z0-9\-\s]/g, '').trim().replace(/\s+/g, '-');
-                              const path = item.title ? `/games/${slugify(item.title)}` : `/games/${item.id}`;
-                              router.push(path);
-                            }}
+                    className="h-7 sm:h-8 w-[100px] sm:w-[120px] rounded-[14px] bg-primary px-0 text-[10px] sm:text-[11px] font-semibold text-white hover:bg-primary/90"
                   >
-                    PLAY NOW
+                    <Link
+                      href={item.title ? getGameRoute(item.title) : '/games'}
+                      onClick={(e) => e.stopPropagation()}
+                      title={item.title ? `Play ${item.title}` : 'Play games'}
+                    >
+                      PLAY NOW
+                    </Link>
                   </Button>
                 ) : (
                   <Button

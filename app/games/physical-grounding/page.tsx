@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { ArrowLeft, Play, Pause, RotateCcw, Volume2, VolumeX } from 'lucide-react';
 import { useVoiceGuide } from '@/hooks/use-breathing-guide';
+import { useLogGameActivity } from '@/hooks/use-log-game-activity';
 
 export default function PhysicalGrounding() {
   const router = useRouter();
@@ -26,6 +27,8 @@ export default function PhysicalGrounding() {
   const [progress, setProgress] = useState(0);
 
   const { speak } = useVoiceGuide();
+
+  useLogGameActivity('Physical Grounding', isRunning);
 
   const steps = [
     {

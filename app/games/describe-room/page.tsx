@@ -6,8 +6,9 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
-import { ArrowLeft, RotateCcw, Home, Volume2, VolumeX } from "lucide-react";
+import { ArrowLeft, RotateCcw, Gamepad2, Volume2, VolumeX } from "lucide-react";
 import { useAmbientSound } from "@/hooks/use-ambient-sound";
+import { useLogGameActivity } from '@/hooks/use-log-game-activity';
 
 type Step =
   | "start"
@@ -40,6 +41,8 @@ export default function DescribeRoom() {
   });
 
   useAmbientSound(ambientSoundEnabled, 0.5);
+
+  useLogGameActivity('Describe Room', currentStep !== 'start');
 
   const stepData: { [key: string]: StepConfig } = {
     step1: {
@@ -436,14 +439,6 @@ export default function DescribeRoom() {
                   {/* Action Buttons */}
                   <div className="flex flex-col md:flex-row gap-4 justify-center pt-4">
                     <Button
-                      onClick={handleSave}
-                      variant="outline"
-                      className="px-6"
-                    >
-                      Save Entry
-                    </Button>
-
-                    <Button
                       onClick={handleReset}
                       className="bg-gradient-to-r from-orange-500 to-amber-500 hover:opacity-90 text-white px-6"
                     >
@@ -452,11 +447,11 @@ export default function DescribeRoom() {
                     </Button>
 
                     <Button
-                      onClick={() => router.push("/home")}
+                      onClick={() => router.push("/games")}
                       className="bg-gradient-to-r from-purple-500 to-pink-500 hover:opacity-90 text-white px-6"
                     >
-                      <Home className="w-4 h-4 mr-2" />
-                      Return Home
+                      <Gamepad2 className="w-4 h-4 mr-2" />
+                      Return to Games
                     </Button>
                   </div>
                 </div>

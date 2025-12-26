@@ -8,6 +8,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { ArrowLeft, Play, Pause, RotateCcw, Volume2, VolumeX } from 'lucide-react';
 import { useVoiceGuide } from '@/hooks/use-breathing-guide';
 import { useBackgroundMusic } from '@/hooks/use-background-music';
+import { useLogGameActivity } from '@/hooks/use-log-game-activity';
 
 export default function CognitiveGrounding() {
   const router = useRouter();
@@ -18,6 +19,8 @@ export default function CognitiveGrounding() {
 
   const { speak, stop } = useVoiceGuide();
   useBackgroundMusic(true, 0.25);
+
+  useLogGameActivity('Cognitive Grounding', isRunning);
 
   // Stop voice when voice is disabled
   useEffect(() => {

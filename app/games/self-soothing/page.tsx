@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Slider } from '@/components/ui/slider';
 import { ArrowLeft, Pause, Play, Volume2, VolumeX } from 'lucide-react';
+import { useLogGameActivity } from '@/hooks/use-log-game-activity';
 
 type Screen = 'intro' | 'emotion' | 'touch' | 'sight' | 'sound' | 'smell' | 'taste' | 'reflection' | 'closing';
 type ReflectionOption = 'softer' | 'calmer' | 'steadier' | 'unsure' | null;
@@ -36,6 +37,8 @@ export default function SelfSoothing() {
   const [reflection, setReflection] = useState<ReflectionOption>(null);
   const audioRef = useRef<HTMLAudioElement>(null);
   const hapticRef = useRef<boolean>(false);
+
+  useLogGameActivity('Self-Soothing', screen !== 'intro');
 
   // Auto-advance experience timer
   useEffect(() => {

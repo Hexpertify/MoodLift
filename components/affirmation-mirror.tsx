@@ -7,6 +7,7 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Heart, Sparkles, RefreshCw, Video, VideoOff } from 'lucide-react';
 import { Alert, AlertDescription } from '@/components/ui/alert';
+import { useLogGameActivity } from '@/hooks/use-log-game-activity';
 
 type AffirmationState = {
   challenge: string;
@@ -55,6 +56,8 @@ export function AffirmationMirror() {
   const [cameraError, setCameraError] = useState<string>('');
   const videoRef = useRef<HTMLVideoElement>(null);
   const streamRef = useRef<MediaStream | null>(null);
+
+  useLogGameActivity('Affirmation Mirror', step !== 'identify');
 
   useEffect(() => {
     return () => {

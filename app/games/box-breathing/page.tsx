@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { RotateCcw } from 'lucide-react';
 import { useBackgroundMusic } from '@/hooks/use-background-music';
+import { useLogGameActivity } from '@/hooks/use-log-game-activity';
 
 export default function BoxBreathing() {
   const router = useRouter();
@@ -19,6 +20,8 @@ export default function BoxBreathing() {
   const timerRef = useRef<NodeJS.Timeout>();
 
   useBackgroundMusic(true, 0.25);
+
+  useLogGameActivity('Box Breathing', isRunning);
 
   const SPEED = 70; // pixels per second
   const CONTAINER_SIZE = 300;

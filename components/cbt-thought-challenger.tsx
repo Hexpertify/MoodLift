@@ -7,6 +7,7 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { AlertCircle, Lightbulb, CheckCircle2 } from 'lucide-react';
 import { Alert, AlertDescription } from '@/components/ui/alert';
+import { useLogGameActivity } from '@/hooks/use-log-game-activity';
 
 type ThoughtChallenge = {
   automaticThought: string;
@@ -25,6 +26,8 @@ export function CBTThoughtChallenger() {
     balancedThought: '',
     mood: '',
   });
+
+  useLogGameActivity('CBT Thought-Challenger', step !== 'input');
 
   const handleInputChange = (field: keyof ThoughtChallenge, value: string) => {
     setChallenge({ ...challenge, [field]: value });

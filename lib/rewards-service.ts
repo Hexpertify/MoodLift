@@ -24,24 +24,29 @@ export const rewardsService = {
 
     if (activityError) throw activityError;
 
-    // Update total points
-    const { data: currentRewards } = await supabase
+    // Update total points (create the row if missing)
+    const { data: currentRewards, error: currentRewardsError } = await supabase
       .from('user_rewards')
       .select('total_points')
       .eq('user_id', userId)
       .maybeSingle();
 
-    const newTotal = (currentRewards?.total_points || 0) + points;
+    if (currentRewardsError) throw currentRewardsError;
 
-    const { error: updateError } = await supabase
+    const newTotal = (currentRewards?.total_points ?? 0) + points;
+
+    const { error: upsertError } = await supabase
       .from('user_rewards')
-      .update({
-        total_points: newTotal,
-        updated_at: new Date().toISOString(),
-      })
-      .eq('user_id', userId);
+      .upsert(
+        {
+          user_id: userId,
+          total_points: newTotal,
+          updated_at: new Date().toISOString(),
+        },
+        { onConflict: 'user_id' }
+      );
 
-    if (updateError) throw updateError;
+    if (upsertError) throw upsertError;
 
     // Check for new badge unlocks
     await rewardsService.checkAndUnlockBadges(userId, newTotal);

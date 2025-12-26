@@ -4,8 +4,9 @@ import { useState, useEffect, useRef } from 'react';
 import { AppFooter } from "@/components/app-footer";
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
-import { ChevronRight, Home } from 'lucide-react';
+import { ChevronRight, Gamepad2 } from 'lucide-react';
 import { useBackgroundMusic } from '@/hooks/use-background-music';
+import { useLogGameActivity } from '@/hooks/use-log-game-activity';
 
 type Step = 'intro' | 'externalize' | 'categorize' | 'actionBuilder' | 'acceptancePath' | 'gifDisplay' | 'storage' | 'closing';
 type AnswerType = 'yes' | 'no' | null;
@@ -24,6 +25,8 @@ export default function WorryBox() {
   const [actionTime, setActionTime] = useState('');
   const [selectedTag, setSelectedTag] = useState<TagType>(null);
   const [storagePhase, setStoragePhase] = useState<'floating' | 'opening' | 'closing' | 'complete'>('floating');
+
+  useLogGameActivity('Worry Box', step !== 'intro');
   
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animationIdRef = useRef<number>();
@@ -299,8 +302,8 @@ export default function WorryBox() {
     }
   };
 
-  const handleReturnHome = () => {
-    router.push('/dashboard');
+  const handleReturnToGames = () => {
+    router.push('/games');
   };
 
   return (
@@ -680,11 +683,12 @@ export default function WorryBox() {
                   Add Another Worry
                 </Button>
                 <Button
-                  onClick={handleReturnHome}
+                  onClick={handleReturnToGames}
                   className="w-full sm:w-auto bg-gradient-to-r from-purple-600 to-purple-500 text-white"
                   size="lg"
                 >
-                  Return Home
+                  <Gamepad2 className="w-4 h-4 mr-2" />
+                  Return to Games
                 </Button>
               </div>
             </div>

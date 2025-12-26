@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { RotateCcw, CheckCircle2 } from 'lucide-react';
 import { useBackgroundMusic } from '@/hooks/use-background-music';
+import { useLogGameActivity } from '@/hooks/use-log-game-activity';
 
 interface PostureStep {
   id: number;
@@ -69,6 +70,8 @@ export default function PostureReset() {
   const timerRef = useRef<NodeJS.Timeout>();
 
   useBackgroundMusic(true, 0.25);
+
+  useLogGameActivity('Posture Reset', isStarted);
 
   const playDingSound = () => {
     try {

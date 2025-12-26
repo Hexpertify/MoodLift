@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { RotateCcw, Volume2, VolumeX } from 'lucide-react';
 import { useBackgroundMusic } from '@/hooks/use-background-music';
+import { useLogGameActivity } from '@/hooks/use-log-game-activity';
 
 type Phase = 'inhale' | 'hold' | 'exhale' | 'complete';
 
@@ -29,6 +30,8 @@ export default function Breathing478() {
   const sessionDurationSecondsRef = useRef(0);
 
   useBackgroundMusic(true, 0.25);
+
+  useLogGameActivity('4-7-8 Breathing', isRunning);
 
   // Breathing pattern configuration
   const breathingPattern = {

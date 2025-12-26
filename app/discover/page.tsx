@@ -42,7 +42,7 @@ function DiscoverContent() {
               <div className="w-full md:w-auto flex justify-center md:justify-end">
                 <div className="w-[160px] sm:w-[200px] md:w-[220px] aspect-square rounded-3xl bg-muted flex items-center justify-center overflow-hidden">
                   <img
-                    src="/assessment-boy.png"
+                    src="/images/assessment-illustration.png"
                     alt="Assessment illustration"
                     className="h-full w-full object-contain"
                     draggable={false}

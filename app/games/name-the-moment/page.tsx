@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent } from "@/components/ui/card";
 import { ArrowLeft, RotateCcw, Home } from "lucide-react";
+import { useLogGameActivity } from '@/hooks/use-log-game-activity';
 
 type Step =
   | "start"
@@ -74,6 +75,8 @@ export default function NameTheMoment() {
   const [intensity, setIntensity] = useState(5);
   const [reflection, setReflection] = useState("");
   const [showReflectionSkip, setShowReflectionSkip] = useState(false);
+
+  useLogGameActivity('Name the Moment', currentStep !== 'start');
 
   // Breathing countdown
   useEffect(() => {

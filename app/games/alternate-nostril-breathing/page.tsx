@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { RotateCcw } from 'lucide-react';
 import { useBreathingGuide, type BreathingCycle } from '@/hooks/use-breathing-guide';
+import { useLogGameActivity } from '@/hooks/use-log-game-activity';
 
 export default function AlternateNostrilBreathing() {
   const router = useRouter();
@@ -42,6 +43,8 @@ export default function AlternateNostrilBreathing() {
     totalDuration: totalDuration,
     name: 'Alternate Nostril Breathing',
   });
+
+  useLogGameActivity('Alternate Nostril Breathing', guide.isRunning);
 
   useEffect(() => {
     if (resetTrigger > 0) {

@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { ArrowLeft, Play, Pause, RotateCcw, Volume2, VolumeX } from 'lucide-react';
 import { useBreathingGuide, useVoiceGuide, type BreathingCycle } from '@/hooks/use-breathing-guide';
+import { useLogGameActivity } from '@/hooks/use-log-game-activity';
 
 export default function FourSevenEightBreathing() {
   const router = useRouter();
@@ -30,6 +31,8 @@ export default function FourSevenEightBreathing() {
     totalDuration: breathingCycles.reduce((sum, c) => sum + c.duration, 0),
     name: '4-7-8 Breathing',
   });
+
+  useLogGameActivity('4-7-8 Breathing', guide.isRunning);
 
   useEffect(() => {
     if (voiceEnabled && guide.currentInstruction && guide.isRunning) {

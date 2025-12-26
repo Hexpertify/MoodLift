@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '@/lib/supabase';
+import { rewardsService } from '@/lib/rewards-service';
 import {
   calculateStreakUpdate,
   getToday,
@@ -72,6 +73,17 @@ export function useStreak(): UseStreakResult {
       }
 
       const today = getToday();
+
+      // Record daily login activity (used by Dashboard Check-in Log)
+      try {
+        const alreadyLogged = await rewardsService.hasActivityToday(user.id, 'daily_login');
+        if (!alreadyLogged) {
+          await rewardsService.addActivity(user.id, 'daily_login', 'Daily Login');
+        }
+      } catch (e) {
+        // Don't block streak updates if rewards logging fails
+        console.error('Failed to log daily_login activity:', e);
+      }
 
       if (!streakData) {
         // New user, create initial streak record
