@@ -14,7 +14,7 @@ import { useAuth } from '@/lib/auth-context';
 import { getGameRecommendations, type MoodType } from '@/lib/mood-service';
 import { HomeNavbar } from '@/components/home-navbar';
 import ConsultantCarousel from '@/components/consultant-carousel';
-import { StructuredData } from '@/components/structured-data';
+import StructuredData from '@/components/structured-data';
 
 type TestType = 'panas' | 'phq9' | 'gad7' | null;
 
@@ -48,32 +48,66 @@ type TestOption = {
   info: TestInfo;
 };
 
-const assessments = [
-  {
-    name: 'PANAS-SF (Positive and Negative Affect Schedule – Short Form)',
-    description:
-      'A short self-report scale that measures positive and negative affect (emotional states) to understand your current mood.',
-    diagnosis: 'Levels of positive and negative affect and current emotional state.',
-    duration: '2-3 minutes',
-    condition: 'Emotional well-being and mood',
+const assessmentCollectionSchema = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  name: "Mental Health Assessments",
+  description:
+    "A collection of scientifically validated mental health self-assessment tools available on MoodLift.",
+  url: "https://moodify-main-gojz.vercel.app/assessment",
+  mainEntity: {
+    "@type": "ItemList",
+    itemListOrder: "https://schema.org/ItemListOrderAscending",
+    numberOfItems: 3,
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        item: {
+          "@type": "MedicalTest",
+          name: "PANAS-SF (Positive and Negative Affect Schedule – Short Form)",
+          description:
+            "A short self-report scale used to assess positive and negative emotional states.",
+          usedToDiagnose: {
+            "@type": "MedicalCondition",
+            name: "Emotional affect and mood state",
+          },
+          url: "https://moodify-main-gojz.vercel.app/assessment?test=panas",
+        },
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        item: {
+          "@type": "MedicalTest",
+          name: "PHQ-9 Depression Questionnaire",
+          description:
+            "A nine-item questionnaire used to screen for the presence and severity of depressive symptoms based on DSM criteria.",
+          usedToDiagnose: {
+            "@type": "MedicalCondition",
+            name: "Depression",
+          },
+          url: "https://moodify-main-gojz.vercel.app/assessment?test=phq9",
+        },
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        item: {
+          "@type": "MedicalTest",
+          name: "GAD-7 Anxiety Questionnaire",
+          description:
+            "A seven-item questionnaire used to screen for generalized anxiety symptoms and assess their severity.",
+          usedToDiagnose: {
+            "@type": "MedicalCondition",
+            name: "Generalized anxiety disorder",
+          },
+          url: "https://moodify-main-gojz.vercel.app/assessment?test=gad7",
+        },
+      },
+    ],
   },
-  {
-    name: 'PHQ-9 Depression Questionnaire',
-    description:
-      'A nine-item questionnaire that screens for the presence and severity of depressive symptoms based on DSM criteria.',
-    diagnosis: 'Major depressive disorder and depressive symptom severity.',
-    duration: '2-3 minutes',
-    condition: 'Depression',
-  },
-  {
-    name: 'GAD-7 Anxiety Questionnaire',
-    description:
-      'A seven-item questionnaire that screens for generalized anxiety symptoms and their severity.',
-    diagnosis: 'Generalized anxiety disorder and anxiety symptom severity.',
-    duration: '2-3 minutes',
-    condition: 'Generalized anxiety and related anxiety disorders',
-  },
-];
+} as const;
 
 export default function PsychometricAssessment() {
   const { user } = useAuth();
@@ -83,34 +117,6 @@ export default function PsychometricAssessment() {
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [result, setResult] = useState<AssessmentResult | null>(null);
   const [userSession, setUserSession] = useState('');
-
-  const assessmentSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'CollectionPage',
-    name: 'Mental Health Assessments',
-    description:
-      'A collection of scientifically validated mental health assessments available on MoodLift.',
-    hasPart: {
-      '@type': 'ItemList',
-      itemListOrder: 'https://schema.org/ItemListOrderAscending',
-      numberOfItems: assessments.length,
-      itemListElement: assessments.map((test, index) => ({
-        '@type': 'ListItem',
-        position: index + 1,
-        item: {
-          '@type': 'MedicalTest',
-          name: test.name,
-          description: test.description,
-          usedToDiagnose: test.diagnosis,
-          estimatedDuration: test.duration,
-          healthCondition: {
-            '@type': 'MedicalCondition',
-            name: test.condition,
-          },
-        },
-      })),
-    },
-  } as const;
 
   const testOptions: TestOption[] = [
     {
@@ -504,9 +510,8 @@ export default function PsychometricAssessment() {
   );
 
   return (
-    <>
-      <StructuredData script={assessmentSchema} />
-      <div className="min-h-screen bg-gradient-to-br from-[#E2DAF5] via-white to-[#E2DAF5]">
+    <div className="min-h-screen bg-gradient-to-br from-[#E2DAF5] via-white to-[#E2DAF5]">
+      <StructuredData id="schema-assessment-collection" script={assessmentCollectionSchema} />
       <HomeNavbar />
 
       <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 md:py-12">
@@ -896,6 +901,5 @@ export default function PsychometricAssessment() {
       />
       <AppFooter />
     </div>
-    </>
   );
 }
