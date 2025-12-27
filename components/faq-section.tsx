@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ChevronDown } from 'lucide-react';
+import StructuredData from '@/components/structured-data';
 
 interface FAQItem {
   question: string;
@@ -65,9 +66,8 @@ export function FAQSection({ title, items = [], page, schemaType = 'HomePage' }:
     <>
       {/* Schema.org JSON-LD */}
       {shouldRenderSchema ? (
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}
+        <StructuredData id={`schema-faq-${page || schemaType}`}
+          script={schemaData}
         />
       ) : null}
 

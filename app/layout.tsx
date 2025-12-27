@@ -4,8 +4,6 @@ import { getSeoMetadata } from '@/lib/seo-service';
 import { Inter } from 'next/font/google';
 import { AuthProvider } from '@/lib/auth-context';
 import { FavoritesProvider } from '@/lib/favorites-context';
-import StructuredData from '@/components/structured-data';
-import { headers } from 'next/headers';
 
 export const dynamic = 'force-dynamic';
 
@@ -106,17 +104,6 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const headerList = headers();
-  const forwardedProto = headerList.get('x-forwarded-proto');
-  const forwardedHost = headerList.get('x-forwarded-host');
-  const host = forwardedHost || headerList.get('host');
-  const protocol = forwardedProto || (host?.includes('localhost') ? 'http' : 'https');
-  const siteUrl =
-    process.env.NEXT_PUBLIC_SITE_URL ||
-    process.env.SITE_URL ||
-    (host ? `${protocol}://${host}` : 'http://localhost:3000');
-  const canonicalSiteUrl = siteUrl.replace(/\/$/, '');
-
   return (
     <html lang="en">
       <head>
@@ -136,43 +123,6 @@ export default function RootLayout({
       <body className={`${inter.variable} font-sans`}>
         <AuthProvider>
           <FavoritesProvider>
-          {/* Base WebSite schema for all pages */}
-          <StructuredData
-            script={{
-              "@context": "https://schema.org",
-              "@type": "WebSite",
-              "name": "MoodLift",
-              "url": canonicalSiteUrl,
-              "potentialAction": {
-                "@type": "SearchAction",
-                "target": `${canonicalSiteUrl}/search?q={search_term_string}`,
-                "query-input": "required name=search_term_string"
-              }
-            }}
-          />
-
-          {/* Base Organization schema for all pages */}
-          <StructuredData
-            script={{
-              "@context": "https://schema.org",
-              "@type": "Organization",
-              "@id": `${canonicalSiteUrl}/#organization`,
-              "name": "MoodLift",
-              "url": canonicalSiteUrl,
-              "logo": `${canonicalSiteUrl}/logo.png`,
-              "description":
-                "MoodLift is a Mental wellness platform designed to help people understand, regulate, and improve their mood through simple, engaging activities.",
-              "parentOrganization": {
-                "@type": "Organization",
-                "name": "Hexpertify",
-                "url": "https://hexpertify.com"
-              },
-              "sameAs": [
-                "https://www.instagram.com/hexpertify",
-                "https://www.linkedin.com/company/hexpertify"
-              ]
-            }}
-          />
           {children}
           </FavoritesProvider>
         </AuthProvider>

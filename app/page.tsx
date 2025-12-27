@@ -32,6 +32,22 @@ type Game = {
 };
 
 export default function Home() {
+  const websiteSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    '@id': 'https://moodlift.yourdomain.com/#website',
+    url: 'https://moodlift.yourdomain.com',
+    name: 'MoodLift',
+    description:
+      'MoodLift is a Mental wellness platform designed to help people understand, regulate, and improve their mood through simple, engaging activities.',
+    publisher: {
+      '@type': 'Organization',
+      '@id': 'https://hexpertify.com/#organization',
+      name: 'Hexpertify',
+      url: 'https://hexpertify.com',
+    },
+  };
+
   const { user } = useAuth();
   const router = useRouter();
   const [selectedMood, setSelectedMood] = useState<string | null>(null);
@@ -213,6 +229,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-white via-secondary/20 to-accent/10">
+      <StructuredData id="schema-website" script={websiteSchema} />
       <HomeNavbar onAuthSuccess={handleAuthSuccess} />
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 md:py-12">
