@@ -213,8 +213,14 @@ export default function ConsultantCarousel({ compact = false }: ConsultantCarous
     const track = trackRef.current;
     if (!container || !track) return;
 
+    // Ensure we start unpaused when (re)mounting.
+    pausedRef.current = false;
+
     const recalc = () => {
-      totalWidthRef.current = track.scrollWidth / 2 || 0; // track contains two copies
+      // Track contains two copies for seamless looping.
+      // scrollWidth can be 0 briefly during hydration / before CSS/layout settles.
+      const next = track.scrollWidth / 2;
+      if (next > 0) totalWidthRef.current = next;
     };
 
     recalc();
@@ -224,7 +230,16 @@ export default function ConsultantCarousel({ compact = false }: ConsultantCarous
       if (lastTime == null) lastTime = now;
       const delta = (now - lastTime) / 1000;
       lastTime = now;
-      const width = totalWidthRef.current;
+      // Self-heal: if width wasn't measurable at effect start, try again.
+      let width = totalWidthRef.current;
+      if (width <= 0) {
+        const measured = (trackRef.current?.scrollWidth || 0) / 2;
+        if (measured > 0) {
+          totalWidthRef.current = measured;
+          width = measured;
+        }
+      }
+
       if (!pausedRef.current && width > 0) {
         offsetRef.current += speed * delta;
         if (offsetRef.current >= width) offsetRef.current -= width;
@@ -245,11 +260,15 @@ export default function ConsultantCarousel({ compact = false }: ConsultantCarous
       ro.observe(track);
     }
 
+    // Also re-check after the next paint; scrollWidth may change without a resize.
+    const raf = requestAnimationFrame(() => recalc());
+
     container.addEventListener('mouseenter', onEnter);
     container.addEventListener('mouseleave', onLeave);
 
     return () => {
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
+      cancelAnimationFrame(raf);
       stopMomentum();
       container.removeEventListener('mouseenter', onEnter);
       container.removeEventListener('mouseleave', onLeave);
