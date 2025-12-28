@@ -34,9 +34,9 @@ export function SiteHeader() {
     <nav className="border-b bg-white/80 backdrop-blur-sm sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16 flex-wrap">
-          <Link href="/" className="flex items-center gap-2 ml-2" title="Go to MoodLift home page">
+          <Link href="/" className="flex items-center gap-2" title="Go to MoodLift home page">
             <img
-              src="/images/MoodLift_Logo (1).jpg"
+              src="/images/HexpertifyBlog Logo - MoodLiftLogo - Edited.png"
               alt="MoodLift logo"
               className="h-12 w-auto object-contain"
             />

@@ -8,9 +8,9 @@ export function AppFooter() {
           <div className="space-y-4">
             <div className="flex items-center gap-2">
               <img
-                src="/images/MoodLift_Logo (1).jpg"
+                src="/images/HexpertifyBlog Logo - MoodLiftLogo - Edited.png"
                 alt="MoodLift logo"
-                className="h-12 w-auto object-contain ml-2"
+                className="h-12 w-auto object-contain"
               />
             </div>
             <div className="text-xs text-muted-foreground space-y-2">
