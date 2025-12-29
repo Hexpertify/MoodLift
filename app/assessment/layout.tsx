@@ -38,7 +38,7 @@ const defaultMetadata: Metadata = {
   openGraph: {
     title: 'Mood Assessment - Take Your Emotional Wellness Test | MoodLift',
     description: 'Take scientifically validated mood assessments including PANAS, PHQ-9, and GAD-7 to understand your emotional state and get personalized wellness recommendations.',
-    url: `${SITE_URL}/assessment`,
+    url: `${SITE_URL.replace(/\/$/, '')}/mood-assessment`,
     siteName: 'MoodLift',
     images: [
       {

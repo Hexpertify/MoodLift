@@ -5,6 +5,15 @@ const nextConfig = {
   },
   images: { unoptimized: true },
   reactStrictMode: false,
+  async redirects() {
+    return [
+      {
+        source: '/assessment',
+        destination: '/mood-assessment',
+        permanent: true,
+      },
+    ];
+  },
   webpack: (config) => {
     // Force webpack to use in-memory cache instead of the 'pack' file strategy.
     // This avoids ENOENT rename errors from PackFileCacheStrategy in some dev
