@@ -17,17 +17,18 @@ export default function BoxBreathing() {
   const [ballPosition, setBallPosition] = useState({ x: -138, y: -138 });
   const [selectedDuration, setSelectedDuration] = useState(2); // 2, 3, or 5 minutes
   const audioContextRef = useRef<AudioContext | null>(null);
-  const timerRef = useRef<NodeJS.Timeout>();
+  const animationFrameRef = useRef<number | null>(null);
+  const elapsedTimeRef = useRef(0);
+  const previousPhaseRef = useRef<'inhale' | 'hold-in' | 'exhale' | 'hold-out'>('inhale');
 
   useBackgroundMusic(true, 0.25);
 
   useLogGameActivity('Box Breathing', isRunning);
 
-  const SPEED = 70; // pixels per second
-  const CONTAINER_SIZE = 300;
-  const PHASE_DURATION = CONTAINER_SIZE / SPEED; // ~4.286 seconds
-  const CYCLE_DURATION = PHASE_DURATION * 4; // One complete cycle
+  const PHASE_DURATION = 4; // seconds per side (inhale, hold-in, exhale, hold-out)
+  const CYCLE_DURATION = PHASE_DURATION * 4; // One complete 4-4-4-4 cycle
   const TOTAL_DURATION = selectedDuration * 60; // Convert minutes to seconds
+  const CONTAINER_SIZE = 300;
   const HALF_CONTAINER = CONTAINER_SIZE / 2;
 
   useEffect(() => {
@@ -207,49 +208,62 @@ export default function BoxBreathing() {
     return { x, y };
   };
 
-  const updatePhase = (timeInCycle: number) => {
-    const phaseIndex = Math.floor(timeInCycle / PHASE_DURATION) % 4;
-    const newPhase: 'inhale' | 'hold-in' | 'exhale' | 'hold-out' =
-      phaseIndex === 0 ? 'inhale' :
-      phaseIndex === 1 ? 'hold-in' :
-      phaseIndex === 2 ? 'exhale' :
-      'hold-out';
-
-    if (newPhase !== phase) {
-      setPhase(newPhase);
-      playMeditationBell();
-    }
-
-    const position = calculateBallPosition(timeInCycle, phaseIndex);
-    setBallPosition(position);
-  };
-
   useEffect(() => {
     if (!isRunning) {
-      if (timerRef.current) clearTimeout(timerRef.current);
+      if (animationFrameRef.current !== null) {
+        cancelAnimationFrame(animationFrameRef.current);
+        animationFrameRef.current = null;
+      }
       return;
     }
 
-    timerRef.current = setInterval(() => {
-      setSessionTime((prev) => {
-        const newTime = prev - 1;
+    const startTime = performance.now() - elapsedTimeRef.current * 1000;
 
-        if (newTime <= 0) {
-          setIsRunning(false);
-          return 0;
-        }
+    const animate = (now: number) => {
+      const elapsedSeconds = (now - startTime) / 1000;
+      elapsedTimeRef.current = elapsedSeconds;
 
-        const timeInCycle = (TOTAL_DURATION - newTime) % (PHASE_DURATION * 4);
-        updatePhase(timeInCycle);
+      const remaining = Math.max(0, TOTAL_DURATION - Math.floor(elapsedSeconds));
 
-        return newTime;
-      });
-    }, 1000);
+      setSessionTime((prev) => (prev !== remaining ? remaining : prev));
+
+      if (remaining <= 0) {
+        setIsRunning(false);
+        setPhase('inhale');
+        previousPhaseRef.current = 'inhale';
+        setBallPosition({ x: -MAX_DISTANCE, y: -MAX_DISTANCE });
+        return;
+      }
+
+      const timeInCycle = elapsedSeconds % CYCLE_DURATION;
+      const phaseIndex = Math.floor(timeInCycle / PHASE_DURATION) % 4;
+      const newPhase: 'inhale' | 'hold-in' | 'exhale' | 'hold-out' =
+        phaseIndex === 0 ? 'inhale' :
+        phaseIndex === 1 ? 'hold-in' :
+        phaseIndex === 2 ? 'exhale' :
+        'hold-out';
+
+      if (newPhase !== previousPhaseRef.current) {
+        previousPhaseRef.current = newPhase;
+        setPhase(newPhase);
+        playMeditationBell();
+      }
+
+      const position = calculateBallPosition(timeInCycle, phaseIndex);
+      setBallPosition(position);
+
+      animationFrameRef.current = requestAnimationFrame(animate);
+    };
+
+    animationFrameRef.current = requestAnimationFrame(animate);
 
     return () => {
-      if (timerRef.current) clearTimeout(timerRef.current);
+      if (animationFrameRef.current !== null) {
+        cancelAnimationFrame(animationFrameRef.current);
+        animationFrameRef.current = null;
+      }
     };
-  }, [isRunning, phase, updatePhase]);
+  }, [isRunning, TOTAL_DURATION, CYCLE_DURATION, PHASE_DURATION, MAX_DISTANCE]);
 
   const phaseLabel = {
     inhale: 'Breathe In',
@@ -259,9 +273,14 @@ export default function BoxBreathing() {
   };
 
   const handleStart = () => {
+    // Align animation time with current remaining time so resume is smooth.
+    const elapsedSoFar = TOTAL_DURATION - sessionTime;
+    elapsedTimeRef.current = elapsedSoFar > 0 ? elapsedSoFar : 0;
+    previousPhaseRef.current = phase;
     setIsRunning(true);
     if (sessionTime === TOTAL_DURATION) {
       setPhase('inhale');
+      previousPhaseRef.current = 'inhale';
       setBallPosition({ x: -MAX_DISTANCE, y: -MAX_DISTANCE });
       playMeditationBell();
     }
@@ -271,7 +290,9 @@ export default function BoxBreathing() {
     setSessionTime(TOTAL_DURATION);
     setIsRunning(false);
     setPhase('inhale');
-    setBallPosition({ x: -138, y: -138 });
+    previousPhaseRef.current = 'inhale';
+    elapsedTimeRef.current = 0;
+    setBallPosition({ x: -MAX_DISTANCE, y: -MAX_DISTANCE });
   };
 
   const handleDurationSelect = (minutes: number) => {
@@ -280,7 +301,9 @@ export default function BoxBreathing() {
       setSessionTime(minutes * 60);
       setIsRunning(false);
       setPhase('inhale');
-      setBallPosition({ x: -138, y: -138 });
+      previousPhaseRef.current = 'inhale';
+      elapsedTimeRef.current = 0;
+      setBallPosition({ x: -MAX_DISTANCE, y: -MAX_DISTANCE });
     }
   };
 
@@ -344,7 +367,9 @@ export default function BoxBreathing() {
               style={{
                 left: `calc(50% + ${ballPosition.x}px - 12px)`,
                 top: `calc(50% + ${ballPosition.y}px - 12px)`,
-                transitionDuration: isRunning ? `${PHASE_DURATION}s` : '0s',
+                // Position is updated every animation frame via requestAnimationFrame,
+                // so we keep transitions instant to avoid stuttering.
+                transitionDuration: '0s',
                 transitionTimingFunction: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)',
                 boxShadow: '0 0 15px rgba(168, 85, 247, 0.8), 0 0 25px rgba(236, 72, 153, 0.6)',
                 zIndex: 10,

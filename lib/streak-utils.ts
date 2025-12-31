@@ -32,7 +32,8 @@ export function calculateStreakUpdate(
   const today = getToday();
   const yesterday = getYesterday();
 
-  if (!lastLoginDate) {
+  // Handle brand-new or legacy users with no valid streak yet
+  if (!lastLoginDate || currentStreak <= 0) {
     return {
       currentStreak: 1,
       longestStreak: Math.max(1, longestStreak),
