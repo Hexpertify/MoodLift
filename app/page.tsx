@@ -482,6 +482,13 @@ export default function Home() {
               </>
             )}
           </div>
+          <div className="mt-8 flex justify-center w-full">
+            <Link href="/games">
+              <Button className="h-10 sm:h-11 w-[80vw] max-w-3xl rounded-full px-8 bg-primary hover:bg-primary/90 text-sm sm:text-base font-semibold">
+                Browse All Activities
+              </Button>
+            </Link>
+          </div>
         </div>
 
         <ConsultantCarousel />
