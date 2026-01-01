@@ -196,11 +196,11 @@ export function AffirmationMirror() {
           const img = new window.Image();
           img.onload = () => resolve(img);
           img.onerror = () => reject(new Error('Logo failed to load'));
-          img.src = '/images/HexpertifyBlog Logo - MoodLiftLogo - Edited (2).png';
+          img.src = '/images/White-Logo.png';
         });
 
         const logoPadding = Math.round(width * 0.03);
-        const logoWidth = Math.round(width * 0.16);
+        const logoWidth = Math.round(width * 0.22);
         const aspectRatio = logo.naturalHeight && logo.naturalWidth
           ? logo.naturalHeight / logo.naturalWidth
           : 1;
@@ -509,10 +509,10 @@ export function AffirmationMirror() {
               {/* Logo in top-left corner of mirror */}
               <div className="absolute top-3 left-3 z-20 pointer-events-none">
                 <NextImage
-                  src="/images/HexpertifyBlog Logo - MoodLiftLogo - Edited (2).png"
+                  src="/images/White-Logo.png"
                   alt="MoodLift logo"
-                  width={80}
-                  height={80}
+                  width={112}
+                  height={112}
                   className="rounded-full bg-black/40 p-1"
                   priority
                 />
