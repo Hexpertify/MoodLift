@@ -131,7 +131,7 @@ function PsychometricAssessmentPage() {
       info: {
         inventor: 'David Watson, Lee Anna Clark, & Auke Tellegen',
         reason: 'Measures positive and negative affect (emotional states) with a short-form version for quick assessments of mood and emotions',
-        certifiedBy: 'Validated by multiple peer-reviewed studies; widely used in clinical and research settings',
+        certifiedBy: 'Validated by multiple Peer - Review studies, widely used in Clinical and Research settings.',
         details: 'The PANAS-SF (Short Form) is a 20-item self-report measure that assesses two dimensions of emotional experience: Positive Affect (PA) and Negative Affect (NA). It provides a rapid snapshot of your current emotional state.'
       }
     },
@@ -145,7 +145,7 @@ function PsychometricAssessmentPage() {
       info: {
         inventor: 'Developed by Robert L. Spitzer, Janet B.W. Williams, Kurt Kroenke, and colleagues',
         reason: 'A screening tool and severity measure for depression based on DSM-IV diagnostic criteria',
-        certifiedBy: 'FDA cleared; extensively validated in clinical and primary care settings; recommended by mental health organizations',
+        certifiedBy: 'FDA Cleared, Validated in Clinical settings & recom-mended by Mental Health organisations.',
         details: 'The PHQ-9 is a 9-item self-report instrument that scores each criterion as "0" (not at all) to "3" (nearly every day). It assesses the severity of depressive symptoms and has been validated across diverse populations.'
       }
     },
@@ -159,7 +159,7 @@ function PsychometricAssessmentPage() {
       info: {
         inventor: 'Developed by Robert L. Spitzer, Kurt Kroenke, and colleagues',
         reason: 'A brief screening tool and severity measure for generalized anxiety disorder',
-        certifiedBy: 'Validated across multiple studies; recommended by psychiatric and medical associations',
+        certifiedBy: 'Validated across multiple Studies, recommended by Psychiatric & Medical associations.',
         details: 'The GAD-7 is a 7-item self-report measure that assesses the severity of anxiety symptoms. Each item scores from "0" (not at all) to "3" (nearly every day), providing a rapid assessment of generalized anxiety.'
       }
     },
@@ -561,72 +561,79 @@ function PsychometricAssessmentPage() {
               </CardContent>
             </Card>
 
-            <div className="space-y-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {testOptions.map((test) => {
-                const Icon = test.icon;
                 return (
                   <Card
                     key={test.id}
-                    className="rounded-lg border-2 border-[#3C1F71]/20 bg-white shadow-md overflow-hidden"
+                    className="rounded-[32px] border-2 border-[#EFE7FF] bg-white shadow-md overflow-hidden h-full flex flex-col"
                   >
-                    <div className={`h-1 w-full bg-gradient-to-r ${test.gradient}`} />
-                    <CardContent className="px-4 sm:px-6 md:px-8 py-6 sm:py-8">
-                      <div className="flex flex-col items-center text-center">
-                        <h3 className="text-2xl font-semibold text-[#3C1F71] mb-3 tracking-wide">
-                          {test.title}
-                        </h3>
-                        <p className="text-sm sm:text-base text-[#3C1F71]/80 max-w-xl mx-auto mb-4">
-                          {test.description}
-                        </p>
+                    <CardContent className="px-5 sm:px-7 md:px-8 py-6 sm:py-8 flex-1 flex flex-col justify-between">
+                      <div>
+                        <div className="flex flex-row items-start gap-4">
+                          <div className="flex-shrink-0">
+                            <div className="h-16 w-16 sm:h-20 sm:w-20 rounded-[15px] bg-[#D9D9D9] flex items-center justify-center">
+                              <test.icon className="w-8 h-8 text-[#3C1F71]" />
+                            </div>
+                          </div>
+                          <div className="flex-1">
+                            <h3 className="text-xl font-semibold text-[#450BC8] mb-1 tracking-wide text-left">
+                              {test.title}
+                            </h3>
+                            <p className="text-xs sm:text-sm text-[#1F160F]/70 mb-3 text-left leading-relaxed">
+                              {test.description}
+                            </p>
+                          </div>
+                        </div>
 
-                        <div className="w-full max-w-xl mx-auto rounded-lg bg-[#E2DAF5] px-4 sm:px-6 py-3 sm:py-4 mb-4">
-                          <p className="text-xs font-bold tracking-[0.15em] text-[#3C1F71] uppercase mb-2">
+                        <div className="mt-4 w-full mx-auto rounded-[24px] border border-[#450BC8]/30 bg-[#D0BCFF]/50 px-5 sm:px-8 py-4 sm:py-5 text-center">
+                          <p className="text-xs sm:text-sm font-semibold tracking-[0.18em] text-[#3C1F71] uppercase mb-2">
                             Certified by
                           </p>
-                          <p className="text-xs sm:text-sm text-[#3C1F71]/80 leading-relaxed">
+                          <p className="text-xs sm:text-sm text-[#1F160F]/70 leading-relaxed max-w-md mx-auto">
                             {test.info.certifiedBy}
                           </p>
                         </div>
+                      </div>
 
-                        <div className="flex flex-row flex-wrap items-center justify-center gap-4 sm:gap-6 mt-2">
-                          <Popover>
-                            <PopoverTrigger asChild>
-                              <Button
-                                variant="outline"
-                                className="rounded-full border-2 border-[#3C1F71] text-[#3C1F71] bg-white hover:bg-[#3C1F71] hover:text-white px-8 py-2 text-sm font-semibold min-w-[140px]"
-                              >
-                                Know More
-                              </Button>
-                            </PopoverTrigger>
-                            <PopoverContent className="w-80 max-w-md bg-white border-2 border-[#3C1F71]/25 rounded-none shadow-xl p-4 sm:p-5 text-left text-[#3C1F71]">
-                              <div className="space-y-3 text-xs sm:text-sm">
-                                <div>
-                                  <p className="font-semibold mb-1">Inventor</p>
-                                  <p className="text-[#3C1F71]/80 leading-snug">{test.info.inventor}</p>
-                                </div>
-                                <div>
-                                  <p className="font-semibold mb-1">Purpose</p>
-                                  <p className="text-[#3C1F71]/80 leading-snug">{test.info.reason}</p>
-                                </div>
-                                <div>
-                                  <p className="font-semibold mb-1">Certification</p>
-                                  <p className="text-[#3C1F71]/80 leading-snug">{test.info.certifiedBy}</p>
-                                </div>
-                                <div>
-                                  <p className="font-semibold mb-1">Details</p>
-                                  <p className="text-[#3C1F71]/80 leading-snug">{test.info.details}</p>
-                                </div>
+                      <div className="mt-6 flex items-center justify-between gap-4">
+                        <Popover>
+                          <PopoverTrigger asChild>
+                            <Button
+                              variant="ghost"
+                              className="px-0 text-xs sm:text-sm font-semibold tracking-[0.15em] text-[#450BC8] uppercase hover:bg-transparent"
+                            >
+                              Know More
+                            </Button>
+                          </PopoverTrigger>
+                          <PopoverContent className="w-80 max-w-md bg-white border-2 border-[#3C1F71]/25 rounded-none shadow-xl p-4 sm:p-5 text-left text-[#3C1F71]">
+                            <div className="space-y-3 text-xs sm:text-sm">
+                              <div>
+                                <p className="font-semibold mb-1">Inventor</p>
+                                <p className="text-[#3C1F71]/80 leading-snug">{test.info.inventor}</p>
                               </div>
-                            </PopoverContent>
-                          </Popover>
+                              <div>
+                                <p className="font-semibold mb-1">Purpose</p>
+                                <p className="text-[#3C1F71]/80 leading-snug">{test.info.reason}</p>
+                              </div>
+                              <div>
+                                <p className="font-semibold mb-1">Certification</p>
+                                <p className="text-[#3C1F71]/80 leading-snug">{test.info.certifiedBy}</p>
+                              </div>
+                              <div>
+                                <p className="font-semibold mb-1">Details</p>
+                                <p className="text-[#3C1F71]/80 leading-snug">{test.info.details}</p>
+                              </div>
+                            </div>
+                          </PopoverContent>
+                        </Popover>
 
-                          <Button
-                            className={`rounded-full bg-gradient-to-r ${test.gradient} hover:opacity-90 text-white px-10 py-2 text-sm font-semibold min-w-[140px]`}
-                            onClick={() => handleTestSelection(test.id)}
-                          >
-                            Start
-                          </Button>
-                        </div>
+                        <Button
+                          className="ml-auto rounded-full bg-[#450BC8] hover:bg-[#3C1F71] text-white px-8 sm:px-10 py-2 text-xs sm:text-sm font-semibold tracking-[0.15em] uppercase min-w-[120px] sm:min-w-[140px]"
+                          onClick={() => handleTestSelection(test.id)}
+                        >
+                          Start
+                        </Button>
                       </div>
                     </CardContent>
                   </Card>
