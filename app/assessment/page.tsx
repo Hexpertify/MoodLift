@@ -15,6 +15,7 @@ import { HomeNavbar } from '@/components/home-navbar';
 import ConsultantCarousel from '@/components/consultant-carousel';
 import StructuredData from '@/components/structured-data';
 import { AuthModal } from '@/components/auth-modal';
+import Image from 'next/image';
 
 type TestType = 'panas' | 'phq9' | 'gad7' | null;
 
@@ -541,7 +542,7 @@ function PsychometricAssessmentPage() {
             asChild
             variant="outline"
             size="sm"
-            className="rounded-full border-2 border-[#3C1F71] text-[#3C1F71] bg-white hover:bg-[#3C1F71] hover:text-white px-6 py-2 text-sm font-semibold shadow-sm"
+            className="rounded-full border-2 border-primary text-primary bg-white hover:bg-primary hover:text-primary-foreground px-6 py-2 text-sm font-semibold shadow-sm"
           >
             <Link href="/">Back To Home</Link>
           </Button>
@@ -549,48 +550,63 @@ function PsychometricAssessmentPage() {
 
         {!selectedTest && (
           <>
-            <Card className="mb-8 border-2 border-[#3C1F71]/20 bg-white shadow-md">
+            <Card className="mb-8 border-2 border-primary/20 bg-white shadow-md rounded-[25px]">
               <CardContent className="px-4 sm:px-6 md:px-8 py-6 sm:py-8 text-center">
-                <h2 className="text-2xl sm:text-3xl font-semibold text-[#3C1F71] mb-4 tracking-wide">
+                <h2 className="text-2xl sm:text-3xl font-semibold text-primary mb-4 tracking-wide">
                   Choose Your Assessment
                 </h2>
-                <p className="text-sm sm:text-base text-[#3C1F71]/80 leading-relaxed max-w-2xl mx-auto">
-                  Select the assessment that best matches what you would like to evaluate. Each assessment is
-                  scientifically validated and provides personalized insights.
-                </p>
+                <div className="mt-2 w-full mx-auto rounded-[24px] border border-primary/30 bg-secondary/60 px-5 sm:px-8 py-4 sm:py-5 text-center">
+                  <p className="text-sm sm:text-base text-muted-foreground leading-relaxed max-w-2xl mx-auto">
+                    Select the assessment that best matches what you would like to evaluate. Each assessment is
+                    scientifically validated and provides personalized insights.
+                  </p>
+                </div>
               </CardContent>
             </Card>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {testOptions.map((test) => {
+                const iconSrc =
+                  test.id === 'panas'
+                    ? '/images/PANAS-SF-removebg-preview.png'
+                    : test.id === 'phq9'
+                      ? '/images/PHQ-9-removebg-preview.png'
+                      : '/images/GAD-7-removebg-preview.png';
+
                 return (
                   <Card
                     key={test.id}
-                    className="rounded-[32px] border-2 border-[#EFE7FF] bg-white shadow-md overflow-hidden h-full flex flex-col"
+                    className="rounded-[32px] border-2 border-border bg-card shadow-md overflow-hidden h-full flex flex-col"
                   >
                     <CardContent className="px-5 sm:px-7 md:px-8 py-6 sm:py-8 flex-1 flex flex-col justify-between">
                       <div>
                         <div className="flex flex-row items-start gap-4">
                           <div className="flex-shrink-0">
-                            <div className="h-16 w-16 sm:h-20 sm:w-20 rounded-[15px] bg-[#D9D9D9] flex items-center justify-center">
-                              <test.icon className="w-8 h-8 text-[#3C1F71]" />
+                            <div className="h-16 w-16 sm:h-20 sm:w-20 rounded-[15px] bg-muted flex items-center justify-center overflow-hidden">
+                              <Image
+                                src={iconSrc}
+                                alt={`${test.title} icon`}
+                                width={80}
+                                height={80}
+                                className="w-full h-full object-contain"
+                              />
                             </div>
                           </div>
                           <div className="flex-1">
-                            <h3 className="text-xl font-semibold text-[#450BC8] mb-1 tracking-wide text-left">
+                            <h3 className="text-xl font-semibold text-primary mb-1 tracking-wide text-left">
                               {test.title}
                             </h3>
-                            <p className="text-xs sm:text-sm text-[#1F160F]/70 mb-3 text-left leading-relaxed">
+                            <p className="text-xs sm:text-sm text-muted-foreground mb-3 text-left leading-relaxed">
                               {test.description}
                             </p>
                           </div>
                         </div>
 
-                        <div className="mt-4 w-full mx-auto rounded-[24px] border border-[#450BC8]/30 bg-[#D0BCFF]/50 px-5 sm:px-8 py-4 sm:py-5 text-center">
-                          <p className="text-xs sm:text-sm font-semibold tracking-[0.18em] text-[#3C1F71] uppercase mb-2">
+                        <div className="mt-4 w-full mx-auto rounded-[24px] border border-primary/30 bg-secondary/60 px-5 sm:px-8 py-4 sm:py-5 text-center">
+                          <p className="text-xs sm:text-sm font-semibold tracking-[0.18em] text-primary uppercase mb-2">
                             Certified by
                           </p>
-                          <p className="text-xs sm:text-sm text-[#1F160F]/70 leading-relaxed max-w-md mx-auto">
+                          <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed max-w-md mx-auto">
                             {test.info.certifiedBy}
                           </p>
                         </div>
@@ -601,35 +617,35 @@ function PsychometricAssessmentPage() {
                           <PopoverTrigger asChild>
                             <Button
                               variant="ghost"
-                              className="px-0 text-xs sm:text-sm font-semibold tracking-[0.15em] text-[#450BC8] uppercase hover:bg-transparent"
+                              className="px-0 text-xs sm:text-sm font-semibold tracking-[0.15em] text-primary uppercase hover:bg-transparent"
                             >
                               Know More
                             </Button>
                           </PopoverTrigger>
-                          <PopoverContent className="w-80 max-w-md bg-white border-2 border-[#3C1F71]/25 rounded-none shadow-xl p-4 sm:p-5 text-left text-[#3C1F71]">
+                          <PopoverContent className="w-80 max-w-md bg-card border-2 border-primary/25 rounded-none shadow-xl p-4 sm:p-5 text-left text-primary">
                             <div className="space-y-3 text-xs sm:text-sm">
                               <div>
                                 <p className="font-semibold mb-1">Inventor</p>
-                                <p className="text-[#3C1F71]/80 leading-snug">{test.info.inventor}</p>
+                                <p className="text-muted-foreground leading-snug">{test.info.inventor}</p>
                               </div>
                               <div>
                                 <p className="font-semibold mb-1">Purpose</p>
-                                <p className="text-[#3C1F71]/80 leading-snug">{test.info.reason}</p>
+                                <p className="text-muted-foreground leading-snug">{test.info.reason}</p>
                               </div>
                               <div>
                                 <p className="font-semibold mb-1">Certification</p>
-                                <p className="text-[#3C1F71]/80 leading-snug">{test.info.certifiedBy}</p>
+                                <p className="text-muted-foreground leading-snug">{test.info.certifiedBy}</p>
                               </div>
                               <div>
                                 <p className="font-semibold mb-1">Details</p>
-                                <p className="text-[#3C1F71]/80 leading-snug">{test.info.details}</p>
+                                <p className="text-muted-foreground leading-snug">{test.info.details}</p>
                               </div>
                             </div>
                           </PopoverContent>
                         </Popover>
 
                         <Button
-                          className="ml-auto rounded-full bg-[#450BC8] hover:bg-[#3C1F71] text-white px-8 sm:px-10 py-2 text-xs sm:text-sm font-semibold tracking-[0.15em] uppercase min-w-[120px] sm:min-w-[140px]"
+                          className="ml-auto rounded-full bg-primary hover:bg-primary/90 text-primary-foreground px-8 sm:px-10 py-2 text-xs sm:text-sm font-semibold tracking-[0.15em] uppercase min-w-[120px] sm:min-w-[140px]"
                           onClick={() => handleTestSelection(test.id)}
                         >
                           Start
@@ -645,7 +661,7 @@ function PsychometricAssessmentPage() {
 
         {selectedTest && !result && !isAnalyzing && (
           <>
-            <Card className="mb-8 border-2 border-[#3C1F71]/20">
+            <Card className="mb-8 border-2 border-primary/20">
               <CardHeader className={`bg-gradient-to-r ${getTestGradient()} text-white`}>
                 <CardTitle className="text-2xl flex items-center gap-2">
                   <Brain className="w-6 h-6" />
@@ -653,12 +669,12 @@ function PsychometricAssessmentPage() {
                 </CardTitle>
               </CardHeader>
               <CardContent className="pt-6">
-                <p className="text-[#3C1F71]/80 mb-4">
+                <p className="text-muted-foreground mb-4">
                   {selectedTest === 'panas' && 'Rate the extent you have felt each emotion. This assessment measures your current positive and negative affect.'}
                   {selectedTest === 'gad7' && 'Please answer each question based on how often you have been bothered by the following problems over the last 2 weeks.'}
                   {selectedTest === 'phq9' && 'The PHQ-9 is a validated screening tool for depression. Please answer each question based on how often you have been bothered by the following problems over the last 2 weeks.'}
                 </p>
-                <div className="flex items-center gap-2 text-sm text-[#3C1F71]/60">
+                <div className="flex items-center gap-2 text-sm text-muted-foreground">
                   <Sparkles className="w-4 h-4" />
                   <span>{getQuestions(selectedTest).length} questions • 2-3 minutes • Confidential screening</span>
                 </div>
@@ -667,28 +683,27 @@ function PsychometricAssessmentPage() {
 
             <div className="mb-6">
               <div className="flex items-center justify-between mb-2">
-                <span className="text-sm font-medium text-[#3C1F71]">
+                <span className="text-sm font-medium text-primary">
                   Question {currentQuestion + 1} of {getQuestions(selectedTest).length}
                 </span>
-                <span className="text-sm text-[#3C1F71]/60">
+                <span className="text-sm text-muted-foreground">
                   {Math.round(((currentQuestion + 1) / getQuestions(selectedTest).length) * 100)}% complete
                 </span>
               </div>
-              <div className="h-2 bg-[#E2DAF5] rounded-full overflow-hidden">
+              <div className="h-2 bg-secondary rounded-full overflow-hidden">
                 <div
                   className={`h-full bg-gradient-to-r ${getTestGradient()} transition-all duration-300`}
                   style={{ width: `${((currentQuestion + 1) / getQuestions(selectedTest).length) * 100}%` }}
                 />
               </div>
             </div>
-
-            <Card className="border-2 border-[#3C1F71]/20">
+            <Card className="border-2 border-primary/20">
               <CardContent className="p-4 sm:p-6 md:p-8">
                 <div className="mb-6">
-                  <p className="text-sm text-[#3C1F71]/60 mb-2">
+                  <p className="text-sm text-muted-foreground mb-2">
                     {selectedTest === 'panas' ? 'To what extent do you feel:' : 'Over the last 2 weeks, how often have you been bothered by:'}
                   </p>
-                  <h2 className="text-2xl font-semibold text-[#3C1F71]">
+                  <h2 className="text-2xl font-semibold text-primary">
                     {getQuestions(selectedTest)[currentQuestion].question}
                   </h2>
                 </div>
@@ -699,20 +714,20 @@ function PsychometricAssessmentPage() {
                       <button
                         key={option.value}
                         onClick={() => handleAnswer(option.value)}
-                        className={`w-full p-4 text-left rounded-lg border-2 transition-all duration-200 text-[#3C1F71] font-medium group ${
+                        className={`w-full p-4 text-left rounded-lg border-2 transition-all duration-200 text-primary font-medium group ${
                           isSelected
-                            ? 'border-[#3C1F71] bg-[#3C1F71]/10'
-                            : 'border-[#E2DAF5] hover:border-[#3C1F71] hover:bg-[#E2DAF5]/30'
+                            ? 'border-primary bg-primary/10'
+                            : 'border-secondary hover:border-primary hover:bg-secondary/30'
                         }`}
                       >
                         <div className="flex items-center gap-3">
                           <div className={`w-6 h-6 rounded-full border-2 transition-all duration-200 flex items-center justify-center ${
                             isSelected
-                              ? 'border-[#3C1F71] bg-[#3C1F71]'
-                              : 'border-[#3C1F71]/30 group-hover:border-[#3C1F71]'
+                              ? 'border-primary bg-primary'
+                              : 'border-primary/30 group-hover:border-primary'
                           }`}>
                             <span className={`text-xs font-bold ${
-                              isSelected ? 'text-white' : 'text-[#3C1F71] group-hover:text-[#3C1F71]'
+                              isSelected ? 'text-primary-foreground' : 'text-primary group-hover:text-primary'
                             }`}>{option.value}</span>
                           </div>
                           {option.label}
@@ -726,7 +741,7 @@ function PsychometricAssessmentPage() {
                   size="sm"
                   onClick={() => setCurrentQuestion(prev => Math.max(0, prev - 1))}
                   disabled={currentQuestion === 0}
-                  className="bg-[#E2DAF5] hover:bg-[#3C1F71] text-[#3C1F71] hover:text-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed px-4 py-2 rounded-lg font-medium"
+                  className="bg-secondary hover:bg-primary text-primary hover:text-primary-foreground transition-colors disabled:opacity-50 disabled:cursor-not-allowed px-4 py-2 rounded-lg font-medium"
                 >
                   Previous Question
                 </Button>
@@ -736,13 +751,13 @@ function PsychometricAssessmentPage() {
         )}
 
         {isAnalyzing && (
-          <Card className="border-2 border-[#3C1F71]/20">
+          <Card className="border-2 border-primary/20">
             <CardContent className="p-16 text-center">
-              <Loader2 className="w-16 h-16 mx-auto mb-4 text-[#3C1F71] animate-spin" />
-              <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-[#3C1F71] mb-2">
+              <Loader2 className="w-16 h-16 mx-auto mb-4 text-primary animate-spin" />
+              <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-primary mb-2">
                 Calculating Your Results...
               </h2>
-              <p className="text-[#3C1F71]/60">
+              <p className="text-muted-foreground">
                 Processing your {getTestTitle()} responses
               </p>
             </CardContent>
@@ -751,29 +766,29 @@ function PsychometricAssessmentPage() {
 
         {result && (
           <>
-            <Card className="mb-8 border-2 border-[#3C1F71]/20 overflow-hidden">
+            <Card className="mb-8 border-2 border-primary/20 overflow-hidden">
               <div className={`h-2 bg-gradient-to-r ${getSeverityColor(result.totalScore)}`} />
               <CardContent className="p-4 sm:p-6 md:p-8">
                 <div className="text-center mb-8">
-                  <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gradient-to-br from-[#3C1F71] to-[#5B3A8F] text-white text-xl sm:text-2xl md:text-3xl font-bold mb-4">
+                  <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gradient-to-br from-primary to-accent text-primary-foreground text-xl sm:text-2xl md:text-3xl font-bold mb-4">
                     {result.totalScore}
                   </div>
-                  <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-[#3C1F71] mb-2">
+                  <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-primary mb-2">
                     {result.severity}
                   </h2>
-                  <div className="flex items-center justify-center gap-2 text-[#3C1F71]/60">
+                  <div className="flex items-center justify-center gap-2 text-muted-foreground">
                     <TrendingUp className="w-5 h-5" />
                     <span className="text-lg">{getTestTitle()} Score: {result.totalScore}/{getMaxScore()}</span>
                   </div>
                 </div>
 
-                <div className="bg-[#E2DAF5]/30 rounded-lg p-4 mb-6">
-                  <p className="text-[#3C1F71] text-center">
+                <div className="bg-secondary/30 rounded-lg p-4 mb-6">
+                  <p className="text-primary text-center">
                     {result.interpretation}
                   </p>
                 </div>
 
-                <div className="relative h-4 bg-[#E2DAF5] rounded-full overflow-hidden">
+                <div className="relative h-4 bg-secondary rounded-full overflow-hidden">
                   <div
                     className={`absolute inset-y-0 left-0 bg-gradient-to-r ${getSeverityColor(result.totalScore)} transition-all duration-1000`}
                     style={{ width: `${(result.totalScore / getMaxScore()) * 100}%` }}
@@ -795,9 +810,9 @@ function PsychometricAssessmentPage() {
               </Card>
             ) : null}
 
-            <Card className="mb-8 border-2 border-[#3C1F71]/20">
-              <CardHeader className="bg-[#E2DAF5]">
-                <CardTitle className="text-xl text-[#3C1F71] flex items-center gap-2">
+            <Card className="mb-8 border-2 border-primary/20">
+              <CardHeader className="bg-secondary">
+                <CardTitle className="text-xl text-primary flex items-center gap-2">
                   <Sparkles className="w-5 h-5" />
                   Personalized Recommendations
                 </CardTitle>
@@ -813,38 +828,38 @@ function PsychometricAssessmentPage() {
                 <div className="space-y-4">
                   {result.recommendations.map((recommendation, index) => (
                     <div key={index} className="flex items-start gap-3">
-                      <CheckCircle2 className="w-5 h-5 text-[#3C1F71] mt-0.5 flex-shrink-0" />
-                      <p className="text-[#3C1F71]/80">{recommendation}</p>
+                      <CheckCircle2 className="w-5 h-5 text-primary mt-0.5 flex-shrink-0" />
+                      <p className="text-muted-foreground">{recommendation}</p>
                     </div>
                   ))}
                 </div>
               </CardContent>
             </Card>
             <div className="grid grid-cols-1 gap-4">
-              <Card className="border-2 border-[#3C1F71]/20 hover:border-[#3C1F71] transition-colors">
+              <Card className="border-2 border-primary/20 hover:border-primary transition-colors">
                 <CardContent className="p-8">
-                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[#3C1F71] to-[#5B3A8F] flex items-center justify-center mx-auto mb-3">
+                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center mx-auto mb-3">
                     <Sparkles className="w-6 h-6 text-white" />
                   </div>
-                  <h3 className="font-semibold text-[#3C1F71] mb-2 text-center">Try Wellness Games</h3>
-                  <p className="text-sm text-[#3C1F71]/60 text-center mb-4">Boost your mood with our interactive games</p>
+                  <h3 className="font-semibold text-primary mb-2 text-center">Try Wellness Games</h3>
+                  <p className="text-sm text-muted-foreground text-center mb-4">Boost your mood with our interactive games</p>
 
                   <ol className="space-y-4 text-left">
                     {recommendedGames.map((g, idx) => (
                       <li key={g.title} className="flex items-center gap-3">
                         <div className="flex-1">
                           <div className="flex items-center justify-between">
-                            <Link href={g.url} className="font-semibold text-[#3C1F71]" title={`Play ${g.title} - ${g.description}`}>
+                            <Link href={g.url} className="font-semibold text-primary" title={`Play ${g.title} - ${g.description}`}>
                               {idx + 1}. {g.title}
                             </Link>
                             <Link href={g.url} title={`Start playing ${g.title}`}>
-                              <Button size="sm" className="px-3 py-1 bg-gradient-to-r from-[#3C1F71] to-[#5B3A8F] text-white hover:opacity-90 transition-opacity">
+                              <Button size="sm" className="px-3 py-1 bg-gradient-to-r from-primary to-accent text-primary-foreground hover:opacity-90 transition-opacity">
                                 Play
                               </Button>
                             </Link>
                           </div>
-                          <p className="text-sm text-[#3C1F71]/70 mt-2">{g.description}</p>
-                          <p className="text-xs text-[#3C1F71]/50 mt-1">{g.reason}</p>
+                          <p className="text-sm text-muted-foreground mt-2">{g.description}</p>
+                          <p className="text-xs text-muted-foreground/80 mt-1">{g.reason}</p>
                         </div>
                       </li>
                     ))}
@@ -853,23 +868,23 @@ function PsychometricAssessmentPage() {
               </Card>
 
               {!needsImmediateHelp ? (
-                <Card className="border-2 border-[#3C1F71]/20">
+                <Card className="border-2 border-primary/20">
                   <CardContent className="pt-6">
                     <ConsultantCarousel compact />
                   </CardContent>
                 </Card>
               ) : null}
 
-              <Card className="border-2 border-[#3C1F71]/20 hover:border-[#3C1F71] transition-colors">
+              <Card className="border-2 border-primary/20 hover:border-primary transition-colors">
                 <CardContent className="p-6">
                   <div className="text-center">
                     <Button
                       onClick={resetAssessment}
-                      className="w-full sm:w-auto bg-gradient-to-r text-xs sm:text-sm md:text-base from-[#3C1F71] to-[#5B3A8F] hover:opacity-90 transition-opacity"
+                      className="w-full sm:w-auto bg-gradient-to-r text-xs sm:text-sm md:text-base from-primary to-accent text-primary-foreground hover:opacity-90 transition-opacity"
                     >
                       Take Assessment Again
                     </Button>
-                    <p className="text-sm text-[#3C1F71]/60 mt-3">
+                    <p className="text-sm text-muted-foreground mt-3">
                       Track your mood changes over time
                     </p>
                   </div>
