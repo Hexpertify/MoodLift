@@ -550,19 +550,17 @@ function PsychometricAssessmentPage() {
 
         {!selectedTest && (
           <>
-            <Card className="mb-8 border-2 border-primary/20 bg-white shadow-md rounded-[25px]">
-              <CardContent className="px-4 sm:px-6 md:px-8 py-6 sm:py-8 text-center">
-                <h2 className="text-2xl sm:text-3xl font-semibold text-primary mb-4 tracking-wide">
-                  Choose Your Assessment
-                </h2>
-                <div className="mt-2 w-full mx-auto rounded-[24px] border border-primary/30 bg-secondary/60 px-5 sm:px-8 py-4 sm:py-5 text-center">
-                  <p className="text-sm sm:text-base text-muted-foreground leading-relaxed max-w-2xl mx-auto">
-                    Select the assessment that best matches what you would like to evaluate. Each assessment is
-                    scientifically validated and provides personalized insights.
-                  </p>
-                </div>
-              </CardContent>
-            </Card>
+            <div className="mb-8 px-4 sm:px-6 md:px-8 py-6 sm:py-8 text-center">
+              <h2 className="text-2xl sm:text-3xl font-semibold text-primary mb-4 tracking-wide">
+                Mood Assessments
+              </h2>
+              <div className="mt-2 w-full mx-auto rounded-[24px] border border-primary/30 bg-secondary/60 px-5 sm:px-8 py-4 sm:py-5 text-center">
+                <p className="text-sm sm:text-base text-muted-foreground leading-relaxed max-w-2xl mx-auto">
+                  Select the assessment that best matches what you would like to evaluate. Each assessment is
+                  scientifically validated and provides personalized insights.
+                </p>
+              </div>
+            </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {testOptions.map((test) => {
@@ -573,13 +571,31 @@ function PsychometricAssessmentPage() {
                       ? '/images/PHQ-9-removebg-preview.png'
                       : '/images/GAD-7-removebg-preview.png';
 
+                const sourceUrl =
+                  test.id === 'panas'
+                    ? 'https://pmc.ncbi.nlm.nih.gov/articles/PMC7008531/'
+                    : test.id === 'gad7'
+                      ? 'https://pmc.ncbi.nlm.nih.gov/articles/PMC6691128/'
+                      : 'https://pmc.ncbi.nlm.nih.gov/articles/PMC7549295/';
+
                 return (
                   <Card
                     key={test.id}
-                    className="rounded-[32px] border-2 border-border bg-card shadow-md overflow-hidden h-full flex flex-col"
+                    className="relative rounded-[32px] border-2 border-border bg-card shadow-md overflow-hidden h-full flex flex-col"
                   >
                     <CardContent className="px-5 sm:px-7 md:px-8 py-6 sm:py-8 flex-1 flex flex-col justify-between">
                       <div>
+                        <div className="absolute top-4 right-5">
+                          <a href={sourceUrl} target="_blank" rel="noreferrer">
+                            <Button
+                              variant="ghost"
+                              className="px-0 text-[11px] sm:text-xs font-medium text-primary underline-offset-2 hover:underline"
+                            >
+                              Source
+                            </Button>
+                          </a>
+                        </div>
+
                         <div className="flex flex-row items-start gap-4">
                           <div className="flex-shrink-0">
                             <div className="h-16 w-16 sm:h-20 sm:w-20 rounded-[15px] bg-muted flex items-center justify-center overflow-hidden">
@@ -602,7 +618,7 @@ function PsychometricAssessmentPage() {
                           </div>
                         </div>
 
-                        <div className="mt-4 w-full mx-auto rounded-[24px] border border-primary/30 bg-secondary/60 px-5 sm:px-8 py-4 sm:py-5 text-center">
+                        <div className="mt-3 w-full mx-auto rounded-[24px] border border-primary/30 bg-secondary/60 px-5 sm:px-8 py-4 sm:py-5 text-center">
                           <p className="text-xs sm:text-sm font-semibold tracking-[0.18em] text-primary uppercase mb-2">
                             Certified by
                           </p>
