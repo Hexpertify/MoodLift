@@ -53,6 +53,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     '/dashboard',
     '/progress',
     '/rewards',
+    '/games',
   ]);
 
   // Core static routes that are always part of the product
@@ -63,7 +64,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     '/books',
     '/contact',
     '/discover',
-    '/games',
     '/games-and-activities',
     '/mood-assessment',
     '/all-activities',
