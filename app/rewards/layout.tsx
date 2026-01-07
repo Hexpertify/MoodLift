@@ -8,6 +8,10 @@ const defaultMetadata: Metadata = {
   title: 'Rewards & Achievements - Earn Points for Emotional Wellness | MoodLift',
   description: 'Earn points, unlock achievements, and track your progress as you complete emotional wellness activities and maintain healthy mental health habits.',
   keywords: 'emotional wellness rewards, mental health achievements, wellness points, habit tracking, mental health badges, wellness milestones',
+  robots: {
+    index: false,
+    follow: true,
+  },
   openGraph: {
     title: 'Rewards & Achievements - Earn Points for Emotional Wellness | MoodLift',
     description: 'Earn points, unlock achievements, and track your progress as you complete emotional wellness activities and maintain healthy mental health habits.',
@@ -46,6 +50,10 @@ export async function generateMetadata(): Promise<Metadata> {
       title: seo.title || defaultMetadata.title,
       description: seo.description || defaultMetadata.description,
       keywords: seo.keywords || defaultMetadata.keywords,
+      robots: {
+        index: false,
+        follow: true,
+      },
       metadataBase: new URL('https://moodlift.com'),
       alternates: defaultMetadata.alternates,
       openGraph: {

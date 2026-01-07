@@ -8,6 +8,10 @@ const defaultMetadata: Metadata = {
   title: 'Progress & Profile - Track Your Emotional Wellness Journey | MoodLift',
   description: 'View your emotional wellness progress, track mood patterns, manage your profile, and monitor your mental health journey with detailed analytics.',
   keywords: 'emotional wellness progress, mood tracking, mental health profile, wellness analytics, progress tracking, mood patterns',
+  robots: {
+    index: false,
+    follow: true,
+  },
   openGraph: {
     title: 'Progress & Profile - Track Your Emotional Wellness Journey | MoodLift',
     description: 'View your emotional wellness progress, track mood patterns, manage your profile, and monitor your mental health journey with detailed analytics.',
@@ -46,6 +50,10 @@ export async function generateMetadata(): Promise<Metadata> {
       title: seo.title || defaultMetadata.title,
       description: seo.description || defaultMetadata.description,
       keywords: seo.keywords || defaultMetadata.keywords,
+      robots: {
+        index: false,
+        follow: true,
+      },
       metadataBase: new URL('https://moodlift.com'),
       alternates: defaultMetadata.alternates,
       openGraph: {
