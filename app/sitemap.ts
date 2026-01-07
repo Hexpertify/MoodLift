@@ -45,6 +45,10 @@ function toSitemapUrl(origin: string, rawPathOrUrl: string) {
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const origin = getSiteOrigin();
 
+  // Explicitly exclude legacy/incorrect URLs that should not be indexed.
+  // Note: pathname is URL-encoded (e.g. '&' becomes '%26').
+  const excludedPathnames = new Set<string>(['/books%26Activities']);
+
   // Core static routes that are always part of the product
   const staticPaths: string[] = [
     '/',
@@ -119,5 +123,20 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     byUrl.set(entry.url, entry);
   }
 
-  return Array.from(byUrl.values());
+  return Array.from(byUrl.values()).filter((entry) => {
+    try {
+      const pathname = new URL(entry.url).pathname;
+      if (excludedPathnames.has(pathname)) return false;
+
+      // Also guard against any unencoded variant that might sneak in.
+      const decodedPathname = decodeURIComponent(pathname);
+      if (decodedPathname === '/books&Activities') return false;
+      if (decodedPathname.toLowerCase() === '/books&activities') return false;
+
+      return true;
+    } catch {
+      // If parsing fails, keep the entry rather than accidentally dropping valid URLs.
+      return true;
+    }
+  });
 }
