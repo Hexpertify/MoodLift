@@ -3,7 +3,7 @@
 import { useState, useEffect, useMemo } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Brain, ArrowLeft, CheckCircle2, Sparkles, TrendingUp, Loader2, Heart, Activity, Gamepad2, Info, AlertTriangle } from 'lucide-react';
+import { Brain, ArrowLeft, CheckCircle2, Sparkles, TrendingUp, Loader2, Heart, Activity, Gamepad2, AlertTriangle } from 'lucide-react';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import Link from 'next/link';
 import { supabase } from '@/lib/supabase';
@@ -910,6 +910,92 @@ function PsychometricAssessmentPage() {
           </>
         )}
       </main>
+
+      {/* Informational Q&A box (shown above Assessment FAQs) */}
+      <section className="py-6 sm:py-8 bg-gradient-to-br from-white via-secondary/20 to-accent/10">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <Card className="border-2 border-primary/20 overflow-hidden">
+            <CardContent className="pt-4 sm:pt-6">
+              <div className="space-y-8">
+                <div>
+                  <h3 className="text-base sm:text-lg font-semibold text-primary">What Are Mood Assessments?</h3>
+                  <p className="mt-2 text-sm sm:text-base text-muted-foreground leading-relaxed">
+                    Mood or Mental assessments are scientifically validated assessments designed to help individuals understand their emotional well-being, stress levels, anxiety patterns, and depressive symptoms. These assessments provide insights into mental health trends, helping users recognize potential concerns early and take steps toward emotional balance and psychological wellness.
+                  </p>
+                </div>
+
+                <div>
+                  <h3 className="text-base sm:text-lg font-semibold text-primary">Why Should You Take Mood Assessment on MoodLift?</h3>
+                  <p className="mt-2 text-sm sm:text-base text-muted-foreground leading-relaxed">
+                    Mood assessments help you gain clarity about your emotional and mental state. Whether you are feeling overwhelmed, stressed, low in energy, or simply curious about your mental state, these tools provide insights and personalized support.
+                  </p>
+                  <p className="mt-3 font-medium text-primary">Benefits include:</p>
+                  <ul className="mt-2 list-disc pl-5 space-y-1 text-sm sm:text-base text-muted-foreground">
+                    <li>Early detection of stress, anxiety, or depression symptoms</li>
+                    <li>Better emotional self-awareness</li>
+                    <li>Personalized coping strategies</li>
+                    <li>Directed to Mental Health Counsellors if your score indicates risk</li>
+                  </ul>
+                </div>
+
+                <div>
+                  <h3 className="text-base sm:text-lg font-semibold text-primary">Mental Health Assessments on MoodLift</h3>
+                  <div className="mt-3 space-y-4 text-sm sm:text-base text-muted-foreground leading-relaxed">
+                    <div>
+                      <p className="font-semibold text-primary">PANAS-SF - Positive &amp; Negative Affect Schedule – Short Form</p>
+                      <p className="mt-1">
+                        PANAS-SF is a psychometrically validated assessment used to measure a person’s current emotional state by evaluating positive and negative affect. It is grounded in affective science and emotion psychology and is widely used in clinical, academic, and research settings to understand mood patterns, emotional balance, and short-term changes in mental well-being.
+                      </p>
+                      <p className="mt-1 text-sm">Best for: Understanding emotional patterns and mood fluctuations.</p>
+                    </div>
+
+                    <div>
+                      <p className="font-semibold text-primary">PHQ-9 - Patient Health Questionnaire-9</p>
+                      <p className="mt-1">
+                        PHQ-9 is a clinically validated questionnaire used to identify symptoms of depression and their severity over the past two weeks. It helps indicate whether depressive symptoms may be present and how strongly they are affecting daily life.
+                      </p>
+                      <p className="mt-1 text-sm">Best for: Identifying signs of depression symptoms.</p>
+                    </div>
+
+                    <div>
+                      <p className="font-semibold text-primary">GAD-7 - Generalized Anxiety Disorder–7</p>
+                      <p className="mt-1">
+                        GAD-7 is a clinically validated questionnaire used to identify symptoms of anxiety and their severity over the past two weeks. It helps determine whether excessive worry or anxiety may be present and how much it is impacting daily functioning. The GAD-7 is backed by cognitive-behavioral science and anxiety research, and is widely used in clinical, primary care, and research settings by mental health professionals to screen and monitor anxiety disorders.
+                      </p>
+                      <p className="mt-1 text-sm">Best for: Detecting anxiety levels and chronic worry patterns.</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div>
+                  <h3 className="text-base sm:text-lg font-semibold text-primary">How Mood Assessment Works</h3>
+                  <ul className="mt-2 list-disc pl-5 space-y-1 text-sm sm:text-base text-muted-foreground">
+                    <li>Choose an assessment based on your emotional concerns</li>
+                    <li>Answer short, simple and research-based questions</li>
+                    <li>Receive results with a score breakdown</li>
+                    <li>Get personalized insights and coping suggestions</li>
+                  </ul>
+                </div>
+
+                <div>
+                  <h3 className="text-base sm:text-lg font-semibold text-primary">Are These Assessments Reliable?</h3>
+                  <p className="mt-2 text-sm sm:text-base text-muted-foreground leading-relaxed">
+                    All assessments on MoodLift are based on peer-reviewed psychological research and widely used by Mental Health Counsellors across the world. While they do not replace a professional diagnosis, they serve as early guidance tools to help users recognize potential mental health concerns.
+                  </p>
+                </div>
+
+                <div>
+                  <h3 className="text-base sm:text-lg font-semibold text-primary">Why Choose MoodLift for Mood Assessments?</h3>
+                  <p className="mt-2 text-sm sm:text-base text-muted-foreground leading-relaxed">
+                    MoodLift provides free science-backed mental assessments to help individuals understand stress, anxiety, depression, and emotional balance. Based on the assessment results, MoodLift provides personalized suggestions and coping strategies.
+                  </p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </section>
+
       <FAQSection 
         title="Assessment FAQs" 
         page="assessment" 
