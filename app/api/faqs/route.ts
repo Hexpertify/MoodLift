@@ -1,5 +1,6 @@
 import { createClient } from '@supabase/supabase-js';
 import { NextRequest, NextResponse } from 'next/server';
+import { DEFAULT_FAQS, type DefaultFaqPage } from '@/lib/default-faqs';
 
 export const dynamic = 'force-dynamic';
 
@@ -32,14 +33,30 @@ function createPublicClient() {
 }
 
 export async function GET(request: NextRequest) {
+  const { searchParams } = new URL(request.url);
+  const page = searchParams.get('page');
+
+  if (!page) {
+    return NextResponse.json({ data: [], error: 'Page parameter required' }, { status: 400 });
+  }
+
+  const defaultPage = page as DefaultFaqPage;
+  const defaultFaqs = DEFAULT_FAQS[defaultPage];
+  const defaultData = Array.isArray(defaultFaqs)
+    ? defaultFaqs
+        .slice()
+        .sort((a, b) => a.sort_order - b.sort_order)
+        .map((item) => ({
+          id: `default-${defaultPage}-${item.sort_order}`,
+          page: defaultPage,
+          question: item.question,
+          answer: item.answer,
+          sort_order: item.sort_order,
+          active: true,
+        }))
+    : [];
+
   try {
-    const { searchParams } = new URL(request.url);
-    const page = searchParams.get('page');
-
-    if (!page) {
-      return NextResponse.json({ data: [], error: 'Page parameter required' }, { status: 400 });
-    }
-
     const supabase = createPublicClient();
 
     const { data, error } = await supabase
@@ -51,10 +68,14 @@ export async function GET(request: NextRequest) {
 
     if (error) throw new Error(extractErrorMessage(error));
 
-    return NextResponse.json({ data: data || [] });
+    const nextData = Array.isArray(data) ? data : [];
+    return NextResponse.json({ data: nextData.length > 0 ? nextData : defaultData });
   } catch (err) {
     console.error('Error fetching public FAQs:', err);
-    // Don’t fail the page; return empty list and a message for debugging.
-    return NextResponse.json({ data: [], error: extractErrorMessage(err) }, { status: 200 });
+    // Don’t fail the page; prefer defaults when available.
+    return NextResponse.json(
+      { data: defaultData, error: extractErrorMessage(err) },
+      { status: 200 }
+    );
   }
 }

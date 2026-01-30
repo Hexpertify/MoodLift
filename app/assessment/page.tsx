@@ -66,7 +66,7 @@ const assessmentCollectionSchema = {
         position: 1,
         item: {
           "@type": "MedicalTest",
-          name: "PANAS-SF (Positive and Negative Affect Schedule – Short Form)",
+          name: "PANAS-SF (Positive and Negative Affect Schedule - Short Form)",
           description:
             "A short self-report scale used to assess positive and negative emotional states.",
           usedToDiagnose: {
@@ -685,10 +685,10 @@ function PsychometricAssessmentPage() {
           <>
             <Card className="mb-8 border-2 border-primary/20">
               <CardHeader className={`bg-gradient-to-r ${getTestGradient()} text-white`}>
-                <CardTitle className="text-2xl flex items-center gap-2">
+                <div className="text-2xl font-semibold leading-none tracking-tight flex items-center gap-2">
                   <Brain className="w-6 h-6" />
                   {getTestTitle()} {selectedTest === 'panas' ? 'Emotional State' : selectedTest === 'gad7' ? 'Anxiety Assessment' : 'Depression Screening'}
-                </CardTitle>
+                </div>
               </CardHeader>
               <CardContent className="pt-6">
                 <p className="text-muted-foreground mb-4">
@@ -725,9 +725,9 @@ function PsychometricAssessmentPage() {
                   <p className="text-sm text-muted-foreground mb-2">
                     {selectedTest === 'panas' ? 'To what extent do you feel:' : 'Over the last 2 weeks, how often have you been bothered by:'}
                   </p>
-                  <h2 className="text-2xl font-semibold text-primary">
+                  <p className="text-2xl font-semibold text-primary">
                     {getQuestions(selectedTest)[currentQuestion].question}
-                  </h2>
+                  </p>
                 </div>
                 <div className="space-y-3 mb-6" key={currentQuestion}>
                   {getScaleOptions(selectedTest).map((option) => {
@@ -776,9 +776,9 @@ function PsychometricAssessmentPage() {
           <Card className="border-2 border-primary/20">
             <CardContent className="p-16 text-center">
               <Loader2 className="w-16 h-16 mx-auto mb-4 text-primary animate-spin" />
-              <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-primary mb-2">
+              <p className="text-lg sm:text-xl md:text-2xl font-bold text-primary mb-2">
                 Calculating Your Results...
-              </h2>
+              </p>
               <p className="text-muted-foreground">
                 Processing your {getTestTitle()} responses
               </p>
@@ -795,9 +795,9 @@ function PsychometricAssessmentPage() {
                   <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gradient-to-br from-primary to-accent text-primary-foreground text-xl sm:text-2xl md:text-3xl font-bold mb-4">
                     {result.totalScore}
                   </div>
-                  <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-primary mb-2">
+                  <p className="text-xl sm:text-2xl md:text-3xl font-bold text-primary mb-2">
                     {result.severity}
-                  </h2>
+                  </p>
                   <div className="flex items-center justify-center gap-2 text-muted-foreground">
                     <TrendingUp className="w-5 h-5" />
                     <span className="text-lg">{getTestTitle()} Score: {result.totalScore}/{getMaxScore()}</span>
@@ -821,10 +821,10 @@ function PsychometricAssessmentPage() {
             {needsImmediateHelp ? (
               <Card className="mb-8 border-2 border-red-200">
                 <CardHeader className="bg-red-50">
-                  <CardTitle className="text-xl text-red-800 flex items-center gap-2">
+                  <div className="text-xl font-semibold leading-none tracking-tight text-red-800 flex items-center gap-2">
                     <AlertTriangle className="w-5 h-5" />
                     Need Immediate Help
-                  </CardTitle>
+                  </div>
                 </CardHeader>
                 <CardContent className="pt-6">
                   <ConsultantCarousel compact />
@@ -834,10 +834,10 @@ function PsychometricAssessmentPage() {
 
             <Card className="mb-8 border-2 border-primary/20">
               <CardHeader className="bg-secondary">
-                <CardTitle className="text-xl text-primary flex items-center gap-2">
+                <div className="text-xl font-semibold leading-none tracking-tight text-primary flex items-center gap-2">
                   <Sparkles className="w-5 h-5" />
                   Personalized Recommendations
-                </CardTitle>
+                </div>
               </CardHeader>
               <CardContent className="pt-6">
                 {((selectedTest === 'phq9' && result.totalScore >= 15) || (selectedTest === 'gad7' && result.totalScore >= 15)) && (
@@ -863,7 +863,7 @@ function PsychometricAssessmentPage() {
                   <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center mx-auto mb-3">
                     <Sparkles className="w-6 h-6 text-white" />
                   </div>
-                  <h3 className="font-semibold text-primary mb-2 text-center">Try Wellness Games</h3>
+                  <p className="font-semibold text-primary mb-2 text-center">Try Wellness Games</p>
                   <p className="text-sm text-muted-foreground text-center mb-4">Boost your mood with our interactive games</p>
 
                   <ol className="space-y-4 text-left">
@@ -955,12 +955,11 @@ function PsychometricAssessmentPage() {
                   <p className="mt-2 text-sm sm:text-base text-muted-foreground leading-relaxed">
                     Mood assessments help you gain clarity about your emotional and mental state. Whether you are feeling overwhelmed, stressed, low in energy, or simply curious about your mental state, these tools provide insights and personalized support.
                   </p>
-                  <h3 className="mt-3 font-medium text-primary">Benefits Include</h3>
                   <ul className="mt-2 list-disc pl-5 space-y-1 text-sm sm:text-base text-muted-foreground">
                     <li>Early detection of stress, anxiety, or depression symptoms</li>
                     <li>Better emotional self-awareness</li>
                     <li>Personalized coping strategies</li>
-                    <li>Directed to Mental Health Counsellors if your score indicates risk</li>
+                    <li>Guidance toward mental health counsellors if risk is detected</li>
                   </ul>
                 </div>
 
@@ -1005,13 +1004,12 @@ function PsychometricAssessmentPage() {
 
                 <div>
                   <h2 className="text-base sm:text-lg font-semibold text-primary">How Mood Assessment Works</h2>
-                  <h3 className="mt-2 font-medium text-primary">Steps</h3>
-                  <ul className="mt-2 list-disc pl-5 space-y-1 text-sm sm:text-base text-muted-foreground">
-                    <li>Choose an assessment based on your emotional concerns</li>
-                    <li>Answer short, simple and research-based questions</li>
-                    <li>Receive results with a score breakdown</li>
-                    <li>Get personalized insights and coping suggestions</li>
-                  </ul>
+                  <div className="mt-3 space-y-2">
+                    <h3 className="text-sm sm:text-base font-medium text-primary">Choose an assessment based on your emotional concerns</h3>
+                    <h3 className="text-sm sm:text-base font-medium text-primary">Answer short, research-based questions</h3>
+                    <h3 className="text-sm sm:text-base font-medium text-primary">Receive results with a score breakdown</h3>
+                    <h3 className="text-sm sm:text-base font-medium text-primary">Get personalized insights &amp; coping suggestions</h3>
+                  </div>
                 </div>
 
                 <div>

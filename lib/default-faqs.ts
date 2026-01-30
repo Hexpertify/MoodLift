@@ -123,39 +123,33 @@ export const DEFAULT_FAQS: Record<DefaultFaqPage, DefaultFaqItem[]> = {
   assessment: [
     {
       sort_order: 0,
-      question: 'What is the PANAS-SF assessment?',
+      question: 'What does the PANAS-SF test assess?',
       answer:
-        'The PANAS-SF (Positive and Negative Affect Schedule - Short Form) is a 20-item self-report measure that assesses your current emotional state by measuring positive affect (PA) and negative affect (NA). It provides a quick snapshot of your mood and emotions.',
+        'PANAS-SF measures your current emotional state by assessing two dimensions: Positive Affect (PA) and Negative Affect (NA). It provides a quick snapshot of how you are feeling right now.',
     },
     {
       sort_order: 1,
-      question: 'What is the PHQ-9 assessment?',
+      question: 'What is the full form of PHQ-9?',
       answer:
-        'The PHQ-9 (Patient Health Questionnaire-9) is a 9-item screening tool for depression based on DSM-IV diagnostic criteria. It measures the severity of depressive symptoms and is widely used in clinical and primary care settings.',
+        'PHQ-9 stands for Patient Health Questionnaire-9. It is a 9-item screening tool used to assess the presence and severity of depressive symptoms.',
     },
     {
       sort_order: 2,
-      question: 'What is the GAD-7 assessment?',
+      question: 'How accurate are MoodLift assessments?',
       answer:
-        'The GAD-7 (Generalized Anxiety Disorder-7) is a 7-item self-report measure that assesses the severity of anxiety symptoms. It helps identify and measure the severity of generalized anxiety disorder.',
+        'MoodLift uses widely accepted, validated scales like PHQ-9, GAD-7, and PANAS-SF. These tools are widely used in clinical and research settings, but they are screening tools and should be interpreted as guidance rather than a diagnosis.',
     },
     {
       sort_order: 3,
-      question: 'How long do the assessments take?',
+      question: 'Are these assessments clinically validated?',
       answer:
-        'Each assessment typically takes 2-3 minutes to complete. They are designed to be quick yet comprehensive, allowing you to get meaningful insights about your mental health state without taking too much of your time.',
+        'Yes. All assessments used on MoodLift such as PHQ-9, GAD-7, and PANAS-SF are scientifically validated psychological tools that have been tested in peer-reviewed clinical and academic research. These tools are widely used by mental health professionals to screen for symptoms related to depression, anxiety, and emotional well-being. However, results should be interpreted as screening insights, not a medical diagnosis.',
     },
     {
       sort_order: 4,
-      question: 'Are these assessments scientifically validated?',
+      question: 'Can these tests replace professional diagnosis?',
       answer:
-        'Yes, all three assessments are scientifically validated and widely used in clinical and research settings. PANAS-SF, PHQ-9, and GAD-7 have been validated across diverse populations and are recommended by mental health organizations.',
-    },
-    {
-      sort_order: 5,
-      question: 'Can I retake the assessments?',
-      answer:
-        'Absolutely! You can retake any assessment at any time. Taking assessments regularly helps you track your mood changes over time and see how your mental health is progressing.',
+        'No. These assessments do not replace a professional mental health diagnosis. They are designed to help individuals understand their emotional state, recognize potential concerns, and decide whether to seek professional support. If your results indicate high levels of distress, anxiety, or depression, it is strongly recommended to consult a qualified mental health professional.',
     },
   ],
 };
