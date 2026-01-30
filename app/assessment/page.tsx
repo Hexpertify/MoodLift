@@ -551,15 +551,21 @@ function PsychometricAssessmentPage() {
         {!selectedTest && (
           <>
             <div className="mb-8 px-4 sm:px-6 md:px-8 py-6 sm:py-8 text-center">
-              <h2 className="text-2xl sm:text-3xl font-semibold text-primary mb-4 tracking-wide">
+              <h1 className="text-2xl sm:text-3xl font-semibold text-primary mb-4 tracking-wide">
                 Mood Assessments
-              </h2>
+              </h1>
               <div className="mt-2 w-full mx-auto rounded-[24px] border border-primary/30 bg-secondary/60 px-5 sm:px-8 py-4 sm:py-5 text-center">
                 <p className="text-sm sm:text-base text-muted-foreground leading-relaxed max-w-2xl mx-auto">
                   Select the assessment that best matches what you would like to evaluate. Each assessment is
                   scientifically validated and provides personalized insights.
                 </p>
               </div>
+            </div>
+
+            <div className="mb-5 sm:mb-6 text-center">
+              <h2 className="text-lg sm:text-xl font-semibold text-primary tracking-wide">
+                Available Mood &amp; Mental Health Assessments
+              </h2>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -918,7 +924,7 @@ function PsychometricAssessmentPage() {
             <CardContent className="pt-4 sm:pt-6">
               <div className="space-y-8">
                 <div>
-                  <h3 className="text-base sm:text-lg font-semibold text-primary">What Are Mood Assessments?</h3>
+                  <h2 className="text-base sm:text-lg font-semibold text-primary">What Are Mood Assessments?</h2>
                   <div className="mt-4 overflow-hidden rounded-xl border border-primary/10 bg-white/60">
                     <Image
                       src="/images/3.webp"
@@ -935,7 +941,7 @@ function PsychometricAssessmentPage() {
                 </div>
 
                 <div>
-                  <h3 className="text-base sm:text-lg font-semibold text-primary">Why Should You Take Mood Assessment on MoodLift?</h3>
+                  <h2 className="text-base sm:text-lg font-semibold text-primary">Why Should You Take a Mood Assessment on MoodLift?</h2>
                   <div className="mt-4 overflow-hidden rounded-xl border border-primary/10 bg-white/60">
                     <Image
                       src="/images/1.webp"
@@ -949,7 +955,7 @@ function PsychometricAssessmentPage() {
                   <p className="mt-2 text-sm sm:text-base text-muted-foreground leading-relaxed">
                     Mood assessments help you gain clarity about your emotional and mental state. Whether you are feeling overwhelmed, stressed, low in energy, or simply curious about your mental state, these tools provide insights and personalized support.
                   </p>
-                  <p className="mt-3 font-medium text-primary">Benefits include:</p>
+                  <h3 className="mt-3 font-medium text-primary">Benefits Include</h3>
                   <ul className="mt-2 list-disc pl-5 space-y-1 text-sm sm:text-base text-muted-foreground">
                     <li>Early detection of stress, anxiety, or depression symptoms</li>
                     <li>Better emotional self-awareness</li>
@@ -959,7 +965,7 @@ function PsychometricAssessmentPage() {
                 </div>
 
                 <div>
-                  <h3 className="text-base sm:text-lg font-semibold text-primary">Mental Health Assessments on MoodLift</h3>
+                  <h2 className="text-base sm:text-lg font-semibold text-primary">Mental Health Assessments on MoodLift</h2>
                   <div className="mt-4 overflow-hidden rounded-xl border border-primary/10 bg-white/60">
                     <Image
                       src="/images/2.webp"
@@ -972,7 +978,7 @@ function PsychometricAssessmentPage() {
                   </div>
                   <div className="mt-3 space-y-4 text-sm sm:text-base text-muted-foreground leading-relaxed">
                     <div>
-                      <p className="font-semibold text-primary">PANAS-SF - Positive &amp; Negative Affect Schedule – Short Form</p>
+                      <h3 className="font-semibold text-primary">PANAS-SF  Positive &amp; Negative Affect Schedule (Short Form)</h3>
                       <p className="mt-1">
                         PANAS-SF is a psychometrically validated assessment used to measure a person’s current emotional state by evaluating positive and negative affect. It is grounded in affective science and emotion psychology and is widely used in clinical, academic, and research settings to understand mood patterns, emotional balance, and short-term changes in mental well-being.
                       </p>
@@ -980,7 +986,7 @@ function PsychometricAssessmentPage() {
                     </div>
 
                     <div>
-                      <p className="font-semibold text-primary">PHQ-9 - Patient Health Questionnaire-9</p>
+                      <h3 className="font-semibold text-primary">PHQ-9  Patient Health Questionnaire-9</h3>
                       <p className="mt-1">
                         PHQ-9 is a clinically validated questionnaire used to identify symptoms of depression and their severity over the past two weeks. It helps indicate whether depressive symptoms may be present and how strongly they are affecting daily life.
                       </p>
@@ -988,7 +994,7 @@ function PsychometricAssessmentPage() {
                     </div>
 
                     <div>
-                      <p className="font-semibold text-primary">GAD-7 - Generalized Anxiety Disorder–7</p>
+                      <h3 className="font-semibold text-primary">GAD-7  Generalized Anxiety Disorder-7</h3>
                       <p className="mt-1">
                         GAD-7 is a clinically validated questionnaire used to identify symptoms of anxiety and their severity over the past two weeks. It helps determine whether excessive worry or anxiety may be present and how much it is impacting daily functioning. The GAD-7 is backed by cognitive-behavioral science and anxiety research, and is widely used in clinical, primary care, and research settings by mental health professionals to screen and monitor anxiety disorders.
                       </p>
@@ -998,7 +1004,8 @@ function PsychometricAssessmentPage() {
                 </div>
 
                 <div>
-                  <h3 className="text-base sm:text-lg font-semibold text-primary">How Mood Assessment Works</h3>
+                  <h2 className="text-base sm:text-lg font-semibold text-primary">How Mood Assessment Works</h2>
+                  <h3 className="mt-2 font-medium text-primary">Steps</h3>
                   <ul className="mt-2 list-disc pl-5 space-y-1 text-sm sm:text-base text-muted-foreground">
                     <li>Choose an assessment based on your emotional concerns</li>
                     <li>Answer short, simple and research-based questions</li>
@@ -1008,14 +1015,14 @@ function PsychometricAssessmentPage() {
                 </div>
 
                 <div>
-                  <h3 className="text-base sm:text-lg font-semibold text-primary">Are These Assessments Reliable?</h3>
+                  <h2 className="text-base sm:text-lg font-semibold text-primary">Are These Assessments Reliable?</h2>
                   <p className="mt-2 text-sm sm:text-base text-muted-foreground leading-relaxed">
                     All assessments on MoodLift are based on peer-reviewed psychological research and widely used by Mental Health Counsellors across the world. While they do not replace a professional diagnosis, they serve as early guidance tools to help users recognize potential mental health concerns.
                   </p>
                 </div>
 
                 <div>
-                  <h3 className="text-base sm:text-lg font-semibold text-primary">Why Choose MoodLift for Mood Assessments?</h3>
+                  <h2 className="text-base sm:text-lg font-semibold text-primary">Why Choose MoodLift for Mood Assessments?</h2>
                   <p className="mt-2 text-sm sm:text-base text-muted-foreground leading-relaxed">
                     MoodLift provides free science-backed mental assessments to help individuals understand stress, anxiety, depression, and emotional balance. Based on the assessment results, MoodLift provides personalized suggestions and coping strategies.
                   </p>
