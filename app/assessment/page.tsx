@@ -919,6 +919,16 @@ function PsychometricAssessmentPage() {
               <div className="space-y-8">
                 <div>
                   <h3 className="text-base sm:text-lg font-semibold text-primary">What Are Mood Assessments?</h3>
+                  <div className="mt-4 overflow-hidden rounded-xl border border-primary/10 bg-white/60">
+                    <Image
+                      src="/images/3.webp"
+                      alt="Illustration of a girl taking mental assessment"
+                      width={1200}
+                      height={675}
+                      className="h-auto w-full object-cover"
+                      loading="lazy"
+                    />
+                  </div>
                   <p className="mt-2 text-sm sm:text-base text-muted-foreground leading-relaxed">
                     Mood or Mental assessments are scientifically validated assessments designed to help individuals understand their emotional well-being, stress levels, anxiety patterns, and depressive symptoms. These assessments provide insights into mental health trends, helping users recognize potential concerns early and take steps toward emotional balance and psychological wellness.
                   </p>
@@ -926,6 +936,16 @@ function PsychometricAssessmentPage() {
 
                 <div>
                   <h3 className="text-base sm:text-lg font-semibold text-primary">Why Should You Take Mood Assessment on MoodLift?</h3>
+                  <div className="mt-4 overflow-hidden rounded-xl border border-primary/10 bg-white/60">
+                    <Image
+                      src="/images/1.webp"
+                      alt="Illustration of a confused brain"
+                      width={1200}
+                      height={675}
+                      className="h-auto w-full object-cover"
+                      loading="lazy"
+                    />
+                  </div>
                   <p className="mt-2 text-sm sm:text-base text-muted-foreground leading-relaxed">
                     Mood assessments help you gain clarity about your emotional and mental state. Whether you are feeling overwhelmed, stressed, low in energy, or simply curious about your mental state, these tools provide insights and personalized support.
                   </p>
@@ -940,6 +960,16 @@ function PsychometricAssessmentPage() {
 
                 <div>
                   <h3 className="text-base sm:text-lg font-semibold text-primary">Mental Health Assessments on MoodLift</h3>
+                  <div className="mt-4 overflow-hidden rounded-xl border border-primary/10 bg-white/60">
+                    <Image
+                      src="/images/2.webp"
+                      alt="Illustration of a girl confused about her current mood"
+                      width={1200}
+                      height={675}
+                      className="h-auto w-full object-cover"
+                      loading="lazy"
+                    />
+                  </div>
                   <div className="mt-3 space-y-4 text-sm sm:text-base text-muted-foreground leading-relaxed">
                     <div>
                       <p className="font-semibold text-primary">PANAS-SF - Positive &amp; Negative Affect Schedule – Short Form</p>
