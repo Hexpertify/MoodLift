@@ -21,7 +21,7 @@ export function AppFooter() {
           </div>
 
           <div>
-            <h3 className="font-semibold text-primary mb-4">Features</h3>
+            <p className="font-semibold text-primary mb-4">Features</p>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li>
                 <Link href="/mood-assessment" className="hover:text-primary transition-colors" title="Take our AI-powered mood assessment">
@@ -48,7 +48,7 @@ export function AppFooter() {
           </div>
 
           <div>
-            <h3 className="font-semibold text-primary mb-4">Resources</h3>
+            <p className="font-semibold text-primary mb-4">Resources</p>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li>
                 <Link href="/about" className="hover:text-primary transition-colors" title="Learn about MoodLift and our mission">
@@ -79,7 +79,7 @@ export function AppFooter() {
           </div>
 
           <div>
-            <h3 className="font-semibold text-primary mb-4">Support</h3>
+            <p className="font-semibold text-primary mb-4">Support</p>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li>
                 <Link href="/contact" className="hover:text-primary transition-colors" title="Get in touch with our support team">

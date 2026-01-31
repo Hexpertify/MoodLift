@@ -977,7 +977,7 @@ function PsychometricAssessmentPage() {
                   </div>
                   <div className="mt-3 space-y-4 text-sm sm:text-base text-muted-foreground leading-relaxed">
                     <div>
-                      <h3 className="font-semibold text-primary">PANAS-SF — Positive &amp; Negative Affect Schedule (Short Form)</h3>
+                      <h3 className="font-semibold text-primary">PANAS-SF - Positive &amp; Negative Affect Schedule (Short Form)</h3>
                       <p className="mt-1">
                         PANAS-SF is a psychometrically validated assessment used to measure a person’s current emotional state by evaluating positive and negative affect. It is grounded in affective science and emotion psychology and is widely used in clinical, academic, and research settings to understand mood patterns, emotional balance, and short-term changes in mental well-being.
                       </p>
@@ -985,7 +985,7 @@ function PsychometricAssessmentPage() {
                     </div>
 
                     <div>
-                      <h3 className="font-semibold text-primary">PHQ-9 — Patient Health Questionnaire-9</h3>
+                      <h3 className="font-semibold text-primary">PHQ-9 - Patient Health Questionnaire-9</h3>
                       <p className="mt-1">
                         PHQ-9 is a clinically validated questionnaire used to identify symptoms of depression and their severity over the past two weeks. It helps indicate whether depressive symptoms may be present and how strongly they are affecting daily life.
                       </p>
@@ -993,7 +993,7 @@ function PsychometricAssessmentPage() {
                     </div>
 
                     <div>
-                      <h3 className="font-semibold text-primary">GAD-7 — Generalized Anxiety Disorder-7</h3>
+                      <h3 className="font-semibold text-primary">GAD-7 - Generalized Anxiety Disorder-7</h3>
                       <p className="mt-1">
                         GAD-7 is a clinically validated questionnaire used to identify symptoms of anxiety and their severity over the past two weeks. It helps determine whether excessive worry or anxiety may be present and how much it is impacting daily functioning. The GAD-7 is backed by cognitive-behavioral science and anxiety research, and is widely used in clinical, primary care, and research settings by mental health professionals to screen and monitor anxiety disorders.
                       </p>
