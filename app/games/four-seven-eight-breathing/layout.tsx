@@ -3,6 +3,8 @@ import { getSeoMetadata } from '@/lib/seo-service';
 
 export const dynamic = 'force-dynamic';
 
+const CANONICAL_URL = 'https://moodlift.hexpertify.com/games/four-seven-eight-breathing';
+
 const defaultMetadata: Metadata = {
   title: '4-7-8 Breathing | MoodLift',
   description: 'Use the 4-7-8 breathing technique to calm your mind and body before sleep or during stress.',
@@ -10,7 +12,7 @@ const defaultMetadata: Metadata = {
   openGraph: {
     title: '4-7-8 Breathing | MoodLift',
     description: 'Use the 4-7-8 breathing technique to calm your mind and body before sleep or during stress.',
-    url: 'https://moodlift.com/games/four-seven-eight-breathing',
+    url: CANONICAL_URL,
     siteName: 'MoodLift',
     images: [
       {
@@ -30,7 +32,7 @@ const defaultMetadata: Metadata = {
     images: ['https://moodlift.com/images/og-four-seven-eight-breathing.jpg'],
   },
   alternates: {
-    canonical: '/games/four-seven-eight-breathing',
+    canonical: CANONICAL_URL,
   },
 };
 
@@ -45,12 +47,12 @@ export async function generateMetadata(): Promise<Metadata> {
       title: seo.title || defaultMetadata.title,
       description: seo.description || defaultMetadata.description,
       keywords: seo.keywords || defaultMetadata.keywords,
-      metadataBase: new URL('https://moodlift.com'),
+      metadataBase: new URL('https://moodlift.hexpertify.com'),
       alternates: defaultMetadata.alternates,
       openGraph: {
         title: seo.title || defaultMetadata.openGraph?.title,
         description: seo.description || defaultMetadata.openGraph?.description,
-        url: 'https://moodlift.com/games/four-seven-eight-breathing',
+        url: CANONICAL_URL,
         siteName: defaultMetadata.openGraph?.siteName,
         images: ogImages as any,
         locale: defaultMetadata.openGraph?.locale,

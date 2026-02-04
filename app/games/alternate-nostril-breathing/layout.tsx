@@ -3,6 +3,8 @@ import { getSeoMetadata } from '@/lib/seo-service';
 
 export const dynamic = 'force-dynamic';
 
+const CANONICAL_URL = 'https://moodlift.hexpertify.com/games/alternate-nostril-breathing';
+
 const defaultMetadata: Metadata = {
   title: 'Alternate Nostril Breathing - Yogic Breathing for Balance | MoodLift',
   description: 'Practice alternate nostril breathing (Nadi Shodhana) - an ancient yogic technique that balances brain hemispheres and promotes deep relaxation.',
@@ -10,7 +12,7 @@ const defaultMetadata: Metadata = {
   openGraph: {
     title: 'Alternate Nostril Breathing - Yogic Breathing for Balance | MoodLift',
     description: 'Practice alternate nostril breathing (Nadi Shodhana) - an ancient yogic technique that balances brain hemispheres.',
-    url: 'https://moodlift.com/games/alternate-nostril-breathing',
+    url: CANONICAL_URL,
     siteName: 'MoodLift',
     images: [
       {
@@ -30,7 +32,7 @@ const defaultMetadata: Metadata = {
     images: ['https://moodlift.com/images/og-alternate-nostril-breathing.jpg'],
   },
   alternates: {
-    canonical: '/games/alternate-nostril-breathing',
+    canonical: CANONICAL_URL,
   },
 };
 
@@ -45,12 +47,12 @@ export async function generateMetadata(): Promise<Metadata> {
       title: seo.title || defaultMetadata.title,
       description: seo.description || defaultMetadata.description,
       keywords: seo.keywords || defaultMetadata.keywords,
-      metadataBase: new URL('https://moodlift.com'),
+      metadataBase: new URL('https://moodlift.hexpertify.com'),
       alternates: defaultMetadata.alternates,
       openGraph: {
         title: seo.og_title || seo.title || defaultMetadata.openGraph?.title,
         description: seo.og_description || seo.description || defaultMetadata.openGraph?.description,
-        url: 'https://moodlift.com/games/alternate-nostril-breathing',
+        url: CANONICAL_URL,
         siteName: defaultMetadata.openGraph?.siteName,
         images: ogImages as any,
         locale: defaultMetadata.openGraph?.locale,

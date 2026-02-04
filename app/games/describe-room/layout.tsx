@@ -3,6 +3,8 @@ import { getSeoMetadata } from '@/lib/seo-service';
 
 export const dynamic = 'force-dynamic';
 
+const CANONICAL_URL = 'https://moodlift.hexpertify.com/games/describe-room';
+
 const defaultMetadata: Metadata = {
   title: 'Describe Room | MoodLift',
   description: 'Describe your room in detail to bring yourself back to the present moment and reduce dissociation.',
@@ -10,7 +12,7 @@ const defaultMetadata: Metadata = {
   openGraph: {
     title: 'Describe Room | MoodLift',
     description: 'Describe your room in detail to bring yourself back to the present moment and reduce dissociation.',
-    url: 'https://moodlift.com/games/describe-room',
+    url: CANONICAL_URL,
     siteName: 'MoodLift',
     images: [
       {
@@ -30,7 +32,7 @@ const defaultMetadata: Metadata = {
     images: ['https://moodlift.com/images/og-describe-room.jpg'],
   },
   alternates: {
-    canonical: '/games/describe-room',
+    canonical: CANONICAL_URL,
   },
 };
 
@@ -45,12 +47,12 @@ export async function generateMetadata(): Promise<Metadata> {
       title: seo.title || defaultMetadata.title,
       description: seo.description || defaultMetadata.description,
       keywords: seo.keywords || defaultMetadata.keywords,
-      metadataBase: new URL('https://moodlift.com'),
+      metadataBase: new URL('https://moodlift.hexpertify.com'),
       alternates: defaultMetadata.alternates,
       openGraph: {
         title: seo.title || defaultMetadata.openGraph?.title,
         description: seo.description || defaultMetadata.openGraph?.description,
-        url: 'https://moodlift.com/games/describe-room',
+        url: CANONICAL_URL,
         siteName: defaultMetadata.openGraph?.siteName,
         images: ogImages as any,
         locale: defaultMetadata.openGraph?.locale,

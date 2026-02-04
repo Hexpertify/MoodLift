@@ -936,7 +936,7 @@ function PsychometricAssessmentPage() {
                     />
                   </div>
                   <p className="mt-2 text-sm sm:text-base text-muted-foreground leading-relaxed">
-                    Mood or Mental assessments are scientifically validated assessments designed to help individuals understand their emotional well-being, stress levels, anxiety patterns, and depressive symptoms. These assessments provide insights into mental health trends, helping users recognize potential concerns early and take steps toward emotional balance and psychological wellness.
+                    Mood assessments are scientifically validated emotional wellness tests designed to help individuals understand their emotional well-being, stress levels, anxiety patterns, and depressive symptoms. These assessments provide insights into mental health trends, helping users recognize potential concerns early and take steps toward emotional balance and psychological wellness.
                   </p>
                 </div>
 

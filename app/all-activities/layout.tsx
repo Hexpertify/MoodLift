@@ -4,6 +4,8 @@ import StructuredData from '@/components/structured-data';
 
 export const dynamic = 'force-dynamic';
 
+const CANONICAL_URL = 'https://moodlift.hexpertify.com/all-activities';
+
 const defaultMetadata: Metadata = {
   title: 'All Activities - Complete Collection of Emotional Wellness Tools | MoodLift',
   description: 'Explore our complete collection of emotional wellness activities, games, and exercises designed to improve mental health and emotional well-being.',
@@ -11,7 +13,7 @@ const defaultMetadata: Metadata = {
   openGraph: {
     title: 'All Activities - Complete Collection of Emotional Wellness Tools | MoodLift',
     description: 'Explore our complete collection of emotional wellness activities, games, and exercises designed to improve mental health and emotional well-being.',
-    url: 'https://moodlift.com/all-activities',
+    url: CANONICAL_URL,
     siteName: 'MoodLift',
     images: [
       {
@@ -31,7 +33,7 @@ const defaultMetadata: Metadata = {
     images: ['https://moodlift.com/images/og-activities.jpg'],
   },
   alternates: {
-    canonical: '/all-activities',
+    canonical: CANONICAL_URL,
   },
 };
 
@@ -46,12 +48,12 @@ export async function generateMetadata(): Promise<Metadata> {
       title: seo.title || defaultMetadata.title,
       description: seo.description || defaultMetadata.description,
       keywords: seo.keywords || defaultMetadata.keywords,
-      metadataBase: new URL('https://moodlift.com'),
+      metadataBase: new URL('https://moodlift.hexpertify.com'),
       alternates: defaultMetadata.alternates,
       openGraph: {
         title: seo.title || defaultMetadata.openGraph?.title,
         description: seo.description || defaultMetadata.openGraph?.description,
-        url: 'https://moodlift.com/all-activities',
+        url: CANONICAL_URL,
         siteName: defaultMetadata.openGraph?.siteName,
         images: ogImages as any,
         locale: defaultMetadata.openGraph?.locale,
@@ -81,11 +83,11 @@ export default function AllActivitiesLayout({
           "@type": "CollectionPage",
           "name": "All Activities - MoodLift",
           "description": "Complete collection of emotional wellness activities and mental health exercises.",
-          "url": "/all-activities",
+          "url": CANONICAL_URL,
           "publisher": {
             "@type": "Organization",
             "name": "MoodLift",
-            "url": "https://moodlift.com"
+            "url": "https://moodlift.hexpertify.com"
           }
         }}
       />
