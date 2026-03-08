@@ -2,6 +2,33 @@
 
 ## For Developers
 
+### Switch To A New Supabase Database
+
+1. **Create your local env file**:
+   ```bash
+   cp .env.example .env.local
+   ```
+
+2. **Set credentials from your new Supabase project** in `.env.local`:
+   - `NEXT_PUBLIC_SUPABASE_URL`
+   - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+   - `SUPABASE_URL`
+   - `SUPABASE_ANON_KEY`
+   - `SUPABASE_SERVICE_ROLE_KEY`
+
+3. **Apply SQL migrations** from `supabase/migrations/` to the new project.
+   - Use Supabase SQL Editor or Supabase CLI.
+   - Run all migrations in timestamp order.
+
+4. **Restart the app** after updating env vars:
+   ```bash
+   npm run dev
+   ```
+
+5. **Optional: seed starter content**:
+   - Call local admin/seed routes only after env vars are set.
+   - Example: `POST /api/seed-games`
+
 ### Running the Application
 
 1. **Start the development server** (already running automatically):
