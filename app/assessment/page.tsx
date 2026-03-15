@@ -238,14 +238,17 @@ function PsychometricAssessmentPage() {
   }, []);
 
   const handleAnswer = (score: number) => {
-    const newResponses = [...responses, score];
+    const newResponses = [...responses];
+    newResponses[currentQuestion] = score;
     setResponses(newResponses);
+  };
 
+  const handleNext = () => {
     const questions = getQuestions(selectedTest);
     if (currentQuestion < questions.length - 1) {
-      setCurrentQuestion(currentQuestion + 1);
+      setCurrentQuestion(prev => prev + 1);
     } else {
-      calculateResults(newResponses);
+      calculateResults(responses);
     }
   };
 
@@ -734,7 +737,7 @@ function PsychometricAssessmentPage() {
                     const isSelected = responses[currentQuestion] === option.value;
                     return (
                       <button
-                        key={option.value}
+                        key={`${currentQuestion}-${option.value}`}
                         onClick={() => handleAnswer(option.value)}
                         className={`w-full p-4 text-left rounded-lg border-2 transition-all duration-200 text-primary font-medium group ${
                           isSelected
@@ -758,15 +761,27 @@ function PsychometricAssessmentPage() {
                     );
                   })}
                 </div>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => setCurrentQuestion(prev => Math.max(0, prev - 1))}
-                  disabled={currentQuestion === 0}
-                  className="bg-secondary hover:bg-primary text-primary hover:text-primary-foreground transition-colors disabled:opacity-50 disabled:cursor-not-allowed px-4 py-2 rounded-lg font-medium"
-                >
-                  Previous Question
-                </Button>
+                <div className="flex gap-3">
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => setCurrentQuestion(prev => Math.max(0, prev - 1))}
+                    disabled={currentQuestion === 0}
+                    className="bg-secondary hover:bg-primary text-primary hover:text-primary-foreground transition-colors disabled:opacity-50 disabled:cursor-not-allowed px-4 py-2 rounded-lg font-medium"
+                  >
+                    Previous Question
+                  </Button>
+
+                  <Button
+                    variant="default"
+                    size="sm"
+                    onClick={handleNext}
+                    disabled={responses[currentQuestion] === undefined}
+                    className="ml-auto bg-primary hover:bg-primary/90 text-primary-foreground transition-colors disabled:opacity-50 disabled:cursor-not-allowed px-4 py-2 rounded-lg font-medium"
+                  >
+                    {currentQuestion < getQuestions(selectedTest).length - 1 ? 'Next Question' : 'Finish'}
+                  </Button>
+                </div>
               </CardContent>
             </Card>
           </>
