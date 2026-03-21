@@ -53,7 +53,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     '/dashboard',
     '/progress',
     '/rewards',
-    '/games',
     '/all-activities',
   ]);
 
@@ -65,7 +64,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     '/books',
     '/contact',
     '/discover',
-    '/games-and-activities',
+     '/games',
     '/mood-assessment',
     '/privacy-policy',
   ];

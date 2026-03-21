@@ -5,15 +5,16 @@ export function middleware(request: NextRequest) {
   const url = request.nextUrl;
   const pathname = url.pathname;
 
-  if (pathname === '/games' || pathname === '/games/') {
-    const destination = new URL('/games-and-activities', url);
+  // Redirect legacy/alternate paths to the canonical /games route
+  if (pathname === '/games-and-activities' || pathname === '/games-and-activities/') {
+    const destination = new URL('/games', url);
     destination.search = url.search;
 
     return NextResponse.redirect(destination, 301);
   }
 
   if (pathname === '/games&activities' || pathname === '/games%26activities') {
-    const destination = new URL('/games-and-activities', url);
+    const destination = new URL('/games', url);
     destination.search = url.search;
 
     return NextResponse.redirect(destination, 301);
@@ -31,8 +32,8 @@ export function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
-    '/games',
-    '/games/',
+    '/games-and-activities',
+    '/games-and-activities/',
     '/games&activities',
     '/games%26activities',
     '/all-activities/',
